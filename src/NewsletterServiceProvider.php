@@ -24,9 +24,16 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->bind('Spatie\Newsletter\MailChimp\MailChimpApi',
-            new Mailchimp($this->app['config']->get('newsletter.mailChimp.apiKey'))
-        );
+        $this->app->bind('Spatie\Newsletter\MailChimp\MailChimpApi', function() {
+
+            $apiKey = $this->app['config']->get('newsletter.mailChimp.apiKey');
+
+            if ($apiKey)
+            {
+                return new Mailchimp($apiKey);
+            }
+        });
+
 
         $this->app->bind(
             'Spatie\Newsletter\Interfaces\NewsletterListInterface',
