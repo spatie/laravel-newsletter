@@ -4,6 +4,8 @@ namespace Spatie\Newsletter\MailChimp;
 
 use Illuminate\Contracts\Config\Repository;
 use Exception;
+use Illuminate\Support\Facades\App;
+use MailChimp;
 
 abstract class MailChimpBase
 {
@@ -16,9 +18,9 @@ abstract class MailChimpBase
      */
     private $config;
 
-    public function __construct(Repository $config, MailChimpApiInterface $mailChimp)
+    public function __construct(App $app, Repository $config)
     {
-        $this->mailChimp = $mailChimp;
+        $this->mailChimp = app()['laravel-newsletter-mailchimp'];
         $this->config = $config;
     }
 
