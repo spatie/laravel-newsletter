@@ -3,7 +3,6 @@
 namespace Spatie\Newsletter\MailChimp;
 
 use Illuminate\Contracts\Config\Repository;
-use Mailchimp;
 use Exception;
 
 abstract class MailChimpBase
@@ -17,7 +16,7 @@ abstract class MailChimpBase
      */
     private $config;
 
-    public function __construct(Repository $config, MailChimpApi $mailChimp)
+    public function __construct(Repository $config, MailChimpApiInterface $mailChimp)
     {
         $this->mailChimp = $mailChimp;
         $this->config = $config;
