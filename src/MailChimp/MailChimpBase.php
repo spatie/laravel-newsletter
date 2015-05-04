@@ -31,10 +31,10 @@ abstract class MailChimpBase
      */
     public function getAllLists()
     {
-        $allLists =  $this->config->get('newsletter.mailChimp.lists');
+        $allLists =  $this->config->get('laravel-newsletter.mailChimp.lists');
 
         if (! count($allLists)) {
-            throw new Exception('There are no mailchimp lists defined');
+            throw new Exception('There are no MailChimp lists defined');
         }
 
         return $allLists;

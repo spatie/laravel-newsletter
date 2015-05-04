@@ -24,9 +24,9 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind('Spatie\Newsletter\MailChimp\MailChimpApi', function() {
+        $this->app->bind('Spatie\Newsletter\MailChimp\MailChimpApiInterface', function() {
 
-            $apiKey = $this->app['config']->get('newsletter.mailChimp.apiKey');
+            $apiKey = $this->app['config']->get('laravel-newsletter.mailChimp.apiKey');
 
             if ($apiKey)
             {
