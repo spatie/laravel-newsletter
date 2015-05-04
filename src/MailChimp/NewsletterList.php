@@ -21,9 +21,11 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      */
     public function subscribe($email, $listName = '')
     {
+        $listProperties = $this->getListProperties($listName);
+
         try {
             return $this->mailChimp->lists->subscribe(
-                $this->getListProperties($listName)['id'],
+                $listProperties['id'],
                 compact('email'),
                 null,    //merge vars
                 'html',  //e-mail type
@@ -47,8 +49,10 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      */
     public function unsubscribe($email, $listName = '')
     {
+        $listProperties = $this->getListProperties($listName);
+
         return $this->mailChimp->lists->unsubscribe(
-            $this->convertListNameToMailChimpListId($listName),
+            $listProperties['id'],
             compact('email'),
             false,  //delete permanently
             false,  //send goodbye mail?
