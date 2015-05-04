@@ -1,5 +1,5 @@
 {
-    "name": "league/laravel-newsletter",
+    "name": "spatie/laravel-newsletter",
     "description": "Manage newsletters in Laravel 5",
     "keywords": [
         "laravel",
