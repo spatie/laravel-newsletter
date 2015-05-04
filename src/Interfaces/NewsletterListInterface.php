@@ -1,21 +1,7 @@
 <?php namespace Spatie\Newsletter\Interfaces;
 
-/**
- * Interface NewsletterCampaign.
- */
-interface Newsletter
+interface NewsletterListInterface
 {
-    /**
-     * Create a new newsletter campaign.
-     *
-     * @param $list
-     * @param $subject
-     * @param $content
-     *
-     * @return mixed
-     */
-    public function createCampaign($list, $subject, $content);
-
     /**
      * Subscribe the email address to given list.
      *

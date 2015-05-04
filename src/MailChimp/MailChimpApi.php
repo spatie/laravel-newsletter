@@ -2,6 +2,6 @@
 
 namespace Spatie\Newsletter\MailChimp;
 
-interface  MailChimpApi
+interface  MailChimpApiInterface
 {
 }

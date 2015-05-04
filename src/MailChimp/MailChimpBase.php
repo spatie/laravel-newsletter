@@ -4,7 +4,6 @@ namespace Spatie\Newsletter\MailChimp;
 
 use Illuminate\Contracts\Config\Repository;
 use Mailchimp;
-use Config;
 use Exception;
 
 abstract class MailChimpBase

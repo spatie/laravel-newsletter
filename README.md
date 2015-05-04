@@ -37,7 +37,7 @@ If you want to make use of the facade you must install it as well.
 // config/app.php
 'aliases' => [
     ...
-    'Newsltter' => 'Spatie\Newsletter\NewsletterFacade',
+    'Newsletter' => 'Spatie\Newsletter\NewsletterFacade',
 ];
 ```
 

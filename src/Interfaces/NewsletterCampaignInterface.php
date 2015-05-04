@@ -3,7 +3,7 @@
 /**
  * Interface NewsletterCampaign.
  */
-interface NewsletterCampaign
+interface NewsletterCampaignInterface
 {
     /**
      * Create a new newsletter campaign.

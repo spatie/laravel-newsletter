@@ -1,8 +1,8 @@
 <?php namespace Spatie\Newsletter\MailChimp;
 
-use Spatie\Newsletter\Interfaces\Newsletter as NewsletterInterface;
-use Spatie\Newsletter\Interfaces\NewsletterCampaign;
-use Spatie\Newsletter\Interfaces\NewsletterList;
+use Spatie\Newsletter\Interfaces\NewsletterInterface;
+use Spatie\Newsletter\Interfaces\NewsletterCampaignInterface;
+use Spatie\Newsletter\Interfaces\NewsletterListInterface;
 
 class Newsletter implements NewsletterInterface
 {
@@ -15,7 +15,7 @@ class Newsletter implements NewsletterInterface
      */
     private $list;
 
-    public function __construct(NewsletterCampaign $campaign, NewsletterList $list)
+    public function __construct(NewsletterCampaignInterface $campaign, NewsletterListInterface $list)
     {
         $this->campaign = $campaign;
         $this->list = $list;
