@@ -4,6 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 class NewsletterServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
         $this->app->bind(
