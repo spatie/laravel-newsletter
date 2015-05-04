@@ -1,6 +1,6 @@
 <?php namespace Spatie\Newsletter\MailChimp;
 
-use Spatie\Newsletter\NewsletterCampaign as NewsletterCampaignInterface;
+use Spatie\Newsletter\Interfaces\NewsletterCampaign as NewsletterCampaignInterface;
 
 class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInterface
 {

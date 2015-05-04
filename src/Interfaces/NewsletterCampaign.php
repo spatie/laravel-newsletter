@@ -1,4 +1,4 @@
-<?php namespace Spatie\Newsletter;
+<?php namespace Spatie\Newsletter\Interfaces;
 
 /**
  * Interface NewsletterCampaign.
@@ -11,6 +11,7 @@ interface NewsletterCampaign
      * @param $list
      * @param $subject
      * @param $content
+     *
      * @return mixed
      */
     public function create($list, $subject, $content);

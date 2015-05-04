@@ -4,22 +4,22 @@ namespace Spatie\Newsletter\MailChimp;
 
 use Spatie\Newsletter\Exceptions\AlreadySubscribed;
 use Spatie\Newsletter\Exceptions\ServiceRefusedSubscription;
-use Spatie\Newsletter\NewsletterList as NewsletterListInterface;
+use Spatie\Newsletter\Interfaces\NewsletterList as NewsletterListInterface;
 
 class NewsletterList extends MailChimpBase implements NewsletterListInterface
 {
     /**
      * Subscribe a user to a MailChimp list.
      *
-     * @param $listName
      * @param $email
+     * @param $listName
      *
      * @return array
      *
      * @throws ServiceRefusedSubscription
      * @throws AlreadySubscribed
      */
-    public function subscribeTo($listName, $email)
+    public function subscribe($email, $listName = '')
     {
         try {
             return $this->mailChimp->lists->subscribe(
@@ -40,12 +40,12 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
     /**
      * Unsubscribe a user from a MailChimp list.
      *
-     * @param $listName
      * @param $email
+     * @param $listName
      *
      * @return mixed
      */
-    public function unsubscribeFrom($listName, $email)
+    public function unsubscribe($email, $listName = '')
     {
         return $this->mailChimp->lists->unsubscribe(
             $this->convertListNameToMailChimpListId($listName),

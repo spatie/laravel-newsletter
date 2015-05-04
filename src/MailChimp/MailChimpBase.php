@@ -25,19 +25,62 @@ abstract class MailChimpBase
     }
 
     /**
-     * Convert a string to a MailChimp list id.
+     * Get all configured lists.
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function getAllLists()
+    {
+        $allLists =  $this->config->get('newsletter.mailChimp.lists');
+
+        if (! count($allLists)) {
+            throw new Exception('There are no mailchimp lists defined');
+        }
+
+        return $allLists;
+    }
+
+    /**
+     * Convert all  properties for the given listName.
      *
      * @param string $listName
-     * @return integer mixed
+     *
+     * @return array
+     *
      * @throws Exception
      */
     protected function getListProperties($listName)
     {
-        $properties = $this->config->get('newsletter.mailChimp.lists.'.$listName);
-        if (! count($properties)) {
-            throw new Exception('Unknown list name for mailChimp: '.$listName);
+        if ($listName == '') {
+            $listName = $this->getDefaultListName();
         }
 
-        return $properties;
+        foreach ($this->getAllLists() as $configuredListName => $listProperties) {
+            if ($configuredListName == $listName) {
+                return $listProperties;
+            }
+        }
+
+        throw new Exception('Unknown list name for mailChimp: '.$listName);
+    }
+
+    /**
+     * Get the name of the list that is marked as default.
+     *
+     * @return string
+     *
+     * @throws Exception
+     */
+    protected function getDefaultListName()
+    {
+        foreach ($this->getAllLists() as $listName => $listProperties) {
+            if (isset($listProperties['default']) && $listProperties['default']) {
+                return $listName;
+            }
+        }
+
+        throw new Exception('There is no default mailchimp list configured');
     }
 }

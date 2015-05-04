@@ -4,18 +4,47 @@
 [![Latest Version](https://img.shields.io/github/release/freekmurze/laravel-newsletter.svg?style=flat-square)](https://github.com/freekmurze/laravel-newsletter/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/freekmurze/laravel-newsletter/master.svg?style=flat-square)](https://travis-ci.org/freekmurze/laravel-newsletter)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/freekmurze/laravel-newsletter.svg?style=flat-square)](https://scrutinizer-ci.com/g/freekmurze/laravel-newsletter/code-structure)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/10993a65-449a-488a-886c-f810b9950070/mini.png)](https://insight.sensiolabs.com/projects/10993a65-449a-488a-886c-f810b9950070)
 [![Quality Score](https://img.shields.io/scrutinizer/g/freekmurze/laravel-newsletter.svg?style=flat-square)](https://scrutinizer-ci.com/g/freekmurze/laravel-newsletter)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
 
 This package provides an easy way to manages newsletters.
 
-## Install
+## Installation
 
-Via Composer
+You can install this package via composer using:
+
+```bash
+composer require spatie/laravel-newsletter
+```
+
+You must also install this service provider.
+
+```php
+
+// config/app.php
+
+'providers' => [
+    ...
+    'Spatie\Newsletter\NewsletterServiceProvider',
+    ...
+];
+```
+
+If you want to make use of the facade you must install it as well.
+
+```php
+// config/app.php
+'aliases' => [
+    ...
+    'Newsltter' => 'Spatie\Newsletter\NewsletterFacade',
+];
+```
+
+To publish the config file to ``app/config/laravel-newsletter.php`` run:
 
 ``` bash
-$ composer require spatie/laravel-newsletter
+php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"
 ```
 
 ## Usage
