@@ -19,9 +19,7 @@ composer require spatie/laravel-newsletter
 You must also install this service provider.
 
 ```php
-
 // config/app.php
-
 'providers' => [
     ...
     'Spatie\Newsletter\NewsletterServiceProvider',
