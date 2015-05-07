@@ -7,13 +7,14 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
     /**
      * Create new MailChimp Campaign.
      *
-     * @param $listName
+     *
      * @param $subject
      * @param $content
+     * @param $listName
      *
      * @return \associative_array
      */
-    public function create($listName, $subject, $content)
+    public function create($subject, $content, $listName = '')
     {
         $listProperties = $this->getListProperties($listName);
 

@@ -43,6 +43,16 @@ abstract class MailChimpBase
     }
 
     /**
+     * Get the instance of the underlying api
+     *
+     * @return MailChimp
+     */
+    public function getApi()
+    {
+        return $this->mailChimp;
+    }
+
+    /**
      * Convert all  properties for the given listName.
      *
      * @param string $listName
@@ -75,12 +85,18 @@ abstract class MailChimpBase
      */
     protected function getDefaultListName()
     {
-        foreach ($this->getAllLists() as $listName => $listProperties) {
-            if (isset($listProperties['default']) && $listProperties['default']) {
-                return $listName;
-            }
+        $allLists = $this->getAllLists();
+
+        if (! count($allLists))
+        {
+            throw new Exception('There are no lists defined');
         }
 
-        throw new Exception('There is no default mailchimp list configured');
+        if (count($allLists) > 2)
+        {
+            throw new Exception('You must specified a list name when you have multiple lists defined');
+        }
+
+        return key($this->getAllLists()[0]);
     }
 }

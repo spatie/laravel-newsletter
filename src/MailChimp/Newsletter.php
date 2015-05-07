@@ -24,15 +24,16 @@ class Newsletter implements NewsletterInterface
     /**
      * Create a new newsletter campaign.
      *
-     * @param $list
+
      * @param $subject
      * @param $content
+     * @param $list
      *
      * @return mixed
      */
-    public function createCampaign($list, $subject, $content)
+    public function createCampaign($subject, $content, $list = '')
     {
-        return $this->campaign->create($list, $subject, $content);
+        return $this->campaign->create($subject, $content, $list);
     }
 
     /**
@@ -59,5 +60,16 @@ class Newsletter implements NewsletterInterface
     public function unsubscribe($email, $list = '')
     {
         return $this->list->unsubscribe($email, $list);
+    }
+
+
+    /**
+     * Get the instance of the underlying api
+     *
+     * @return mixed
+     */
+    public function getApi()
+    {
+        return $this->list->getApi();
     }
 }

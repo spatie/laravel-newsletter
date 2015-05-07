@@ -4,7 +4,8 @@ return [
 
     'mailChimp' => [
         /*
-         * The api key of your MailChimp account
+         * The api key of your MailChimp account. You can find yours here:
+         * https://us10.admin.mailchimp.com/account/api-key-popup/
          */
         'apiKey' => getenv('MAILCHIMP_APIKEY'),
 
@@ -22,13 +23,18 @@ return [
              */
             'subscribers' => [
                 /*
-                 * The MailChimp id of this list
+                 * A mail chimp list id. Check the mailchimp docs if you don't know
+                 * how to get this value:
+                 * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
                  */
                 'id' => '',
+
+                /*
+                 * These values will be used when creating a new campaign.
+                 */
                 'fromEmail' => '',
                 'fromName' => '',
                 'toName' => '',
-                'default' => true,
             ],
         ],
     ],

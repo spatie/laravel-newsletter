@@ -2,7 +2,6 @@
 
 use Illuminate\Support\ServiceProvider;
 use Mailchimp;
-
 class NewsletterServiceProvider extends ServiceProvider
 {
     /**
@@ -10,7 +9,7 @@ class NewsletterServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer = false;
 
     /**
      * Bootstrap the application events.

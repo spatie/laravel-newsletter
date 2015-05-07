@@ -35,4 +35,11 @@ interface NewsletterInterface
      * @return mixed
      */
     public function unsubscribe($email, $list = '');
+
+    /**
+     * Get the instance of the underlying api
+     *
+     * @return mixed
+     */
+    public function getApi();
 }
