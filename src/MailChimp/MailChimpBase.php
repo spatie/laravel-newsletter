@@ -4,7 +4,7 @@ namespace Spatie\Newsletter\MailChimp;
 
 use Illuminate\Contracts\Config\Repository;
 use Exception;
-use Illuminate\Support\Facades\App;
+use Illuminate\Contracts\Foundation\Application;
 use MailChimp;
 
 abstract class MailChimpBase
@@ -18,9 +18,9 @@ abstract class MailChimpBase
      */
     private $config;
 
-    public function __construct(App $app, Repository $config)
+    public function __construct(Application $app, Repository $config)
     {
-        $this->mailChimp = app()['laravel-newsletter-mailchimp'];
+        $this->mailChimp = $app['laravel-newsletter-mailchimp'];
         $this->config = $config;
     }
 
@@ -97,6 +97,6 @@ abstract class MailChimpBase
             throw new Exception('You must specified a list name when you have multiple lists defined');
         }
 
-        return key($this->getAllLists()[0]);
+        return key($this->getAllLists());
     }
 }
