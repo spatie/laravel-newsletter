@@ -3,6 +3,7 @@
 return [
 
     'mailChimp' => [
+
         /*
          * The api key of your MailChimp account. You can find yours here:
          * https://us10.admin.mailchimp.com/account/api-key-popup/
@@ -14,6 +15,7 @@ return [
          * send campaigns.
          */
         'lists' => [
+
             /*
              * This key is used to identify this list. It can be used
              * in the various methods provided by this package.
@@ -22,6 +24,7 @@ return [
              * as many lists as you want.
              */
             'subscribers' => [
+
                 /*
                  * A mail chimp list id. Check the mailchimp docs if you don't know
                  * how to get this value:
