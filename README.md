@@ -116,6 +116,7 @@ $contents = '<h1>Big news</h1>The world is carried by four elephants on a turtle
 
 Newsletter::createCampaign($subject, $contents);
 ```
+The method will create a campaign, but not send it.
 
 If you have multiple lists defined in the config file you must pass the name of the list an extra parameter:
 
