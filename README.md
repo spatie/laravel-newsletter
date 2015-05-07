@@ -1,5 +1,3 @@
-### Work in progress, do not include this package in your project yet...
-
 # Manage newsletters in Laravel 5
 [![Latest Version](https://img.shields.io/github/release/freekmurze/laravel-newsletter.svg?style=flat-square)](https://github.com/freekmurze/laravel-newsletter/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -132,7 +130,7 @@ If you need more functionality you get an instance of the underlying service api
 $api = Newsletter::getApi();
 ```
 
-As this package currently only supports MailChimp this method will always return an instance of [the MailChimp API](https://bitbucket.org/mailchimp/mailchimp-api-php)`.
+As this package currently only supports MailChimp this method will always return an instance of [the MailChimp API](https://bitbucket.org/mailchimp/mailchimp-api-php).
 
 
 ## Testing
