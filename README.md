@@ -50,7 +50,7 @@ return [
     'mailChimp' => [
     
         /*
-         * The api key of your MailChimp account. You can find yours here:
+         * The api key of a MailChimp account. You can find yours here:
          * https://us10.admin.mailchimp.com/account/api-key-popup/
          */
         'apiKey' => getenv('MAILCHIMP_APIKEY'),
