@@ -49,8 +49,6 @@ php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvid
 
 This wil publish a file `laravel-newsletter` in your config directory with the following contents: 
 ```
-<?php
-
 return [
 
     'mailChimp' => [
@@ -114,7 +112,7 @@ This is how you create a campaign:
 
 ```php
 $subject = 'The Truth newsletter';
-$contents = '<h1>Big news</h1>The world is carried by four elephants';
+$contents = '<h1>Big news</h1>The world is carried by four elephants on a turtle!';
 
 Newsletter::createCampaign($subject, $contents);
 ```
@@ -134,13 +132,12 @@ If you need more functionality you get an instance of the underlying service api
 $api = Newsletter::getApi();
 ```
 
-As this package currently only supports MailChimp this method will always return an instance of `[MailChimp](https://bitbucket.org/mailchimp/mailchimp-api-php)`.
-
-
+As this package currently only supports MailChimp this method will always return an instance of [the MailChimp API](https://bitbucket.org/mailchimp/mailchimp-api-php)`.
 
 
 ## Testing
 
+Run the tests with:
 ```bash
 vendor/bin/phpunit
 ```
@@ -151,7 +148,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+If you discover any security related issues, please email [freek@spatie.be](mailto:freek@spatie.be) instead of using the issue tracker.
 
 ## Credits
 
