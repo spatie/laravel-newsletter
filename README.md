@@ -43,12 +43,12 @@ If you want to make use of the facade you must install it as well.
 
 To publish the config file to ``app/config/laravel-newsletter.php`` run:
 
-``` bash
+```bash
 php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"
 ```
 
 This wil publish a file `laravel-newsletter` in your config directory with the following contents: 
-```
+```php
 return [
 
     'mailChimp' => [
