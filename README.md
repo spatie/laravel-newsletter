@@ -43,7 +43,7 @@ To publish the config file to ``app/config/laravel-newsletter.php`` run:
 php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"
 ```
 
-This wil publish a file `laravel-newsletter` in your config directory with the following contents: 
+This wil publish a file `laravel-newsletter.php` in your config directory with the following contents: 
 ```php
 return [
 
