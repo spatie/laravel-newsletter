@@ -45,7 +45,7 @@ class NewsletterServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'Spatie\Newsletter\Interfaces\Newsletter',
+            'Spatie\Newsletter\Interfaces\NewsletterInterface',
             'Spatie\Newsletter\MailChimp\Newsletter'
         );
 
