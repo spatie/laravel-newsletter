@@ -45,6 +45,11 @@ class NewsletterServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            'Spatie\Newsletter\Interfaces\Newsletter',
+            'Spatie\Newsletter\MailChimp\Newsletter'
+        );
+
+        $this->app->bind(
             'laravel-newsletter',
             'Spatie\Newsletter\MailChimp\Newsletter'
         );
