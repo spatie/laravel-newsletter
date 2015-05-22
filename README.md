@@ -1,9 +1,9 @@
 # Manage newsletters in Laravel 5
-[![Latest Version](https://img.shields.io/github/release/freekmurze/laravel-newsletter.svg?style=flat-square)](https://github.com/freekmurze/laravel-newsletter/releases)
+[![Latest Version](https://img.shields.io/github/release/spatie/laravel-newsletter.svg?style=flat-square)](https://github.com/spatie/laravel-newsletter/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/freekmurze/laravel-newsletter/master.svg?style=flat-square)](https://travis-ci.org/freekmurze/laravel-newsletter)
+[![Build Status](https://img.shields.io/travis/spatie/laravel-newsletter/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-newsletter)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/10993a65-449a-488a-886c-f810b9950070/mini.png)](https://insight.sensiolabs.com/projects/10993a65-449a-488a-886c-f810b9950070)
-[![Quality Score](https://img.shields.io/scrutinizer/g/freekmurze/laravel-newsletter.svg?style=flat-square)](https://scrutinizer-ci.com/g/freekmurze/laravel-newsletter)
+[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-newsletter.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-newsletter)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
 
 This package provides an easy way to integrate email marketing services with Laravel 5. Currently the package only supports MailChimp. In the future more services may get added.
