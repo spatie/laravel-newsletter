@@ -28,9 +28,9 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
                 $listProperties['id'],
                 compact('email'),
                 null,    //merge vars
-                'html',  //e-mail type
-                false,   //require double optin
-                false    //update existing user
+                $listProperties['subscribe']['emailType'],  //e-mail type
+                $listProperties['subscribe']['requireDoubleOptin'],   //require double optin
+                $listProperties['subscribe']['updateExistingUser']    //update existing user
             );
         } catch (\Mailchimp_List_AlreadySubscribed $exception) {
             throw new AlreadySubscribed();
@@ -54,9 +54,9 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
         return $this->mailChimp->lists->unsubscribe(
             $listProperties['id'],
             compact('email'),
-            false,  //delete permanently
-            false,  //send goodbye mail?
-            false   //send unsubscribe mail?
+            $listProperties['unsubscribe']['deletePermanently'],  //delete permanently
+            $listProperties['unsubscribe']['sendGoodbyeEmail'],  //send goodbye mail?
+            $listProperties['unsubscribe']['sendUnsubscribeEmail']   //send unsubscribe mail?
         );
     }
 }

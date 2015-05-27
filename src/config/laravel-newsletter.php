@@ -35,9 +35,27 @@ return [
                 /*
                  * These values will be used when creating a new campaign.
                  */
-                'fromEmail' => '',
-                'fromName' => '',
-                'toName' => '',
+                'createCampaign' => [
+                    'fromEmail' => '',
+                    'fromName' => '',
+                    'toName' => ''
+                ],
+                /*
+                 * These values will be used when subscribing to a list
+                 */
+                'subscribe' => [
+                    'emailType' => 'html',
+                    'requireDoubleOptin' => false,
+                    'updateExistingUser' => false
+                ],
+                /*
+                 * These values will be used when unsubscribing from a list
+                 */
+                'unsubscribe' => [
+                    'deletePermanently' => false,
+                    'sendGoodbyeEmail' => false,
+                    'sendUnsubscribeEmail' => false
+                ],
             ],
         ],
     ],

@@ -22,9 +22,9 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
             [
                 'list_id' => $listProperties['id'],
                 'subject' => $subject,
-                'from_email' => $listProperties['fromEmail'],
-                'from_name' => $listProperties['fromName'],
-                'to_name' => $listProperties['toName'],
+                'from_email' => $listProperties['createCampaign']['fromEmail'],
+                'from_name' => $listProperties['createCampaign']['fromName'],
+                'to_name' => $listProperties['createCampaign']['toName'],
 
             ],
             [
