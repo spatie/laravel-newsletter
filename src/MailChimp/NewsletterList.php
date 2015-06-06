@@ -70,7 +70,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
             $sendGoodbyeEmail = $listProperties['unsubscribe']['sendGoodbyeEmail'];
             $sendUnsubscribeEmail = $listProperties['unsubscribe']['sendUnsubscribeEmail'];
         }
-        
+
         return $this->mailChimp->lists->unsubscribe(
             $listProperties['id'],
             compact('email'),
