@@ -81,8 +81,8 @@ return [
                  * These values will be used when creating a new campaign.
                  */
                 'createCampaign' => [
-                    'fromEmail' => 'newsletter@coffeewithcats.com',
-                    'fromName' => 'coffee with cats',
+                    'fromEmail' => '',
+                    'fromName' => '',
                     'toName' => ''
                 ],
                 /*

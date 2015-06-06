@@ -28,9 +28,9 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
                 $listProperties['id'],
                 compact('email'),
                 null,    //merge vars
-                $listProperties['subscribe']['emailType'],  //e-mail type
-                $listProperties['subscribe']['requireDoubleOptin'],   //require double optin
-                $listProperties['subscribe']['updateExistingUser']    //update existing user
+                $this->value($listProperties['subscribe']['emailType'], 'html'),  //e-mail type
+                $this->value($listProperties['subscribe']['requireDoubleOptin'], false),   //require double optin
+                $this->value($listProperties['subscribe']['updateExistingUser'], false)    //update existing user
             );
         } catch (\Mailchimp_List_AlreadySubscribed $exception) {
             throw new AlreadySubscribed();
@@ -54,9 +54,25 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
         return $this->mailChimp->lists->unsubscribe(
             $listProperties['id'],
             compact('email'),
-            $listProperties['unsubscribe']['deletePermanently'],  //delete permanently
-            $listProperties['unsubscribe']['sendGoodbyeEmail'],  //send goodbye mail?
-            $listProperties['unsubscribe']['sendUnsubscribeEmail']   //send unsubscribe mail?
+            $this->value($listProperties['unsubscribe']['deletePermanently'], false),  //delete permanently
+            $this->value($listProperties['unsubscribe']['sendGoodbyeEmail'], false),  //send goodbye mail?
+            $this->value($listProperties['unsubscribe']['sendUnsubscribeEmail'], false)   //send unsubscribe mail?
         );
     }
+
+    /**
+     * Get the value of the given $value. If it is not set, return the $default
+     * Only exists to ensure backwards compatibility.
+     * 
+     * @param $value
+     * @param $default
+     *
+     * @return string
+     */
+    public function value($value, $default)
+    {
+        return (isset($value)) ? $value : $default;
+    }
+
+
 }

@@ -22,13 +22,23 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
             [
                 'list_id' => $listProperties['id'],
                 'subject' => $subject,
-                'from_email' => $listProperties['createCampaign']['fromEmail'],
-                'from_name' => $listProperties['createCampaign']['fromName'],
-                'to_name' => $listProperties['createCampaign']['toName'],
-
+                'from_email' => $this->getCreateCampaignProperty('fromEmail'),
+                'from_name' => $this->getCreateCampaignProperty('fromName'),
+                'to_name' => $this->getCreateCampaignProperty('toName'),
             ],
             [
                 'html' => $content,
             ]);
+    }
+
+    /**
+     * Method to provide backwards compatibility with older versions of the config file.
+     *
+     * @param $property
+     * @return string
+     */
+    private function getCreateCampaignProperty($property)
+    {
+        return (isset($listProperties['createCampaign']) ? $listProperties['createCampaign'][$property] : $listProperties[$property]);
     }
 }
