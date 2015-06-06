@@ -63,7 +63,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
     /**
      * Get the value of the given $value. If it is not set, return the $default
      * Only exists to ensure backwards compatibility.
-     * 
+     *
      * @param $value
      * @param $default
      *
