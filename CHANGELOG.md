@@ -2,6 +2,9 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+##1.1.0
+- added various configuration options
+
 ##1.0.3
 - fixed binding of the newsletterinterface in the service provider
 
