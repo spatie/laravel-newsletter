@@ -23,14 +23,24 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
     {
         $listProperties = $this->getListProperties($listName);
 
+        $emailType = 'html';
+        $requireDoubleOptin = false;
+        $updateExistingUser = false;
+
+        if ($listProperties['subscribe']) {
+            $emailType = $listProperties['subscribe']['emailType'];
+            $requireDoubleOptin = $listProperties['subscribe']['requireDoubleOptin'];
+            $updateExistingUser = $listProperties['subscribe']['updateExistingUser'];
+        }
+
         try {
             return $this->mailChimp->lists->subscribe(
                 $listProperties['id'],
                 compact('email'),
                 null,    //merge vars
-                $this->value($listProperties['subscribe']['emailType'], 'html'),  //e-mail type
-                $this->value($listProperties['subscribe']['requireDoubleOptin'], false),   //require double optin
-                $this->value($listProperties['subscribe']['updateExistingUser'], false)    //update existing user
+                $emailType,
+                $requireDoubleOptin,
+                $updateExistingUser
             );
         } catch (\Mailchimp_List_AlreadySubscribed $exception) {
             throw new AlreadySubscribed();
@@ -51,28 +61,25 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
     {
         $listProperties = $this->getListProperties($listName);
 
+        $deletePermanently = false;
+        $sendGoodbyeEmail = false;
+        $sendUnsubscribeEmail = false;
+
+        if (isset($listProperties['unsubscribe'])) {
+            $deletePermanently = $listProperties['unsubscribe']['deletePermanently'];
+            $sendGoodbyeEmail = $listProperties['unsubscribe']['sendGoodbyeEmail'];
+            $sendUnsubscribeEmail = $listProperties['unsubscribe']['sendUnsubscribeEmail'];
+        }
+
+
+
         return $this->mailChimp->lists->unsubscribe(
             $listProperties['id'],
             compact('email'),
-            $this->value($listProperties['unsubscribe']['deletePermanently'], false),  //delete permanently
-            $this->value($listProperties['unsubscribe']['sendGoodbyeEmail'], false),  //send goodbye mail?
-            $this->value($listProperties['unsubscribe']['sendUnsubscribeEmail'], false)   //send unsubscribe mail?
+            $deletePermanently,
+            $sendGoodbyeEmail,
+            $sendUnsubscribeEmail
         );
     }
-
-    /**
-     * Get the value of the given $value. If it is not set, return the $default
-     * Only exists to ensure backwards compatibility.
-     *
-     * @param $value
-     * @param $default
-     *
-     * @return string
-     */
-    public function value($value, $default)
-    {
-        return (isset($value)) ? $value : $default;
-    }
-
 
 }
