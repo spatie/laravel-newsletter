@@ -27,7 +27,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
         $requireDoubleOptin = false;
         $updateExistingUser = false;
 
-        if ($listProperties['subscribe']) {
+        if (isset($listProperties['subscribe'])) {
             $emailType = $listProperties['subscribe']['emailType'];
             $requireDoubleOptin = $listProperties['subscribe']['requireDoubleOptin'];
             $updateExistingUser = $listProperties['subscribe']['updateExistingUser'];
@@ -70,9 +70,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
             $sendGoodbyeEmail = $listProperties['unsubscribe']['sendGoodbyeEmail'];
             $sendUnsubscribeEmail = $listProperties['unsubscribe']['sendUnsubscribeEmail'];
         }
-
-
-
+        
         return $this->mailChimp->lists->unsubscribe(
             $listProperties['id'],
             compact('email'),
