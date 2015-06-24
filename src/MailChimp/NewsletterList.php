@@ -12,14 +12,14 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      * Subscribe a user to a MailChimp list.
      *
      * @param $email
-     * @param $listName
-     *
+     * @param array $mergeVars
+     * @param string $listName
      * @return array
-     *
-     * @throws ServiceRefusedSubscription
      * @throws AlreadySubscribed
+     * @throws ServiceRefusedSubscription
+     * @throws \Exception
      */
-    public function subscribe($email, $listName = '')
+    public function subscribe($email, $mergeVars = [], $listName = '')
     {
         $listProperties = $this->getListProperties($listName);
 
@@ -37,7 +37,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
             return $this->mailChimp->lists->subscribe(
                 $listProperties['id'],
                 compact('email'),
-                null,    //merge vars
+                $mergeVars,
                 $emailType,
                 $requireDoubleOptin,
                 $updateExistingUser

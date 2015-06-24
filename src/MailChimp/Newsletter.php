@@ -40,13 +40,13 @@ class Newsletter implements NewsletterInterface
      * Subscribe the email address to given list.
      *
      * @param $email
-     * @param $list
-     *
+     * @param array $mergeVars
+     * @param string $list
      * @return mixed
      */
-    public function subscribe($email, $list = '')
+    public function subscribe($email, $mergeVars = [],  $list = '')
     {
-        return $this->list->subscribe($email, $list);
+        return $this->list->subscribe($email, $mergeVars, $list);
     }
 
     /**

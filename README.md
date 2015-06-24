@@ -110,6 +110,14 @@ return [
 
 ```
 
+## Upgrading
+
+### From 1.0 to 2.0
+If you specified a listName on a subscription you need to modify that call from
+`Newsletter::subscribe($email, $listName)`
+to
+`Newsletter::subscribe($email, [], $listName)`
+
 ## Usage
 
 After you've installed the package and filled in the values in the config-file working with this package will be a breeze.
@@ -126,6 +134,11 @@ Let's unsubcribe someone:
 Newsletter::unsubscribe('the.luggage@discworld.com');
 ```
 
+You can pass some merge variables as the second argument:
+```php
+Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
+```
+
 
 This is how you create a campaign:
 
@@ -140,8 +153,8 @@ The method will create a campaign, but not send it.
 If you have multiple lists defined in the config file you must pass the name of the list an extra parameter:
 
 ```php
-Newsletter::subscribe('havelock.vetinari@discworld.com', 'mySecondList');
-Newsletter::unsubscribe('sam.vimes@discworld.com', 'mySecondList');
+Newsletter::subscribe('havelock.vetinari@discworld.com', ['firstName'=>'Havelock', 'lastName'=>'Vetinari'], 'mySecondList');
+Newsletter::unsubscribe('sam.vimes@discworld.com', ['firstName'=>'Sam', 'lastName'=>'Vines'], 'mySecondList');
 
 Newsletter::createCampaign($subject, $contents, 'mySecondList);
 ```

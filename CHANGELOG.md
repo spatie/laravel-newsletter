@@ -2,6 +2,9 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+##2.0.0
+- merge vars can now be specified in the subscribe function.
+
 ##1.1.0
 - added various configuration options
 
