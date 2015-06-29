@@ -122,7 +122,7 @@ to
 
 After you've installed the package and filled in the values in the config-file working with this package will be a breeze.
 
-Subscribing an e-mailadress can be done like this:
+Subscribing an email address can be done like this:
 
 ```php
 Newsletter::subscribe('rincewind@discworld.com');
