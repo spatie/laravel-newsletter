@@ -28,7 +28,65 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
             ],
             [
                 'html' => $content,
+                'text' => strip_tags($content),
             ]);
+    }
+
+    /**
+     * Create a new newsletter campaign.
+     *
+     * @param $cid string Campaign ID
+     * @param $name string The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts"
+     * @param $value array An appropriate set of values for the parameter ( see campaigns/create() ). For additional parameters, this is the same value passed to them.
+     *
+     * @return mixed
+     */
+    public function update($cid, $name, $value)
+    {
+        return $this->mailChimp->campaigns->update(
+            $cid,
+            $name,
+            $value
+        );
+    }
+
+    /**
+     * Send a test MailChimp Campaign.
+     *
+     *
+     * @param $cid
+     *
+     * @return mixed
+     */
+    public function sendTest($cid, $emails = [], $send_type = '')
+    {
+        return $this->mailChimp->campaigns->sendTest($cid, $emails, $send_type);
+    }
+
+    /**
+     * Send a MailChimp Campaign.
+     *
+     *
+     * @param $cid
+     *
+     * @return mixed
+     */
+    public function send($cid)
+    {
+        return $this->mailChimp->campaigns->send($cid);
+    }
+
+    /**
+     * Delete a MailChimp Campaign.
+     *
+     *
+     * @param $cid
+     *
+     * @return mixed
+     */
+    public function delete($cid)
+    {
+        return $this->mailChimp->campaigns->delete($cid);
     }
 
     /**

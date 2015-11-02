@@ -22,9 +22,20 @@ class Newsletter implements NewsletterInterface
     }
 
     /**
+     * Delete a newsletter campaign.
+     *
+     * @param $cid
+     *
+     * @return mixed
+     */
+    public function deleteCampaign($cid)
+    {
+        return $this->campaign->delete($cid);
+    }
+
+    /**
      * Create a new newsletter campaign.
      *
-
      * @param $subject
      * @param $content
      * @param $list
@@ -34,6 +45,48 @@ class Newsletter implements NewsletterInterface
     public function createCampaign($subject, $content, $list = '')
     {
         return $this->campaign->create($subject, $content, $list);
+    }
+
+    /**
+     * Create a new newsletter campaign.
+     *
+     * @param $cid string
+     * @param $name string
+     * @param $value array
+     *
+     * @return mixed
+     */
+    public function updateCampaign($cid, $name, $value = [])
+    {
+        return $this->campaign->update($cid, $name, $value);
+    }
+
+    /**
+     * Send a test newsletter campaign.
+     *
+     * @param $subject
+     * @param $content
+     * @param $list
+     *
+     * @return mixed
+     */
+    public function sendTestCampaign($cid, $emails = [], $send_type = '')
+    {
+        return $this->campaign->sendTest($cid, $emails, $send_type);
+    }
+
+    /**
+     * Send a newsletter campaign.
+     *
+     * @param $subject
+     * @param $content
+     * @param $list
+     *
+     * @return mixed
+     */
+    public function sendCampaign($cid)
+    {
+        return $this->campaign->send($cid);
     }
 
     /**
@@ -47,6 +100,19 @@ class Newsletter implements NewsletterInterface
     public function subscribe($email, $mergeVars = [],  $list = '')
     {
         return $this->list->subscribe($email, $mergeVars, $list);
+    }
+
+    /**
+     * Update a member subscibed to a list
+     *
+     * @param $email
+     * @param array $mergeVars
+     * @param string $list
+     * @return mixed
+     */
+    public function updateMember($email, $mergeVars = [],  $list = '')
+    {
+        return $this->list->updateMember($email, $mergeVars, $list);
     }
 
     /**

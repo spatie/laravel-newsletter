@@ -161,6 +161,12 @@ Newsletter::unsubscribe('sam.vimes@discworld.com', ['firstName'=>'Sam', 'lastNam
 Newsletter::createCampaign($subject, $contents, 'mySecondList);
 ```
 
+This is how you delete a campaign:
+
+```php
+Newsletter::deleteCampaign($cid);
+```
+
 If you need more functionality you get an instance of the underlying service api with:
 
 ```

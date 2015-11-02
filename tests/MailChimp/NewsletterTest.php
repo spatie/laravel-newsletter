@@ -34,6 +34,16 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function it_can_update_an_email_subscribed_to_a_list()
+    {
+        $this->list->shouldReceive('updateMember')->with('freek@spatie.be',['firstName'=>'Freek', 'lastName'=>'Van der Herten'], 'testlist');
+
+        $this->newsletter->updateMember('freek@spatie.be', ['firstName'=>'Freek', 'lastName'=>'Van der Herten'], 'testlist');
+    }
+
+    /**
+     * @test
+     */
     public function it_can_unsubscribe_an_email_address_from_a_list()
     {
         $this->list->shouldReceive('unsubscribe')->with('freek@spatie.be', 'testlist');
@@ -49,5 +59,45 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
         $this->campaign->shouldReceive('create')->with('subject', 'content', 'testlist');
 
         $this->newsletter->createCampaign('subject', 'content', 'testlist');
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_update_a_campaign()
+    {
+        $this->campaign->shouldReceive('update')->with('cid', 'name', ['key' => 'value']);
+
+        $this->newsletter->updateCampaign('cid', 'name', ['key' => 'value']);
+    }
+
+   /**
+     * @test
+     */
+    public function it_can_delete_a_campaign()
+    {
+        $this->campaign->shouldReceive('delete')->with('cid');
+
+        $this->newsletter->deleteCampaign('cid');
+    }
+
+   /**
+     * @test
+     */
+    public function it_can_send_a_test_campaign()
+    {
+        $this->campaign->shouldReceive('sendTest')->with('cid', 'emails', 'sendType');
+
+        $this->newsletter->sendTestCampaign('cid', 'emails', 'sendType');
+    }
+
+   /**
+     * @test
+     */
+    public function it_can_send_a_campaign()
+    {
+        $this->campaign->shouldReceive('send')->with('cid');
+
+        $this->newsletter->sendCampaign('cid');
     }
 }

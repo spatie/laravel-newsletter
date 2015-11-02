@@ -55,7 +55,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      * @param $email
      * @param $listName
      *
-     * @return mixed
+     * @return associative_array
      */
     public function unsubscribe($email, $listName = '')
     {
@@ -80,4 +80,31 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
         );
     }
 
+    /**
+     * Update a member subscibed to a list
+     *
+     * @param $email
+     * @param $list
+     *
+     * @return associative_array
+     */
+    public function updateMember($email, $mergeVars = [], $listName = '')
+    {
+        $listProperties = $this->getListProperties($listName);
+
+        $emailType = 'html';
+        $replace_interests = true;
+
+        if (isset($listProperties['updateMember'])) {
+            $emailType = $listProperties['updateMember']['emailType'];
+        }
+
+        return $this->mailChimp->lists->updateMember(
+            $id,
+            compact('email'),
+            $mergeVars,
+            $emailType,
+            $replace_interests
+        );
+    }
 }
