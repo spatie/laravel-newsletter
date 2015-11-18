@@ -158,7 +158,7 @@ If you have multiple lists defined in the config file you must pass the name of 
 Newsletter::subscribe('havelock.vetinari@discworld.com', ['firstName'=>'Havelock', 'lastName'=>'Vetinari'], 'mySecondList');
 Newsletter::unsubscribe('sam.vimes@discworld.com', ['firstName'=>'Sam', 'lastName'=>'Vines'], 'mySecondList');
 
-Newsletter::createCampaign($subject, $contents, 'mySecondList);
+Newsletter::createCampaign($subject, $contents, 'mySecondList');
 ```
 
 If you need more functionality you get an instance of the underlying service api with:
