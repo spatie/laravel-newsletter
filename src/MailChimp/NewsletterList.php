@@ -100,7 +100,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
         }
 
         return $this->mailChimp->lists->updateMember(
-            $id,
+            $listProperties['id'],
             compact('email'),
             $mergeVars,
             $emailType,

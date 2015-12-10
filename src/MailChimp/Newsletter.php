@@ -21,17 +21,6 @@ class Newsletter implements NewsletterInterface
         $this->list = $list;
     }
 
-    /**
-     * Delete a newsletter campaign.
-     *
-     * @param $cid
-     *
-     * @return mixed
-     */
-    public function deleteCampaign($cid)
-    {
-        return $this->campaign->delete($cid);
-    }
 
     /**
      * Create a new newsletter campaign.
@@ -48,7 +37,7 @@ class Newsletter implements NewsletterInterface
     }
 
     /**
-     * Create a new newsletter campaign.
+     * Update a newsletter campaign.
      *
      * @param $cid string
      * @param $name string
@@ -61,12 +50,26 @@ class Newsletter implements NewsletterInterface
         return $this->campaign->update($cid, $name, $value);
     }
 
+
+    /**
+     * Delete a newsletter campaign.
+     *
+     * @param $cid
+     *
+     * @return mixed
+     */
+    public function deleteCampaign($cid)
+    {
+        return $this->campaign->delete($cid);
+    }
+
+
     /**
      * Send a test newsletter campaign.
      *
-     * @param $subject
-     * @param $content
-     * @param $list
+     * @param $cid string
+     * @param $emails array
+     * @param $send_type string
      *
      * @return mixed
      */
@@ -78,9 +81,7 @@ class Newsletter implements NewsletterInterface
     /**
      * Send a newsletter campaign.
      *
-     * @param $subject
-     * @param $content
-     * @param $list
+     * @param $cid string
      *
      * @return mixed
      */
@@ -103,11 +104,12 @@ class Newsletter implements NewsletterInterface
     }
 
     /**
-     * Update a member subscibed to a list
+     * Update a member subscribed to a list
      *
      * @param $email
      * @param array $mergeVars
      * @param string $list
+     *
      * @return mixed
      */
     public function updateMember($email, $mergeVars = [],  $list = '')
