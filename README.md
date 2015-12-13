@@ -182,33 +182,28 @@ And this is how to update a campaign:
 /**
  * Update a newsletter campaign.
  *
- * @param $cid string
- * @param $name string
+ * @param $campaignId string
+ * @param $fieldName string
  * @param $value array
  *
  * @return mixed
  */
-Newsletter::updateCampaign($cid, $name, $value = []);
+Newsletter::updateCampaign($campaignId, $fieldName, $value = []);
 ```
 
 Example of how to update the content or the subject of a campaign
 
 ```php
 Newsletter::updateCampaign(
-    $cid,
+    $campaignId,
     'content', 
     [
         'html' => File::get( 'path/to/some/rendered/view/file' ),
     ]
 );
 
-/**
- * UPDATE THE SUBJECT OF THE CAMPAIGN
- *
- * string $cid The campaign id
- */
 Newsletter::updateCampaign(
-    $cid,
+    $campaignId,
     'options', 
     [
         'subject' => 'New subject'
@@ -222,13 +217,13 @@ You can use this method to send a test campaign ...
 /**
  * Send a test newsletter campaign.
  *
- * @param $cid string
- * @param $emails array
- * @param $send_type string
+ * @param $campaignId string
+ * @param $emails string or array
+ * @param $sendType string
  *
  * @return mixed
  */
-Newsletter::sendTestCampaign($cid, $emails = [], $send_type = '')
+Newsletter::sendTestCampaign($campaignId, $emails, $sendType = '')
 ```
 
 ... or send the final campaign
@@ -237,11 +232,11 @@ Newsletter::sendTestCampaign($cid, $emails = [], $send_type = '')
 /**
  * Send a newsletter campaign.
  *
- * @param $cid string
+ * @param $campaignId string
  *
  * @return mixed
  */
-Newsletter::sendCampaign($cid)
+Newsletter::sendCampaign($campaignId)
 ```
 
 
@@ -251,11 +246,11 @@ And finally, this is how you delete a campaign:
 /**
  * Delete a newsletter campaign.
  *
- * @param $cid
+ * @param $campaignId
  *
  * @return mixed
  */
-Newsletter::deleteCampaign($cid);
+Newsletter::deleteCampaign($campaignId);
 ```
 
 If you need more functionality you get an instance of the underlying service api with:
