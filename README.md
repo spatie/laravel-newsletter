@@ -194,12 +194,11 @@ Newsletter::updateCampaign($cid, $name, $value = []);
 Example of how to update the content or the subject of a campaign
 
 ```php
-$renderd_view = File::get( 'path/to/some/renderd/view/file' );
 Newsletter::updateCampaign(
     $cid,
     'content', 
     [
-        'html' => $renderd_view,
+        'html' => File::get( 'path/to/some/rendered/view/file' ),
     ]
 );
 

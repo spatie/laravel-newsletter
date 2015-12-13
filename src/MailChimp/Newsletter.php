@@ -33,61 +33,66 @@ class Newsletter implements NewsletterInterface
      */
     public function createCampaign($subject, $content, $list = '')
     {
-        return $this->campaign->create($subject, $content, $list);
+        return $this->campaign
+            ->create($subject, $content, $list);
     }
 
     /**
      * Update a newsletter campaign.
      *
-     * @param $cid string
+     * @param $campaignId string
      * @param $name string
      * @param $value array
      *
      * @return mixed
      */
-    public function updateCampaign($cid, $name, $value = [])
+    public function updateCampaign($campaignId, $name, $value = [])
     {
-        return $this->campaign->update($cid, $name, $value);
+        return $this->campaign
+            ->update($campaignId, $name, $value);
     }
 
 
     /**
      * Delete a newsletter campaign.
      *
-     * @param $cid
+     * @param $campaignId
      *
      * @return mixed
      */
-    public function deleteCampaign($cid)
+    public function deleteCampaign($campaignId)
     {
-        return $this->campaign->delete($cid);
+        return $this->campaign
+            ->delete($campaignId);
     }
 
 
     /**
      * Send a test newsletter campaign.
      *
-     * @param $cid string
+     * @param $campaignId string
      * @param $emails array
-     * @param $send_type string
+     * @param $sendType string
      *
      * @return mixed
      */
-    public function sendTestCampaign($cid, $emails = [], $send_type = '')
+    public function sendTestCampaign($campaignId, $emails = [], $sendType = '')
     {
-        return $this->campaign->sendTest($cid, $emails, $send_type);
+        return $this->campaign
+            ->sendTest($campaignId, $emails, $sendType);
     }
 
     /**
      * Send a newsletter campaign.
      *
-     * @param $cid string
+     * @param $campaignId string
      *
      * @return mixed
      */
-    public function sendCampaign($cid)
+    public function sendCampaign($campaignId)
     {
-        return $this->campaign->send($cid);
+        return $this->campaign
+            ->send($campaignId);
     }
 
     /**
@@ -100,7 +105,8 @@ class Newsletter implements NewsletterInterface
      */
     public function subscribe($email, $mergeVars = [],  $list = '')
     {
-        return $this->list->subscribe($email, $mergeVars, $list);
+        return $this->list
+            ->subscribe($email, $mergeVars, $list);
     }
 
     /**
@@ -114,7 +120,8 @@ class Newsletter implements NewsletterInterface
      */
     public function updateMember($email, $mergeVars = [],  $list = '')
     {
-        return $this->list->updateMember($email, $mergeVars, $list);
+        return $this->list
+            ->updateMember($email, $mergeVars, $list);
     }
 
     /**
@@ -127,7 +134,8 @@ class Newsletter implements NewsletterInterface
      */
     public function unsubscribe($email, $list = '')
     {
-        return $this->list->unsubscribe($email, $list);
+        return $this->list
+            ->unsubscribe($email, $list);
     }
 
 
@@ -138,6 +146,7 @@ class Newsletter implements NewsletterInterface
      */
     public function getApi()
     {
-        return $this->list->getApi();
+        return $this->list
+            ->getApi();
     }
 }

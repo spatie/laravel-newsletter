@@ -8,11 +8,11 @@ interface NewsletterInterface
     /**
      * Delete a newsletter campaign.
      *
-     * @param $cid
+     * @param $campaignId
      *
      * @return mixed
      */
-    public function deleteCampaign($cid);
+    public function deleteCampaign($campaignId);
 
     /**
      * Create a new newsletter campaign.
@@ -28,13 +28,13 @@ interface NewsletterInterface
     /**
      * Create a new newsletter campaign.
      *
-     * @param $cid string
+     * @param $campaignId string
      * @param $name string
      * @param $value array
      *
      * @return mixed
      */
-    public function updateCampaign($cid, $name, $value = []);
+    public function updateCampaign($campaignId, $name, $value = []);
 
     /**
      * Send a test newsletter campaign.
@@ -45,7 +45,7 @@ interface NewsletterInterface
      *
      * @return mixed
      */
-    public function sendTestCampaign($cid, $emails = [], $send_type = '');
+    public function sendTestCampaign($campaignId, $emails = [], $sendType = '');
 
     /**
      * Send a newsletter campaign.
@@ -56,7 +56,7 @@ interface NewsletterInterface
      *
      * @return mixed
      */
-    public function sendCampaign($cid);
+    public function sendCampaign($campaignId);
 
     /**
      * Subscribe the email address to given list.

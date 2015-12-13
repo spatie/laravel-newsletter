@@ -19,13 +19,13 @@ interface NewsletterCampaignInterface
     /**
      * Create a new newsletter campaign.
      *
-     * @param $cid string
+     * @param $campaignId string
      * @param $name string The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts"
      * @param $value array An appropriate set of values for the parameter ( see campaigns/create() ). For additional parameters, this is the same value passed to them.
      *
      * @return mixed
      */
-    public function update($cid, $name, $value);
+    public function update($campaignId, $fieldName, $value);
 
     /**
      * Send a test newsletter campaign.
@@ -36,7 +36,7 @@ interface NewsletterCampaignInterface
      *
      * @return mixed
      */
-    public function sendTest($cid, $emails, $send_type);
+    public function sendTest($campaignId, $emails, $sendType);
 
     /**
      * Send a newsletter campaign.
@@ -47,14 +47,14 @@ interface NewsletterCampaignInterface
      *
      * @return mixed
      */
-    public function send($cid);
+    public function send($campaignId);
 
     /**
      * Delete a new newsletter campaign.
      *
-     * @param $cid
+     * @param $campaignId
      *
      * @return mixed
      */
-    public function delete($cid);
+    public function delete($campaignId);
 }
