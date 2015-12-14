@@ -87,17 +87,16 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      *
      * @param string $email
      * @param array $mergeVars
+     * @param bool $replaceInterests
      * @param string $listName
-     *
      * @return \Spatie\Newsletter\MailChimp\associative_array
      * @throws \Exception
      */
-    public function updateMember($email, $mergeVars = [], $listName = '')
+    public function updateMember($email, $mergeVars = [], $replaceInterests = true, $listName = '')
     {
         $listProperties = $this->getListProperties($listName);
 
         $emailType = 'html';
-        $replaceInterests = true;
 
         if (isset($listProperties['updateMember'])) {
             $emailType = $listProperties['updateMember']['emailType'];

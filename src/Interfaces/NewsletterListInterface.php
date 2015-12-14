@@ -29,10 +29,11 @@ interface NewsletterListInterface
      * Update a member subscribed to a list.
      *
      * @param string $email
-     * @param array  $mergeVars
+     * @param array $mergeVars
+     * @param bool $replaceInterests
      * @param string $listName
-     *
+     * 
      * @return mixed
      */
-    public function updateMember($email, $mergeVars, $listName);
+    public function updateMember($email, $mergeVars, $replaceInterests = true, $listName);
 }
