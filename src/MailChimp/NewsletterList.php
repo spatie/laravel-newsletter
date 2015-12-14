@@ -86,10 +86,12 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      * Update a member subscribed to a list.
      *
      * @param string $email
-     * @param array $mergeVars
-     * @param bool $replaceInterests
+     * @param array  $mergeVars
+     * @param bool   $replaceInterests
      * @param string $listName
+     *
      * @return \Spatie\Newsletter\MailChimp\associative_array
+     *
      * @throws \Exception
      */
     public function updateMember($email, $mergeVars = [], $replaceInterests = true, $listName = '')
