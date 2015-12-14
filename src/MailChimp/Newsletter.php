@@ -69,15 +69,20 @@ class Newsletter implements NewsletterInterface
     /**
      * Send a test newsletter campaign.
      *
-     * @param $campaignId string
-     * @param $emails array
-     * @param $sendType string
+     * @param string       $campaignId
+     * @param string|array $emails
+     * @param string       $sendType
      *
      * @return mixed
      */
-    public function sendTestCampaign($campaignId, $emails = [], $sendType = '')
+    public function sendTestCampaign($campaignId, $emails, $sendType = '')
     {
-        return $this->campaign
+        if (!is_array($emails)) {
+            $emails = [$emails];
+        }
+
+        return $this
+            ->campaign
             ->sendTest($campaignId, $emails, $sendType);
     }
 
@@ -90,7 +95,8 @@ class Newsletter implements NewsletterInterface
      */
     public function sendCampaign($campaignId)
     {
-        return $this->campaign
+        return $this
+            ->campaign
             ->send($campaignId);
     }
 
@@ -105,7 +111,8 @@ class Newsletter implements NewsletterInterface
      */
     public function subscribe($email, $mergeVars = [],  $list = '')
     {
-        return $this->list
+        return $this
+            ->list
             ->subscribe($email, $mergeVars, $list);
     }
 
@@ -120,7 +127,8 @@ class Newsletter implements NewsletterInterface
      */
     public function updateMember($email, $mergeVars = [],  $list = '')
     {
-        return $this->list
+        return $this
+            ->list
             ->updateMember($email, $mergeVars, $list);
     }
 
@@ -134,7 +142,8 @@ class Newsletter implements NewsletterInterface
      */
     public function unsubscribe($email, $list = '')
     {
-        return $this->list
+        return $this
+            ->list
             ->unsubscribe($email, $list);
     }
 
@@ -145,7 +154,8 @@ class Newsletter implements NewsletterInterface
      */
     public function getApi()
     {
-        return $this->list
+        return $this
+            ->list
             ->getApi();
     }
 }

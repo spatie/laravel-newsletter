@@ -37,15 +37,16 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
     /**
      * Create a new newsletter campaign.
      *
-     * @param $campaignId string Campaign ID
-     * @param $name string The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts"
+     * @param string $campaignId Campaign ID
+     * @param string $fieldName  string The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts"
      * @param $value array An appropriate set of values for the parameter ( see campaigns/create() ). For additional parameters, this is the same value passed to them.
      *
      * @return mixed
      */
     public function update($campaignId, $fieldName, $value)
     {
-        return $this->mailChimp
+        return $this
+            ->mailChimp
             ->campaigns
             ->update(
                 $campaignId,
@@ -57,18 +58,20 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
     /**
      * Send a test MailChimp Campaign.
      *
-     *
-     * @param $campaignId
+     * @param string       $campaignId
+     * @param array|string $emails
+     * @param string       $sendType
      *
      * @return mixed
      */
     public function sendTest($campaignId, $emails, $sendType = '')
     {
         if (!is_array($emails)) {
-            $emails = array($emails);
+            $emails = [$emails];
         }
 
-        return $this->mailChimp
+        return $this
+            ->mailChimp
             ->campaigns
             ->sendTest($campaignId, $emails, $sendType);
     }
@@ -76,14 +79,14 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
     /**
      * Send a MailChimp Campaign.
      *
-     *
-     * @param $campaignId
+     * @param string $campaignId
      *
      * @return mixed
      */
     public function send($campaignId)
     {
-        return $this->mailChimp
+        return $this
+            ->mailChimp
             ->campaigns
             ->send($campaignId);
     }
@@ -98,7 +101,8 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
      */
     public function delete($campaignId)
     {
-        return $this->mailChimp
+        return $this
+            ->mailChimp
             ->campaigns
             ->delete($campaignId);
     }
@@ -113,6 +117,8 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
      */
     private function getCreateCampaignProperty($listProperties, $property)
     {
-        return isset($listProperties['createCampaign']) ? $listProperties['createCampaign'][$property] : $listProperties[$property];
+        return isset($listProperties['createCampaign'])
+            ? $listProperties['createCampaign'][$property]
+            : $listProperties[$property];
     }
 }

@@ -22,7 +22,7 @@ interface NewsletterCampaignInterface
      * Create a new newsletter campaign.
      *
      * @param $campaignId string
-     * @param $name string The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts"
+     * @param $fieldName string The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts"
      * @param $value array An appropriate set of values for the parameter ( see campaigns/create() ). For additional parameters, this is the same value passed to them.
      *
      * @return mixed
@@ -32,9 +32,9 @@ interface NewsletterCampaignInterface
     /**
      * Send a test newsletter campaign.
      *
-     * @param $list
-     * @param $subject
-     * @param $content
+     * @param string       $campaignId
+     * @param array|string $emails
+     * @param string       $sendType
      *
      * @return mixed
      */
@@ -43,9 +43,7 @@ interface NewsletterCampaignInterface
     /**
      * Send a newsletter campaign.
      *
-     * @param $list
-     * @param $subject
-     * @param $content
+     * @param string $campaignId
      *
      * @return mixed
      */
@@ -54,7 +52,7 @@ interface NewsletterCampaignInterface
     /**
      * Delete a new newsletter campaign.
      *
-     * @param $campaignId
+     * @param string $campaignId
      *
      * @return mixed
      */

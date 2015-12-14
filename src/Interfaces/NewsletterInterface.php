@@ -41,20 +41,18 @@ interface NewsletterInterface
     /**
      * Send a test newsletter campaign.
      *
-     * @param $subject
-     * @param $content
-     * @param $list
+     * @param string       $campaignId
+     * @param string|array $emails
+     * @param string       $sendType
      *
      * @return mixed
      */
-    public function sendTestCampaign($campaignId, $emails = [], $sendType = '');
+    public function sendTestCampaign($campaignId, $emails, $sendType = '');
 
     /**
      * Send a newsletter campaign.
      *
-     * @param $subject
-     * @param $content
-     * @param $list
+     * @param string $campaignId
      *
      * @return mixed
      */
@@ -72,7 +70,7 @@ interface NewsletterInterface
     public function subscribe($email, $mergeVars = [], $list = '');
 
     /**
-     * Update a member subscibed to a list.
+     * Update a member subscribed to a list.
      *
      * @param $email
      * @param array  $mergeVars

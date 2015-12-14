@@ -7,7 +7,7 @@ interface NewsletterListInterface
     /**
      * Subscribe the email address to given list.
      *
-     * @param $email
+     * @param string $email
      * @param array  $mergeVars
      * @param string $list
      *
@@ -18,7 +18,7 @@ interface NewsletterListInterface
     /**
      * Unsubscribe the email address to given list.
      *
-     * @param $email
+     * @param string $email
      * @param $list
      *
      * @return mixed
@@ -26,10 +26,11 @@ interface NewsletterListInterface
     public function unsubscribe($email, $list = '');
 
     /**
-     * Update a member subscibed to a list.
+     * Update a member subscribed to a list.
      *
-     * @param $email
-     * @param $list
+     * @param string $email
+     * @param array  $mergeVars
+     * @param string $listName
      *
      * @return mixed
      */
