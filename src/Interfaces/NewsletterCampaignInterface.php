@@ -1,4 +1,6 @@
-<?php namespace Spatie\Newsletter\Interfaces;
+<?php
+
+namespace Spatie\Newsletter\Interfaces;
 
 /**
  * Interface NewsletterCampaign.

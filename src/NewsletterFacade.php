@@ -1,4 +1,6 @@
-<?php namespace Spatie\Newsletter;
+<?php
+
+namespace Spatie\Newsletter;
 
 use Illuminate\Support\Facades\Facade;
 

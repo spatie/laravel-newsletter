@@ -33,9 +33,9 @@ abstract class MailChimpBase
      */
     public function getAllLists()
     {
-        $allLists =  $this->config->get('laravel-newsletter.mailChimp.lists');
+        $allLists = $this->config->get('laravel-newsletter.mailChimp.lists');
 
-        if (! count($allLists)) {
+        if (!count($allLists)) {
             throw new Exception('There are no MailChimp lists defined');
         }
 
@@ -43,7 +43,7 @@ abstract class MailChimpBase
     }
 
     /**
-     * Get the instance of the underlying api
+     * Get the instance of the underlying api.
      *
      * @return MailChimp
      */
@@ -87,13 +87,11 @@ abstract class MailChimpBase
     {
         $allLists = $this->getAllLists();
 
-        if (! count($allLists))
-        {
+        if (!count($allLists)) {
             throw new Exception('There are no lists defined');
         }
 
-        if (count($allLists) > 2)
-        {
+        if (count($allLists) > 2) {
             throw new Exception('You must specified a list name when you have multiple lists defined');
         }
 

@@ -12,9 +12,11 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      * Subscribe a user to a MailChimp list.
      *
      * @param $email
-     * @param array $mergeVars
+     * @param array  $mergeVars
      * @param string $listName
+     *
      * @return array
+     *
      * @throws AlreadySubscribed
      * @throws ServiceRefusedSubscription
      * @throws \Exception
@@ -81,7 +83,7 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
     }
 
     /**
-     * Update a member subscibed to a list
+     * Update a member subscibed to a list.
      *
      * @param $email
      * @param $list

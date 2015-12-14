@@ -38,7 +38,7 @@ return [
                 'createCampaign' => [
                     'fromEmail' => '',
                     'fromName' => '',
-                    'toName' => ''
+                    'toName' => '',
                 ],
 
                 /*
@@ -47,7 +47,7 @@ return [
                 'subscribe' => [
                     'emailType' => 'html',
                     'requireDoubleOptin' => false,
-                    'updateExistingUser' => false
+                    'updateExistingUser' => false,
                 ],
 
                 /*
@@ -56,7 +56,7 @@ return [
                 'unsubscribe' => [
                     'deletePermanently' => false,
                     'sendGoodbyeEmail' => false,
-                    'sendUnsubscribeEmail' => false
+                    'sendUnsubscribeEmail' => false,
                 ],
             ],
         ],

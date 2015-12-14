@@ -1,7 +1,10 @@
-<?php namespace Spatie\Newsletter;
+<?php
+
+namespace Spatie\Newsletter;
 
 use Illuminate\Support\ServiceProvider;
 use Mailchimp;
+
 class NewsletterServiceProvider extends ServiceProvider
 {
     /**
@@ -23,16 +26,14 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bindShared('laravel-newsletter-mailchimp', function() {
+        $this->app->bindShared('laravel-newsletter-mailchimp', function () {
 
             $apiKey = $this->app['config']->get('laravel-newsletter.mailChimp.apiKey');
 
-            if ($apiKey)
-            {
+            if ($apiKey) {
                 return new Mailchimp($apiKey);
             }
         });
-
 
         $this->app->bind(
             'Spatie\Newsletter\Interfaces\NewsletterListInterface',

@@ -1,4 +1,6 @@
-<?php namespace Spatie\Newsletter\Interfaces;
+<?php
+
+namespace Spatie\Newsletter\Interfaces;
 
 /**
  * Interface NewsletterCampaign.
@@ -62,18 +64,20 @@ interface NewsletterInterface
      * Subscribe the email address to given list.
      *
      * @param $email
-     * @param array $mergeVars
+     * @param array  $mergeVars
      * @param string $list
+     *
      * @return mixed
      */
     public function subscribe($email, $mergeVars = [], $list = '');
 
     /**
-     * Update a member subscibed to a list
+     * Update a member subscibed to a list.
      *
      * @param $email
-     * @param array $mergeVars
+     * @param array  $mergeVars
      * @param string $list
+     *
      * @return mixed
      */
     public function updateMember($email, $mergeVars = [],  $list = '');
@@ -89,7 +93,7 @@ interface NewsletterInterface
     public function unsubscribe($email, $list = '');
 
     /**
-     * Get the instance of the underlying api
+     * Get the instance of the underlying api.
      *
      * @return mixed
      */

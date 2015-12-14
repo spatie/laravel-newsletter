@@ -1,4 +1,6 @@
-<?php namespace Spatie\Newsletter\Interfaces;
+<?php
+
+namespace Spatie\Newsletter\Interfaces;
 
 interface NewsletterListInterface
 {
@@ -6,8 +8,9 @@ interface NewsletterListInterface
      * Subscribe the email address to given list.
      *
      * @param $email
-     * @param array $mergeVars
+     * @param array  $mergeVars
      * @param string $list
+     *
      * @return mixed
      */
     public function subscribe($email, $mergeVars = [], $list = '');
@@ -23,7 +26,7 @@ interface NewsletterListInterface
     public function unsubscribe($email, $list = '');
 
     /**
-     * Update a member subscibed to a list
+     * Update a member subscibed to a list.
      *
      * @param $email
      * @param $list

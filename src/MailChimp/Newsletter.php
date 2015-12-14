@@ -1,4 +1,6 @@
-<?php namespace Spatie\Newsletter\MailChimp;
+<?php
+
+namespace Spatie\Newsletter\MailChimp;
 
 use Spatie\Newsletter\Interfaces\NewsletterInterface;
 use Spatie\Newsletter\Interfaces\NewsletterCampaignInterface;
@@ -20,7 +22,6 @@ class Newsletter implements NewsletterInterface
         $this->campaign = $campaign;
         $this->list = $list;
     }
-
 
     /**
      * Create a new newsletter campaign.
@@ -52,7 +53,6 @@ class Newsletter implements NewsletterInterface
             ->update($campaignId, $name, $value);
     }
 
-
     /**
      * Delete a newsletter campaign.
      *
@@ -65,7 +65,6 @@ class Newsletter implements NewsletterInterface
         return $this->campaign
             ->delete($campaignId);
     }
-
 
     /**
      * Send a test newsletter campaign.
@@ -99,8 +98,9 @@ class Newsletter implements NewsletterInterface
      * Subscribe the email address to given list.
      *
      * @param $email
-     * @param array $mergeVars
+     * @param array  $mergeVars
      * @param string $list
+     *
      * @return mixed
      */
     public function subscribe($email, $mergeVars = [],  $list = '')
@@ -110,10 +110,10 @@ class Newsletter implements NewsletterInterface
     }
 
     /**
-     * Update a member subscribed to a list
+     * Update a member subscribed to a list.
      *
      * @param $email
-     * @param array $mergeVars
+     * @param array  $mergeVars
      * @param string $list
      *
      * @return mixed
@@ -138,9 +138,8 @@ class Newsletter implements NewsletterInterface
             ->unsubscribe($email, $list);
     }
 
-
     /**
-     * Get the instance of the underlying api
+     * Get the instance of the underlying api.
      *
      * @return mixed
      */

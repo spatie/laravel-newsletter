@@ -1,4 +1,6 @@
-<?php namespace Spatie\Newsletter\MailChimp;
+<?php
+
+namespace Spatie\Newsletter\MailChimp;
 
 use Spatie\Newsletter\Interfaces\NewsletterCampaignInterface;
 
@@ -62,8 +64,9 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
      */
     public function sendTest($campaignId, $emails, $sendType = '')
     {
-        if ( ! is_array($emails) )
+        if (!is_array($emails)) {
             $emails = array($emails);
+        }
 
         return $this->mailChimp
             ->campaigns
@@ -105,10 +108,11 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
      *
      * @param $listProperties
      * @param $property
+     *
      * @return string
      */
     private function getCreateCampaignProperty($listProperties, $property)
     {
-        return (isset($listProperties['createCampaign']) ? $listProperties['createCampaign'][$property] : $listProperties[$property]);
+        return isset($listProperties['createCampaign']) ? $listProperties['createCampaign'][$property] : $listProperties[$property];
     }
 }

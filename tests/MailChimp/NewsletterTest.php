@@ -8,7 +8,6 @@ use Spatie\Newsletter\MailChimp\Newsletter;
 
 class NewsletterTest extends PHPUnit_Framework_TestCase
 {
-
     protected $campaign;
     protected $list;
     protected $newsletter;
@@ -28,10 +27,10 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $this->list
             ->shouldReceive('subscribe')
-            ->with('freek@spatie.be',['firstName'=>'Freek', 'lastName'=>'Van der Herten'], 'testlist');
+            ->with('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
 
         $this->newsletter
-            ->subscribe('freek@spatie.be', ['firstName'=>'Freek', 'lastName'=>'Van der Herten'], 'testlist');
+            ->subscribe('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
     }
 
     /**
@@ -41,10 +40,10 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $this->list
             ->shouldReceive('updateMember')
-            ->with('freek@spatie.be',['firstName'=>'Freek', 'lastName'=>'Van der Herten'], 'testlist');
+            ->with('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
 
         $this->newsletter
-            ->updateMember('freek@spatie.be', ['firstName'=>'Freek', 'lastName'=>'Van der Herten'], 'testlist');
+            ->updateMember('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
     }
 
     /**
@@ -86,7 +85,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->updateCampaign('campaignId', 'fieldName', ['key' => 'value']);
     }
 
-   /**
+    /**
      * @test
      */
     public function it_can_delete_a_campaign()
@@ -99,7 +98,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->deleteCampaign('campaignId');
     }
 
-   /**
+    /**
      * @test
      */
     public function it_can_send_a_test_campaign()
@@ -112,7 +111,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->sendTestCampaign('campaignId', ['user1@example.org', 'user2@example.org'], 'sendType');
     }
 
-   /**
+    /**
      * @test
      */
     public function it_can_send_a_campaign()
