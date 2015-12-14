@@ -130,6 +130,21 @@ Subscribing an email address can be done like this:
 Newsletter::subscribe('rincewind@discworld.com');
 ```
 
+If you need to update the subscriber info
+
+```php
+/**
+ * Update a member subscribed to a list
+ *
+ * @param $email
+ * @param array $mergeVars
+ * @param string $list
+ *
+ * @return mixed
+ */
+Newsletter::updateMember($email, $mergeVars = [],  $list = '');
+```
+
 Let's unsubcribe someone:
 
 ```php
@@ -150,7 +165,7 @@ $contents = '<h1>Big news</h1>The world is carried by four elephants on a turtle
 
 Newsletter::createCampaign($subject, $contents);
 ```
-The method will create a campaign, but not send it.
+The method will create a campaign, but not send it. If you want to send a campaign, see below.
 
 If you have multiple lists defined in the config file you must pass the name of the list an extra parameter:
 
@@ -159,6 +174,83 @@ Newsletter::subscribe('havelock.vetinari@discworld.com', ['firstName'=>'Havelock
 Newsletter::unsubscribe('sam.vimes@discworld.com', ['firstName'=>'Sam', 'lastName'=>'Vines'], 'mySecondList');
 
 Newsletter::createCampaign($subject, $contents, 'mySecondList');
+```
+
+And this is how to update a campaign:
+
+```php
+/**
+ * Update a newsletter campaign.
+ *
+ * @param $campaignId string
+ * @param $fieldName string
+ * @param $value array
+ *
+ * @return mixed
+ */
+Newsletter::updateCampaign($campaignId, $fieldName, $value = []);
+```
+
+Example of how to update the content or the subject of a campaign
+
+```php
+Newsletter::updateCampaign(
+    $campaignId,
+    'content', 
+    [
+        'html' => File::get( 'path/to/some/rendered/view/file' ),
+    ]
+);
+
+Newsletter::updateCampaign(
+    $campaignId,
+    'options', 
+    [
+        'subject' => 'New subject'
+    ]
+);
+```
+
+You can use this method to send a test campaign ...
+
+```php
+/**
+ * Send a test newsletter campaign.
+ *
+ * @param $campaignId string
+ * @param $emails string or array
+ * @param $sendType string
+ *
+ * @return mixed
+ */
+Newsletter::sendTestCampaign($campaignId, $emails, $sendType = '')
+```
+
+... or send the final campaign
+
+```php
+/**
+ * Send a newsletter campaign.
+ *
+ * @param $campaignId string
+ *
+ * @return mixed
+ */
+Newsletter::sendCampaign($campaignId)
+```
+
+
+And finally, this is how you delete a campaign:
+
+```php
+/**
+ * Delete a newsletter campaign.
+ *
+ * @param $campaignId
+ *
+ * @return mixed
+ */
+Newsletter::deleteCampaign($campaignId);
 ```
 
 If you need more functionality you get an instance of the underlying service api with:

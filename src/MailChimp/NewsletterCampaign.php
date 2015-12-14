@@ -18,17 +18,86 @@ class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInte
     {
         $listProperties = $this->getListProperties($listName);
 
-        return $this->mailChimp->campaigns->create('regular',
-            [
-                'list_id' => $listProperties['id'],
-                'subject' => $subject,
-                'from_email' => $this->getCreateCampaignProperty($listProperties, 'fromEmail'),
-                'from_name' => $this->getCreateCampaignProperty($listProperties, 'fromName'),
-                'to_name' => $this->getCreateCampaignProperty($listProperties, 'toName'),
-            ],
-            [
-                'html' => $content,
-            ]);
+        return $this->mailChimp
+            ->campaigns->create('regular',
+                [
+                    'list_id' => $listProperties['id'],
+                    'subject' => $subject,
+                    'from_email' => $this->getCreateCampaignProperty($listProperties, 'fromEmail'),
+                    'from_name' => $this->getCreateCampaignProperty($listProperties, 'fromName'),
+                    'to_name' => $this->getCreateCampaignProperty($listProperties, 'toName'),
+                ],
+                [
+                    'html' => $content,
+                ]);
+    }
+
+    /**
+     * Create a new newsletter campaign.
+     *
+     * @param $campaignId string Campaign ID
+     * @param $name string The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts"
+     * @param $value array An appropriate set of values for the parameter ( see campaigns/create() ). For additional parameters, this is the same value passed to them.
+     *
+     * @return mixed
+     */
+    public function update($campaignId, $fieldName, $value)
+    {
+        return $this->mailChimp
+            ->campaigns
+            ->update(
+                $campaignId,
+                $fieldName,
+                $value
+            );
+    }
+
+    /**
+     * Send a test MailChimp Campaign.
+     *
+     *
+     * @param $campaignId
+     *
+     * @return mixed
+     */
+    public function sendTest($campaignId, $emails, $sendType = '')
+    {
+        if ( ! is_array($emails) )
+            $emails = array($emails);
+
+        return $this->mailChimp
+            ->campaigns
+            ->sendTest($campaignId, $emails, $sendType);
+    }
+
+    /**
+     * Send a MailChimp Campaign.
+     *
+     *
+     * @param $campaignId
+     *
+     * @return mixed
+     */
+    public function send($campaignId)
+    {
+        return $this->mailChimp
+            ->campaigns
+            ->send($campaignId);
+    }
+
+    /**
+     * Delete a MailChimp Campaign.
+     *
+     *
+     * @param $campaignId
+     *
+     * @return mixed
+     */
+    public function delete($campaignId)
+    {
+        return $this->mailChimp
+            ->campaigns
+            ->delete($campaignId);
     }
 
     /**

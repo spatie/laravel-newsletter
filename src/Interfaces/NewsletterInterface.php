@@ -6,6 +6,15 @@
 interface NewsletterInterface
 {
     /**
+     * Delete a newsletter campaign.
+     *
+     * @param $campaignId
+     *
+     * @return mixed
+     */
+    public function deleteCampaign($campaignId);
+
+    /**
      * Create a new newsletter campaign.
      *
      * @param $list
@@ -17,6 +26,39 @@ interface NewsletterInterface
     public function createCampaign($list, $subject, $content);
 
     /**
+     * Create a new newsletter campaign.
+     *
+     * @param $campaignId string
+     * @param $name string
+     * @param $value array
+     *
+     * @return mixed
+     */
+    public function updateCampaign($campaignId, $name, $value = []);
+
+    /**
+     * Send a test newsletter campaign.
+     *
+     * @param $subject
+     * @param $content
+     * @param $list
+     *
+     * @return mixed
+     */
+    public function sendTestCampaign($campaignId, $emails = [], $sendType = '');
+
+    /**
+     * Send a newsletter campaign.
+     *
+     * @param $subject
+     * @param $content
+     * @param $list
+     *
+     * @return mixed
+     */
+    public function sendCampaign($campaignId);
+
+    /**
      * Subscribe the email address to given list.
      *
      * @param $email
@@ -25,6 +67,16 @@ interface NewsletterInterface
      * @return mixed
      */
     public function subscribe($email, $mergeVars = [], $list = '');
+
+    /**
+     * Update a member subscibed to a list
+     *
+     * @param $email
+     * @param array $mergeVars
+     * @param string $list
+     * @return mixed
+     */
+    public function updateMember($email, $mergeVars = [],  $list = '');
 
     /**
      * Unsubscribe the email address to given list.

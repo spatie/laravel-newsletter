@@ -21,4 +21,14 @@ interface NewsletterListInterface
      * @return mixed
      */
     public function unsubscribe($email, $list = '');
+
+    /**
+     * Update a member subscibed to a list
+     *
+     * @param $email
+     * @param $list
+     *
+     * @return mixed
+     */
+    public function updateMember($email, $mergeVars, $listName);
 }

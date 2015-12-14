@@ -21,10 +21,10 @@ class Newsletter implements NewsletterInterface
         $this->list = $list;
     }
 
+
     /**
      * Create a new newsletter campaign.
      *
-
      * @param $subject
      * @param $content
      * @param $list
@@ -33,7 +33,66 @@ class Newsletter implements NewsletterInterface
      */
     public function createCampaign($subject, $content, $list = '')
     {
-        return $this->campaign->create($subject, $content, $list);
+        return $this->campaign
+            ->create($subject, $content, $list);
+    }
+
+    /**
+     * Update a newsletter campaign.
+     *
+     * @param $campaignId string
+     * @param $name string
+     * @param $value array
+     *
+     * @return mixed
+     */
+    public function updateCampaign($campaignId, $name, $value = [])
+    {
+        return $this->campaign
+            ->update($campaignId, $name, $value);
+    }
+
+
+    /**
+     * Delete a newsletter campaign.
+     *
+     * @param $campaignId
+     *
+     * @return mixed
+     */
+    public function deleteCampaign($campaignId)
+    {
+        return $this->campaign
+            ->delete($campaignId);
+    }
+
+
+    /**
+     * Send a test newsletter campaign.
+     *
+     * @param $campaignId string
+     * @param $emails array
+     * @param $sendType string
+     *
+     * @return mixed
+     */
+    public function sendTestCampaign($campaignId, $emails = [], $sendType = '')
+    {
+        return $this->campaign
+            ->sendTest($campaignId, $emails, $sendType);
+    }
+
+    /**
+     * Send a newsletter campaign.
+     *
+     * @param $campaignId string
+     *
+     * @return mixed
+     */
+    public function sendCampaign($campaignId)
+    {
+        return $this->campaign
+            ->send($campaignId);
     }
 
     /**
@@ -46,7 +105,23 @@ class Newsletter implements NewsletterInterface
      */
     public function subscribe($email, $mergeVars = [],  $list = '')
     {
-        return $this->list->subscribe($email, $mergeVars, $list);
+        return $this->list
+            ->subscribe($email, $mergeVars, $list);
+    }
+
+    /**
+     * Update a member subscribed to a list
+     *
+     * @param $email
+     * @param array $mergeVars
+     * @param string $list
+     *
+     * @return mixed
+     */
+    public function updateMember($email, $mergeVars = [],  $list = '')
+    {
+        return $this->list
+            ->updateMember($email, $mergeVars, $list);
     }
 
     /**
@@ -59,7 +134,8 @@ class Newsletter implements NewsletterInterface
      */
     public function unsubscribe($email, $list = '')
     {
-        return $this->list->unsubscribe($email, $list);
+        return $this->list
+            ->unsubscribe($email, $list);
     }
 
 
@@ -70,6 +146,7 @@ class Newsletter implements NewsletterInterface
      */
     public function getApi()
     {
-        return $this->list->getApi();
+        return $this->list
+            ->getApi();
     }
 }
