@@ -2,6 +2,9 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+##2.1.0
+- added functions to create, update, delete campaigns, update subscriber details
+
 ##2.0.0
 - merge vars can now be specified in the subscribe function.
 
