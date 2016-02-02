@@ -156,6 +156,12 @@ You can pass some merge variables as the second argument:
 Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
 ```
 
+You can subscribe someone to a specific list by using the third argument:
+```php
+Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind'], 'subscribers');
+```
+That third argument is the name of a list you configured in the config file.
+
 
 This is how you create a campaign:
 
