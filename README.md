@@ -127,6 +127,8 @@ After you've installed the package and filled in the values in the config-file w
 Subscribing an email address can be done like this:
 
 ```php
+use Newsletter;
+
 Newsletter::subscribe('rincewind@discworld.com');
 ```
 
