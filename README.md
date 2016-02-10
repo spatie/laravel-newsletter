@@ -122,7 +122,11 @@ to
 
 ## Usage
 
-After you've installed the package and filled in the values in the config-file working with this package will be a breeze.
+After you've installed the package and filled in the values in the config-file working with this package will be a breeze. All the following examples use the facade. Don't forget to import it at the top of your file.
+
+```php
+use Newsletter;
+```
 
 Subscribing an email address can be done like this:
 
