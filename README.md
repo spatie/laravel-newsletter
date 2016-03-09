@@ -161,6 +161,7 @@ You can pass some merge variables as the second argument:
 ```php
 Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
 ```
+Please note the at the time of this writing the default merge variables in MailChimp are named `FNAME` and `LNAME`. In our examples we use `firstName` and `lastName` for extra readability.
 
 You can subscribe someone to a specific list by using the third argument:
 ```php
