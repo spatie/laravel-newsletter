@@ -2,11 +2,7 @@
 
 namespace Spatie\Newsletter\MailChimp;
 
-use Spatie\Newsletter\Interfaces\NewsletterInterface;
-use Spatie\Newsletter\Interfaces\NewsletterCampaignInterface;
-use Spatie\Newsletter\Interfaces\NewsletterListInterface;
-
-class Newsletter implements NewsletterInterface
+class Newsletter
 {
     /**
      * @var NewsletterCampaign

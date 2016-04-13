@@ -2,9 +2,7 @@
 
 namespace Spatie\Newsletter\MailChimp;
 
-use Spatie\Newsletter\Interfaces\NewsletterCampaignInterface;
-
-class NewsletterCampaign extends MailChimpBase implements NewsletterCampaignInterface
+class NewsletterCampaign extends MailChimpBase
 {
     /**
      * Create new MailChimp Campaign.

@@ -4,7 +4,6 @@ namespace Spatie\Newsletter\MailChimp;
 
 use Spatie\Newsletter\Exceptions\AlreadySubscribed;
 use Spatie\Newsletter\Exceptions\SubscriptionRefused;
-use Spatie\Newsletter\Interfaces\NewsletterListInterface;
 
 class NewsletterList extends MailChimpBase
 {
