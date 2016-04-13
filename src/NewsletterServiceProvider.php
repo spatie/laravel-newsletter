@@ -2,8 +2,8 @@
 
 namespace Spatie\Newsletter;
 
+use DrewM\MailChimp\MailChimp;
 use Illuminate\Support\ServiceProvider;
-use Mailchimp;
 
 class NewsletterServiceProvider extends ServiceProvider
 {
@@ -28,31 +28,10 @@ class NewsletterServiceProvider extends ServiceProvider
     {
         $this->app->singleton('laravel-newsletter-mailchimp', function () {
 
-            $apiKey = $this->app['config']->get('laravel-newsletter.mailChimp.apiKey');
+             return new Mailchimp(config('laravel-newsletter.mailChimp.apiKey'));
 
-            if ($apiKey) {
-                return new Mailchimp($apiKey);
-            }
         });
 
-        $this->app->bind(
-            'Spatie\Newsletter\Interfaces\NewsletterListInterface',
-            'Spatie\Newsletter\MailChimp\NewsletterList'
-        );
-
-        $this->app->bind(
-            'Spatie\Newsletter\Interfaces\NewsletterCampaignInterface',
-            'Spatie\Newsletter\MailChimp\NewsletterCampaign'
-        );
-
-        $this->app->bind(
-            'Spatie\Newsletter\Interfaces\NewsletterInterface',
-            'Spatie\Newsletter\MailChimp\Newsletter'
-        );
-
-        $this->app->bind(
-            'laravel-newsletter',
-            'Spatie\Newsletter\MailChimp\Newsletter'
-        );
+        $this->app->bind(MailChimp::class, 'laravel-newsletter-mailchimp');
     }
 }

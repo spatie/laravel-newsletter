@@ -10,7 +10,7 @@ use MailChimp;
 abstract class MailChimpBase
 {
     /**
-     * @var mailChimp
+     * @var \DrewM\MailChimp\MailChimp
      */
     protected $mailChimp;
     /**
@@ -45,7 +45,7 @@ abstract class MailChimpBase
     /**
      * Get the instance of the underlying api.
      *
-     * @return MailChimp
+     * @return \DrewM\MailChimp\MailChimp
      */
     public function getApi()
     {
@@ -63,12 +63,12 @@ abstract class MailChimpBase
      */
     protected function getListProperties($listName)
     {
-        if ($listName == '') {
+        if ($listName === '') {
             $listName = $this->getDefaultListName();
         }
 
         foreach ($this->getAllLists() as $configuredListName => $listProperties) {
-            if ($configuredListName == $listName) {
+            if ($configuredListName === $listName) {
                 return $listProperties;
             }
         }

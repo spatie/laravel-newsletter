@@ -31,33 +31,6 @@ return [
                  * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
                  */
                 'id' => '',
-
-                /*
-                 * These values will be used when creating a new campaign.
-                 */
-                'createCampaign' => [
-                    'fromEmail' => '',
-                    'fromName' => '',
-                    'toName' => '',
-                ],
-
-                /*
-                 * These values will be used when subscribing to a list.
-                 */
-                'subscribe' => [
-                    'emailType' => 'html',
-                    'requireDoubleOptin' => false,
-                    'updateExistingUser' => false,
-                ],
-
-                /*
-                 * These values will be used when unsubscribing from a list.
-                 */
-                'unsubscribe' => [
-                    'deletePermanently' => false,
-                    'sendGoodbyeEmail' => false,
-                    'sendUnsubscribeEmail' => false,
-                ],
             ],
         ],
     ],

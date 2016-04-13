@@ -3,52 +3,37 @@
 namespace Spatie\Newsletter\MailChimp;
 
 use Spatie\Newsletter\Exceptions\AlreadySubscribed;
-use Spatie\Newsletter\Exceptions\ServiceRefusedSubscription;
+use Spatie\Newsletter\Exceptions\SubscriptionRefused;
 use Spatie\Newsletter\Interfaces\NewsletterListInterface;
 
-class NewsletterList extends MailChimpBase implements NewsletterListInterface
+class NewsletterList extends MailChimpBase
 {
     /**
      * Subscribe a user to a MailChimp list.
      *
      * @param $email
-     * @param array  $mergeVars
+     * @param array $mergeFields
      * @param string $listName
      *
+     * @param $options
      * @return array
-     *
-     * @throws AlreadySubscribed
-     * @throws ServiceRefusedSubscription
-     * @throws \Exception
      */
-    public function subscribe($email, $mergeVars = [], $listName = '')
+    public function subscribe($email, $mergeFields = [], $listName = '', $options = [])
     {
         $listProperties = $this->getListProperties($listName);
-
-        $emailType = 'html';
-        $requireDoubleOptin = false;
-        $updateExistingUser = false;
-
-        if (isset($listProperties['subscribe'])) {
-            $emailType = $listProperties['subscribe']['emailType'];
-            $requireDoubleOptin = $listProperties['subscribe']['requireDoubleOptin'];
-            $updateExistingUser = $listProperties['subscribe']['updateExistingUser'];
-        }
-
-        try {
-            return $this->mailChimp->lists->subscribe(
-                $listProperties['id'],
-                compact('email'),
-                $mergeVars,
-                $emailType,
-                $requireDoubleOptin,
-                $updateExistingUser
-            );
-        } catch (\Mailchimp_List_AlreadySubscribed $exception) {
-            throw new AlreadySubscribed();
-        } catch (\Mailchimp_Error $exception) {
-            throw new ServiceRefusedSubscription($exception->getMessage());
-        }
+        
+        $defaultOptions = [[
+            'email_address' => $email,
+            'status' => 'subscribed',
+            'merge_fields' => $mergeFields,
+            'email_type' => 'html'
+        ]]
+        
+       $response = $this->mailChimp->post("list/{$listProperties['id']}/members", );
+        
+        $this->handleSubscriptionErrors();
+        
+        return $response;
     }
 
     /**
@@ -86,8 +71,8 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
      * Update a member subscribed to a list.
      *
      * @param string $email
-     * @param array  $mergeVars
-     * @param bool   $replaceInterests
+     * @param array $mergeVars
+     * @param bool $replaceInterests
      * @param string $listName
      *
      * @return \Spatie\Newsletter\MailChimp\associative_array
@@ -114,5 +99,14 @@ class NewsletterList extends MailChimpBase implements NewsletterListInterface
                 $emailType,
                 $replaceInterests
             );
+    }
+
+    private function handleSubscriptionErrors($response, $)
+    {
+        if ($this->mailChimp->getLastError() === false) {
+            return;
+        }
+        
+        throw new SubscriptionRefused($this->mailChimp->getLastError());
     }
 }

@@ -4,6 +4,6 @@ namespace Spatie\Newsletter\Exceptions;
 
 use Exception;
 
-class ServiceRefusedSubscription extends Exception
+class SubscriptionRefused extends Exception
 {
 }
