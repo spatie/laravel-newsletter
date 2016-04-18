@@ -26,10 +26,12 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->app->make(NewsletterListCollection::class, function () {
+            return NewsletterListCollection::createFromArray(config('laravel-newsletter.mailChimp.lists'));
+        });
+        
         $this->app->singleton('laravel-newsletter-mailchimp', function () {
-
              return new Mailchimp(config('laravel-newsletter.mailChimp.apiKey'));
-
         });
 
         $this->app->bind(MailChimp::class, 'laravel-newsletter-mailchimp');
