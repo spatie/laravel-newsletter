@@ -35,6 +35,23 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_will_use_the_first_list_not_specifing_a_listname()
+    {
+
+        $this->newsletterListCollection = NewsletterListCollection::createFromArray(
+            [
+                'list1' => ['id' => 1]
+            ]
+        );
+
+        $list = $this->newsletterListCollection->findByName('');
+
+        $this->assertInstanceOf(NewsletterList::class, $list);
+
+        $this->assertSame(1, $list->getId());
+    }
+
+    /** @test */
     public function it_will_throw_an_exception_when_trying_to_find_a_list_that_does_not_exist()
     {
         $this->setExpectedException(InvalidNewsletterList::class);
