@@ -168,4 +168,12 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $this->newsletter->unsubscribe('freek@spatie.be', 'list2');
     }
+
+    /** @test */
+    public function it_exposes_the_api()
+    {
+        $api = $this->newsletter->getApi();
+
+        $this->assertSame($this->mailChimpApi, $api);
+    }
 }
