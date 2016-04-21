@@ -151,6 +151,7 @@ class Newsletter
 
     public function updateContent($campaignId, $html, $options = [])
     {
+
         $defaultOptions = compact('html');
 
         $options = array_merge($defaultOptions, $options);

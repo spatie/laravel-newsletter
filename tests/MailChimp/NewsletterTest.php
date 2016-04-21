@@ -20,12 +20,14 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $this->mailChimpApi = Mockery::mock(MailChimp::class);
 
+        $this->mailChimpApi->shouldReceive('getLastError')->andReturn(false);
+
         $newsletterLists = NewsletterListCollection::makeForConfig(
             [
                 'lists' => [
-                        'list1' => ['id' => 123],
-                        'list2' => ['id' => 456],
-                    ],
+                    'list1' => ['id' => 123],
+                    'list2' => ['id' => 456],
+                ],
                 'defaultListName' => 'list1',
             ]
 
@@ -53,7 +55,6 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             [
                 'email_address' => $email,
                 'status' => 'subscribed',
-                'merge_fields' => [],
                 'email_type' => 'html',
             ],
         ]);
@@ -99,7 +100,6 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 [
                     'email_address' => $email,
                     'status' => 'subscribed',
-                    'merge_fields' => [],
                     'email_type' => 'html',
                 ],
             ]);
@@ -121,7 +121,6 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 [
                     'email_address' => $email,
                     'status' => 'pending',
-                    'merge_fields' => [],
                     'email_type' => 'text',
                 ],
             ]);
@@ -175,5 +174,54 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
         $api = $this->newsletter->getApi();
 
         $this->assertSame($this->mailChimpApi, $api);
+    }
+
+    /** @test */
+    public function is_can_create_a_campaign()
+    {
+        $fromName = 'Spatie';
+        $replyTo = 'info@spatie.be';
+        $subject = 'This is a subject';
+        $html = '<b>This is the content</b>';
+        $listName = 'list1';
+        $options = ['extraOption' => 'extraValue'];
+        $contentOptions = ['plain text' => 'this is the plain text content'];
+
+        $campaignId = 'newCampaignId';
+
+        $this->mailChimpApi
+            ->shouldReceive('post')
+            ->once()
+            ->withArgs(
+                [
+                    'campaigns',
+                    [
+                        'type' => 'regular',
+                        'recipients' => [
+                            'list_id' => 123,
+                        ],
+                        'settings' => [
+                            'subject_line' => $subject,
+                            'from_name' => $fromName,
+                            'reply_to' => $replyTo,
+                        ],
+                        'extraOption' => 'extraValue'
+                    ]
+                ]
+            )
+            ->andReturn(['id' => $campaignId]);
+
+        $this->mailChimpApi
+            ->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                "campaigns/{$campaignId}/content",
+                [
+                    'html' => $html,
+                    'plain text' => 'this is the plain text content',
+                ]
+            ]);
+
+        $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
     }
 }
