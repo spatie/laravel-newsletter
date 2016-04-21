@@ -7,7 +7,7 @@ use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 
 class NewsletterListCollection extends Collection
 {
-    /** @var string @ */
+    /** @var string */
     public $defaultListName = '';
 
     /**
