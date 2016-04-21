@@ -7,16 +7,9 @@ use Illuminate\Support\ServiceProvider;
 
 class NewsletterServiceProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
     protected $defer = false;
 
-    /**
-     * Bootstrap the application events.
-     */
+
     public function boot()
     {
         $this->publishes([
