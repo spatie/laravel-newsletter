@@ -177,6 +177,46 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_get_the_member()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}"]);
+
+        $this->newsletter->getMember($email);
+    }
+
+    /** @test */
+    public function it_can_get_the_member_from_a_specific_list()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(["lists/456/members/{$subscriberHash}"]);
+
+        $this->newsletter->getMember($email, 'list2');
+    }
+
+    /** @test */
     public function is_can_create_a_campaign()
     {
         $fromName = 'Spatie';
@@ -205,8 +245,8 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                             'from_name' => $fromName,
                             'reply_to' => $replyTo,
                         ],
-                        'extraOption' => 'extraValue'
-                    ]
+                        'extraOption' => 'extraValue',
+                    ],
                 ]
             )
             ->andReturn(['id' => $campaignId]);
@@ -219,7 +259,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 [
                     'html' => $html,
                     'plain text' => 'this is the plain text content',
-                ]
+                ],
             ]);
 
         $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);

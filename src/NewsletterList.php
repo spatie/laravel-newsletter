@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Spatie\Newsletter;
 
 class NewsletterList
