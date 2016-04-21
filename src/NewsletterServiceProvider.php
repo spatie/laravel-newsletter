@@ -29,7 +29,7 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->app->make(NewsletterListCollection::class, function () {
             return NewsletterListCollection::makeForConfig(config('laravel-newsletter'));
         });
-        
+
         $this->app->singleton('laravel-newsletter-mailchimp', function () {
              return new Mailchimp(config('laravel-newsletter.mailChimp.apiKey'));
         });

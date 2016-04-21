@@ -22,7 +22,7 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
                     'list2' => ['id' => 2],
                     'list3' => ['id' => 3],
                 ],
-                'defaultListName' => 'list3'
+                'defaultListName' => 'list3',
             ]
         );
     }
@@ -55,10 +55,10 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
         $newsletterListCollection = NewsletterListCollection::makeForConfig(
             [
                 'lists' => [
-                    'list1' => ['id' => 'list1']
+                    'list1' => ['id' => 'list1'],
                 ],
 
-                'defaultListName' => 'list2'
+                'defaultListName' => 'list2',
             ]
         );
 

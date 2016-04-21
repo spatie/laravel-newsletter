@@ -22,11 +22,11 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $newsletterLists = NewsletterListCollection::makeForConfig(
             [
-                'lists' =>
-                    [
+                'lists' => [
                         'list1' => ['id' => 123],
+                        'list2' => ['id' => 456],
                     ],
-                'defaultListName' => 'list1'
+                'defaultListName' => 'list1',
             ]
 
         );
@@ -34,12 +34,19 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
         $this->newsletter = new Newsletter($this->mailChimpApi, $newsletterLists);
     }
 
+    public function tearDown()
+    {
+        Mockery::close();
+
+        parent::tearDown();
+    }
+
     /** @test */
     public function it_can_subscribe_someone()
     {
         $email = 'freek@spatie.be';
 
-        $url = "list/123/members";
+        $url = 'list/123/members';
 
         $this->mailChimpApi->shouldReceive('post')->withArgs([
             $url,
@@ -47,8 +54,8 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 'email_address' => $email,
                 'status' => 'subscribed',
                 'merge_fields' => [],
-                'email_type' => 'html'
-            ]
+                'email_type' => 'html',
+            ],
         ]);
 
         $this->newsletter->subscribe($email);
@@ -61,19 +68,43 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $mergeFields = ['FNAME' => 'Freek'];
 
-        $url = "list/123/members";
+        $url = 'list/123/members';
 
-        $this->mailChimpApi->shouldReceive('post')->withArgs([
-            $url,
-            [
-                'email_address' => $email,
-                'status' => 'subscribed',
-                'merge_fields' => $mergeFields,
-                'email_type' => 'html'
-            ]
-        ]);
+        $this->mailChimpApi->shouldReceive('post')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'merge_fields' => $mergeFields,
+                    'email_type' => 'html',
+                ],
+            ]);
 
         $this->newsletter->subscribe($email, $mergeFields);
+    }
+
+    /** @test */
+    public function it_can_subscribe_someone_to_an_alternative_list()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'list/456/members';
+
+        $this->mailChimpApi->shouldReceive('post')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'merge_fields' => [],
+                    'email_type' => 'html',
+                ],
+            ]);
+
+        $this->newsletter->subscribe($email, [], 'list2');
     }
 
     /** @test */
@@ -81,19 +112,60 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $email = 'freek@spatie.be';
 
-        $url = "list/123/members";
+        $url = 'list/123/members';
 
-        $this->mailChimpApi->shouldReceive('post')->withArgs([
-            $url,
-            [
-                'email_address' => $email,
-                'status' => 'pending',
-                'merge_fields' => [],
-                'email_type' => 'text'
-            ]
-        ]);
+        $this->mailChimpApi->shouldReceive('post')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'pending',
+                    'merge_fields' => [],
+                    'email_type' => 'text',
+                ],
+            ]);
 
         $this->newsletter->subscribe($email, [], '', ['email_type' => 'text', 'status' => 'pending']);
     }
 
+    /** @test */
+    public function it_can_unsubscribe_someone()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('delete')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}"]);
+
+        $this->newsletter->unsubscribe('freek@spatie.be');
+    }
+
+    /** @test */
+    public function it_can_unsubscribe_someone_from_a_specific_list()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('delete')
+            ->once()
+            ->withArgs(["lists/456/members/{$subscriberHash}"]);
+
+        $this->newsletter->unsubscribe('freek@spatie.be', 'list2');
+    }
 }

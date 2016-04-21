@@ -11,11 +11,12 @@ class InvalidNewsletterList extends Exception
      */
     public static function noListsDefined()
     {
-        return new static("There are no lists defined");
+        return new static('There are no lists defined');
     }
 
     /**
      * @param string $name
+     *
      * @return static
      */
     public static function noListWithName($name)
@@ -25,6 +26,7 @@ class InvalidNewsletterList extends Exception
 
     /**
      * @param $defaultListName
+     *
      * @return static
      */
     public static function defaultListDoesNotExist($defaultListName)

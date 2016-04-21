@@ -7,23 +7,22 @@ use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 
 class NewsletterListCollection extends Collection
 {
-    
     /** @var string @ */
     public $defaultListName = '';
-    
+
     /**
      * @param array $config
-     * @return static
      *
+     * @return static
      */
     public static function makeForConfig($config)
     {
-        $collection = new static;
-        
-        foreach($config['lists'] as $name => $listProperties) {
+        $collection = new static();
+
+        foreach ($config['lists'] as $name => $listProperties) {
             $collection->push(new NewsletterList($name, $listProperties));
         }
-        
+
         $collection->defaultListName = $config['defaultListName'];
 
         return $collection;
@@ -31,6 +30,7 @@ class NewsletterListCollection extends Collection
 
     /**
      * @param string $name
+     *
      * @return \Spatie\Newsletter\NewsletterList
      * 
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
@@ -44,11 +44,11 @@ class NewsletterListCollection extends Collection
         $list = $this->first(function ($index, NewsletterList $newletterList) use ($name) {
             return $newletterList->getName() === $name;
         });
-        
+
         if (is_null($list)) {
             throw InvalidNewsletterList::noListWithName($name);
         }
-        
+
         return $list;
     }
 

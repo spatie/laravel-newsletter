@@ -8,7 +8,6 @@ return [
          */
         'apiKey' => env('MAILCHIMP_APIKEY'),
 
-
         /*
          * When not specifying a listname in the various methods, use the list with this name
          */
@@ -36,5 +35,5 @@ return [
                  */
                 'id' => '',
             ],
-        ]
+        ],
 ];
