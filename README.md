@@ -126,7 +126,7 @@ You can also unsubscribe someone from a specific list:
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 ```
 
-There's also a mehtod provided to create a campaign:
+There's also a method provided to create a campaign:
 ```php
     /**
      * @param string $fromName
