@@ -15,6 +15,11 @@ class Newsletter
      */
     protected $lists;
 
+    /**
+     * Newsletter constructor.
+     * @param \DrewM\MailChimp\MailChimp $mailChimp
+     * @param \Spatie\Newsletter\NewsletterListCollection $lists
+     */
     public function __construct(MailChimp $mailChimp, NewsletterListCollection $lists)
     {
         $this->mailChimp = $mailChimp;
@@ -22,6 +27,14 @@ class Newsletter
         $this->lists = $lists;
     }
 
+    /**
+     * @param $email
+     * @param array $mergeFields
+     * @param string $listName
+     * @param array $options
+     * @return array|bool|false
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
     public function subscribe($email, $mergeFields = [], $listName = '', $options = [])
     {
         $list = $this->lists->findByName($listName);
@@ -29,24 +42,124 @@ class Newsletter
         $defaultOptions = [
             'email_address' => $email,
             'status' => 'subscribed',
-            'merge_fields' => $mergeFields,
             'email_type' => 'html',
         ];
 
+        if (count($mergeFields)) {
+            $defaultOptions['merge_fields'] = $mergeFields;
+        }
+
         $options = array_merge($defaultOptions, $options);
 
-        $response = $this->mailChimp->post("list/{$list->getId()}/members", $options);
+        $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options);
+
+        if (!$this->lastActionSucceeded()) {
+            return false;
+        }
 
         return $response;
     }
 
+    /**
+     * @param $email
+     * @param string $listName
+     * @return array|bool|false
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
+    public function getMember($email, $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        if (!$this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+    }
+
+    /**
+     * @param $email
+     * @param string $listName
+     * @return bool
+     */
+    public function hasMember($email, $listName = '')
+    {
+        return (bool)$this->getMember($email, $listName);
+    }
+
+    /**
+     * @param $email
+     * @param string $listName
+     * @return array|false
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
     public function unsubscribe($email, $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
-        $subscriberHash = $this->mailChimp->subscriberHash($email);
+        $response = $this->mailChimp->delete("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
 
-        $response = $this->mailChimp->delete("lists/{$list->getId()}/members/{$subscriberHash}");
+        return $response;
+    }
+
+
+    /**
+     * @param string $fromName
+     * @param string $replyTo
+     * @param string $subject
+     * @param string $html
+     * @param string $listName
+     * @param array $options
+     * @param array $contentOptions
+     * @return array|bool
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
+    public function createCampaign($fromName, $replyTo, $subject, $html = '', $listName = '', $options = [], $contentOptions = [])
+    {
+        $list = $this->lists->findByName($listName);
+
+        $defaultOptions = [
+            'type' => 'regular',
+            'recipients' => [
+                'list_id' => $list->getId(),
+            ],
+            'settings' => [
+                'subject_line' => $subject,
+                'from_name' => $fromName,
+                'reply_to' => $replyTo,
+            ],
+        ];
+
+        $options = array_merge($defaultOptions, $options);
+
+        $response = $this->mailChimp->post("campaigns", $options);
+
+        if (!$this->lastActionSucceeded()) {
+            return false;
+        }
+
+        if ($html === '') {
+            return $response;
+        }
+
+        if (! $this->updateContent($response['id'], $html, $contentOptions)) {
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function updateContent($campaignId, $html, $options = [])
+    {
+        $defaultOptions = compact('html');
+
+        $options = array_merge($defaultOptions, $options);
+
+        $response = $this->mailChimp->put("campaigns/{$campaignId}/content", $options);
+
+        if (!$this->lastActionSucceeded()) {
+            return false;
+        }
 
         return $response;
     }
@@ -59,8 +172,28 @@ class Newsletter
         return $this->mailChimp;
     }
 
+    /**
+     * @return array|false
+     */
+    public function getLastError()
+    {
+        return $this->mailChimp->getLastError();
+    }
+
+    /**
+     * @return bool
+     */
     public function lastActionSucceeded()
     {
-        return is_null($this->mailChimp->getLastError());
+        return !$this->mailChimp->getLastError();
+    }
+
+    /**
+     * @param string $email
+     * @return string
+     */
+    protected function getSubscriberHash($email)
+    {
+        return $this->mailChimp->subscriberHash($email);
     }
 }

@@ -46,7 +46,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $email = 'freek@spatie.be';
 
-        $url = 'list/123/members';
+        $url = 'lists/123/members';
 
         $this->mailChimpApi->shouldReceive('post')->withArgs([
             $url,
@@ -68,7 +68,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $mergeFields = ['FNAME' => 'Freek'];
 
-        $url = 'list/123/members';
+        $url = 'lists/123/members';
 
         $this->mailChimpApi->shouldReceive('post')
             ->once()
@@ -90,7 +90,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $email = 'freek@spatie.be';
 
-        $url = 'list/456/members';
+        $url = 'lists/456/members';
 
         $this->mailChimpApi->shouldReceive('post')
             ->once()
@@ -112,7 +112,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $email = 'freek@spatie.be';
 
-        $url = 'list/123/members';
+        $url = 'lists/123/members';
 
         $this->mailChimpApi->shouldReceive('post')
             ->once()
