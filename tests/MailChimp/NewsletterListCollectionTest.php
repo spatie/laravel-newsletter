@@ -15,11 +15,14 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->newsletterListCollection = NewsletterListCollection::createFromArray(
+        $this->newsletterListCollection = NewsletterListCollection::makeForConfig(
             [
-                'list1' => ['id' => 1],
-                'list2' => ['id' => 2],
-                'list3' => ['id' => 3],
+                'lists' => [
+                    'list1' => ['id' => 1],
+                    'list2' => ['id' => 2],
+                    'list3' => ['id' => 3],
+                ],
+                'defaultListName' => 'list3'
             ]
         );
     }
@@ -35,27 +38,38 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_use_the_first_list_not_specifing_a_listname()
+    public function it_will_use_the_default_list_when_not_specifing_a_listname()
     {
-
-        $this->newsletterListCollection = NewsletterListCollection::createFromArray(
-            [
-                'list1' => ['id' => 1]
-            ]
-        );
-
         $list = $this->newsletterListCollection->findByName('');
 
         $this->assertInstanceOf(NewsletterList::class, $list);
 
-        $this->assertSame(1, $list->getId());
+        $this->assertSame(3, $list->getId());
+    }
+
+    /** @test */
+    public function it_will_throw_an_exception_when_using_a_default_list_that_does_not_exist()
+    {
+        $this->expectException(InvalidNewsletterList::class);
+
+        $newsletterListCollection = NewsletterListCollection::makeForConfig(
+            [
+                'lists' => [
+                    'list1' => ['id' => 'list1']
+                ],
+
+                'defaultListName' => 'list2'
+            ]
+        );
+
+        $newsletterListCollection->findByName('');
     }
 
     /** @test */
     public function it_will_throw_an_exception_when_trying_to_find_a_list_that_does_not_exist()
     {
-        $this->setExpectedException(InvalidNewsletterList::class);
-        
+        $this->expectException(InvalidNewsletterList::class);
+
         $this->newsletterListCollection->findByName('blabla');
     }
 }

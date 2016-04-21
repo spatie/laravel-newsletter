@@ -7,18 +7,24 @@ use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 
 class NewsletterListCollection extends Collection
 {
+    
+    /** @var string @ */
+    public $defaultListName = '';
+    
     /**
-     * @param array $lists
-     *
+     * @param array $config
      * @return static
+     *
      */
-    public static function createFromArray($lists)
+    public static function makeForConfig($config)
     {
         $collection = new static;
         
-        foreach($lists as $name => $listProperties) {
+        foreach($config['lists'] as $name => $listProperties) {
             $collection->push(new NewsletterList($name, $listProperties));
         }
+        
+        $collection->defaultListName = $config['defaultListName'];
 
         return $collection;
     }
@@ -31,9 +37,7 @@ class NewsletterListCollection extends Collection
      */
     public function findByName($name)
     {
-        //dd($this->items);
-
-        if ($name === '') {
+        if ($name == '') {
             return $this->getDefault();
         }
 
@@ -55,16 +59,14 @@ class NewsletterListCollection extends Collection
      */
     public function getDefault()
     {
-        $allLists = $this->getAllLists();
+        $defaultList = $this->first(function ($index, NewsletterList $newletterList) {
+            return $newletterList->getName() === $this->defaultListName;
+        });
 
-        if (!count($this)) {
-            throw InvalidNewsletterList::noListsDefined();
+        if (is_null($defaultList)) {
+            throw InvalidNewsletterList::defaultListDoesNotExist($this->defaultListName);
         }
 
-        if (count($allLists) > 2) {
-            throw InvalidNewsletterList::cannotDetermineDefault();
-        }
-
-        return $this->first();
+        return $defaultList;
     }
 }

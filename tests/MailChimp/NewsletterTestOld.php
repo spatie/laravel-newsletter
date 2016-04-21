@@ -6,7 +6,7 @@ use Mockery;
 use PHPUnit_Framework_TestCase;
 use Spatie\Newsletter\MailChimp\Newsletter;
 
-class NewsletterTest
+class NewsletterTestOld
 {
     protected $campaign;
     protected $list;

@@ -8,6 +8,12 @@ return [
          */
         'apiKey' => env('MAILCHIMP_APIKEY'),
 
+
+        /*
+         * When not specifying a listname in the various methods, use the list with this name
+         */
+        'defaultListName' => 'subscribers',
+
         /*
          * Here you can define properties of the lists you want to
          * send campaigns.
@@ -30,5 +36,5 @@ return [
                  */
                 'id' => '',
             ],
-        ],
+        ]
 ];

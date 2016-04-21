@@ -26,21 +26,20 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        $defaultOptions = [[
+        $defaultOptions = [
             'email_address' => $email,
             'status' => 'subscribed',
             'merge_fields' => $mergeFields,
             'email_type' => 'html'
-        ]];
-
+        ];
+        
         $options = array_merge($defaultOptions, $options);
 
         $response = $this->mailChimp->post("list/{$list->getId()}/members", $options);
 
-        $this->handleSubscriptionErrors();
-
         return $response;
     }
+    
 
     public function unsubscribe($email, $listName = '')
     {
@@ -60,5 +59,12 @@ class Newsletter
     {
         return $this->mailChimp;
     }
+    
+    public function lastActionSucceeded()
+    {
+        return is_null($this->mailChimp->getLastError());
+    }
+
+
 }
 
