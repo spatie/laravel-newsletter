@@ -26,7 +26,7 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->make(NewsletterListCollection::class, function () {
+        $this->app->bind(NewsletterListCollection::class, function () {
             return NewsletterListCollection::makeForConfig(config('laravel-newsletter'));
         });
 
