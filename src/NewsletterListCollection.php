@@ -15,7 +15,7 @@ class NewsletterListCollection extends Collection
      *
      * @return static
      */
-    public static function makeForConfig($config)
+    public static function createFromConfig($config)
     {
         $collection = new static();
 

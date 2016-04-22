@@ -23,7 +23,7 @@ class NewsletterServiceProvider extends ServiceProvider
 
             $mailChimp = new Mailchimp(config('laravel-newsletter.apiKey'));
 
-            $configuredLists = NewsletterListCollection::makeForConfig(config('laravel-newsletter'));
+            $configuredLists = NewsletterListCollection::createFromConfig(config('laravel-newsletter'));
 
             return new Newsletter($mailChimp, $configuredLists);
         });

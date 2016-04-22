@@ -15,7 +15,7 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->newsletterListCollection = NewsletterListCollection::makeForConfig(
+        $this->newsletterListCollection = NewsletterListCollection::createFromConfig(
             [
                 'lists' => [
                     'list1' => ['id' => 1],
@@ -52,7 +52,7 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException(InvalidNewsletterList::class);
 
-        $newsletterListCollection = NewsletterListCollection::makeForConfig(
+        $newsletterListCollection = NewsletterListCollection::createFromConfig(
             [
                 'lists' => [
                     'list1' => ['id' => 'list1'],

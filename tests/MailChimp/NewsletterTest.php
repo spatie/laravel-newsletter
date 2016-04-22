@@ -22,7 +22,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $this->mailChimpApi->shouldReceive('getLastError')->andReturn(false);
 
-        $newsletterLists = NewsletterListCollection::makeForConfig(
+        $newsletterLists = NewsletterListCollection::createFromConfig(
             [
                 'lists' => [
                     'list1' => ['id' => 123],
