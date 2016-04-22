@@ -132,7 +132,7 @@ Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 
 You can get information on a subscriber by using the `getMember`-function:
 ```php
-Newsletter::getMember('lord.vetinari@discworld.com')
+Newsletter::getMember('lord.vetinari@discworld.com');
 ```
 
 This will return an array with information on the subscriber. If there's no one subscribed with that
@@ -141,7 +141,7 @@ e-mailaddress the function will return `false`
 There's also a convience method to check if some in subscribed:
 
 ```php
-Newsletter::hasMember('nanny.ogg@discworld.com') //returns a bool
+Newsletter::hasMember('nanny.ogg@discworld.com'); //returns a bool
 ```
 
 ### Creating a campaign
