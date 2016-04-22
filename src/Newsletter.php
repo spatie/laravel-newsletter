@@ -85,9 +85,17 @@ class Newsletter
      */
     public function hasMember($email, $listName = '')
     {
-        $this->getMember($email, $listName);
+        $response = $this->getMember($email, $listName);
+        
+        if (! isset($response['email_address'])) {
+            return false;
+        }
+        
+        if ($response['email_address'] != $email) {
+            return false;
+        }
 
-        return $this->lastActionSucceeded();
+        return true;
     }
 
     /**
