@@ -85,7 +85,9 @@ class Newsletter
      */
     public function hasMember($email, $listName = '')
     {
-        return (bool) $this->getMember($email, $listName);
+        $this->getMember($email, $listName);
+
+        return $this->lastActionSucceeded();
     }
 
     /**
