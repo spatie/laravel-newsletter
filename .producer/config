@@ -9,5 +9,5 @@ phpunit = vendor/bin/phpunit
 changes = CHANGELOG.md
 contributing = CONTRIBUTING.md
 license = LICENSE.md
-phpunit = phpunit.xml.dist
+phpunit = phpunit.xml
 readme = README.md
