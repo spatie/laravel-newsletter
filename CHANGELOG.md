@@ -3,7 +3,7 @@
 All Notable changes to `laravel-newsletter` will be documented in this file
 
 #3.0.1 - 2016-04-22
-- fix the `hasMember` function
+- fixed the `hasMember` function
 
 ##3.0.0 - 2016-04-22
 - complete rewrite
