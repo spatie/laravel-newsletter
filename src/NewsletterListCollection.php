@@ -15,7 +15,7 @@ class NewsletterListCollection extends Collection
      *
      * @return static
      */
-    public static function createFromConfig($config)
+    public static function createFromConfig(array $config)
     {
         $collection = new static();
 
@@ -37,7 +37,7 @@ class NewsletterListCollection extends Collection
      */
     public function findByName($name)
     {
-        if ($name == '') {
+        if ($name === '') {
             return $this->getDefault();
         }
 

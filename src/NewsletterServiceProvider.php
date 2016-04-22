@@ -12,8 +12,10 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/laravel-newsletter.php', 'laravel-newsletter');
+
         $this->publishes([
-            __DIR__.'/config/laravel-newsletter.php' => config_path('laravel-newsletter.php'),
+            __DIR__.'/../config/laravel-newsletter.php' => config_path('laravel-newsletter.php'),
         ]);
     }
 
