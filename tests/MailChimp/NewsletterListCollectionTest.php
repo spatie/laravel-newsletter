@@ -50,7 +50,7 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_will_throw_an_exception_when_using_a_default_list_that_does_not_exist()
     {
-        $this->expectException(InvalidNewsletterList::class);
+        $this->setExpectedException(InvalidNewsletterList::class);
 
         $newsletterListCollection = NewsletterListCollection::createFromConfig(
             [
@@ -68,7 +68,7 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_will_throw_an_exception_when_trying_to_find_a_list_that_does_not_exist()
     {
-        $this->expectException(InvalidNewsletterList::class);
+        $this->setExpectedException(InvalidNewsletterList::class);
 
         $this->newsletterListCollection->findByName('blabla');
     }
