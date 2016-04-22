@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class NewsletterServiceProvider extends ServiceProvider
 {
     protected $defer = false;
-    
+
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-newsletter.php', 'laravel-newsletter');
@@ -28,7 +28,7 @@ class NewsletterServiceProvider extends ServiceProvider
 
             return new Newsletter($mailChimp, $configuredLists);
         });
-        
+
         $this->app->alias(Newsletter::class, 'laravel-newsletter');
     }
 }

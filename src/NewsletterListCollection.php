@@ -37,7 +37,7 @@ class NewsletterListCollection extends Collection
      */
     public function findByName($name)
     {
-        if ((string)$name === '') {
+        if ((string) $name === '') {
             return $this->getDefault();
         }
 
