@@ -8,24 +8,27 @@ use Illuminate\Support\ServiceProvider;
 class NewsletterServiceProvider extends ServiceProvider
 {
     protected $defer = false;
-
-
+    
     public function boot()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/laravel-newsletter.php', 'laravel-newsletter');
+
         $this->publishes([
-            __DIR__.'/config/laravel-newsletter.php' => config_path('laravel-newsletter.php'),
+            __DIR__.'/../config/laravel-newsletter.php' => config_path('laravel-newsletter.php'),
         ]);
     }
 
     public function register()
     {
-        $this->app->singleton('laravel-newsletter', function () {
+        $this->app->singleton(Newsletter::class, function () {
 
             $mailChimp = new Mailchimp(config('laravel-newsletter.apiKey'));
 
-            $configuredLists = NewsletterListCollection::makeForConfig(config('laravel-newsletter'));
+            $configuredLists = NewsletterListCollection::createFromConfig(config('laravel-newsletter'));
 
             return new Newsletter($mailChimp, $configuredLists);
         });
+        
+        $this->app->alias(Newsletter::class, 'laravel-newsletter');
     }
 }
