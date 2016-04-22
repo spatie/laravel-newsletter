@@ -21,7 +21,7 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton('laravel-newsletter', function () {
+        $this->app->singleton(Newsletter::class, function () {
 
             $mailChimp = new Mailchimp(config('laravel-newsletter.apiKey'));
 
@@ -29,5 +29,7 @@ class NewsletterServiceProvider extends ServiceProvider
 
             return new Newsletter($mailChimp, $configuredLists);
         });
+        
+        $this->app->alias(Newsletter::class, 'laravel-newsletter');
     }
 }
