@@ -34,7 +34,7 @@ If you want to make use of the facade you must install it as well.
 ```php
 // config/app.php
 'aliases' => [
-    ...
+    ..
     'Newsletter' => 'Spatie\Newsletter\NewsletterFacade',
 ];
 ```
@@ -128,20 +128,20 @@ Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 
 There's also a method provided to create a campaign:
 ```php
-    /**
-     * @param string $fromName
-     * @param string $replyTo
-     * @param string $subject
-     * @param string $html
-     * @param string $listName
-     * @param array  $options
-     * @param array  $contentOptions
-     *
-     * @return array|bool
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function createCampaign($fromName, $replyTo, $subject, $html = '', $listName = '', $options = [], $contentOptions = [])
+/**
+ * @param string $fromName
+ * @param string $replyTo
+ * @param string $subject
+ * @param string $html
+ * @param string $listName
+ * @param array  $options
+ * @param array  $contentOptions
+ *
+ * @return array|bool
+ *
+ * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+ */
+public function createCampaign($fromName, $replyTo, $subject, $html = '', $listName = '', $options = [], $contentOptions = [])
 ```
 
 If you need more functionality you get an instance of the underlying [MailChimp Api](https://github.com/drewm/mailchimp-api) with:
