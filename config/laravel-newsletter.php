@@ -33,7 +33,7 @@ return [
                  * how to get this value:
                  * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
                  */
-                'id' => '',
+                'id' => env('MAILCHIMP_LIST_ID'),
             ],
         ],
 ];
