@@ -7,7 +7,7 @@ All Notable changes to `laravel-newsletter` will be documented in this file
 
 ##3.0.0 - 2016-04-22
 - complete rewrite
-- under the hood v3 of the MailChimp API gets used
+- under the hood v3 of the MailChimp API is used
 
 ##2.2.0
 - add compatibility for Laravel 5.2
