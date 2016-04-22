@@ -8,8 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class NewsletterServiceProvider extends ServiceProvider
 {
     protected $defer = false;
-
-
+    
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-newsletter.php', 'laravel-newsletter');
