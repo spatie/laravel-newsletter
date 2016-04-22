@@ -1,126 +1,267 @@
 <?php
 
-namespace Spatie\Newsletter\Test\MailChimp;
+namespace Spatie\Newsletter\Test;
 
+use DrewM\MailChimp\MailChimp;
 use Mockery;
 use PHPUnit_Framework_TestCase;
-use Spatie\Newsletter\MailChimp\Newsletter;
+use Spatie\Newsletter\Newsletter;
+use Spatie\Newsletter\NewsletterListCollection;
 
 class NewsletterTest extends PHPUnit_Framework_TestCase
 {
-    protected $campaign;
-    protected $list;
+    /** @var Mockery\Mock */
+    protected $mailChimpApi;
+
+    /** @var \Spatie\Newsletter\Newsletter */
     protected $newsletter;
 
     public function setUp()
     {
-        $this->campaign = Mockery::mock('Spatie\Newsletter\MailChimp\NewsletterCampaign');
-        $this->list = Mockery::mock('Spatie\Newsletter\MailChimp\NewsletterList');
+        $this->mailChimpApi = Mockery::mock(MailChimp::class);
 
-        $this->newsletter = new Newsletter($this->campaign, $this->list);
+        $this->mailChimpApi->shouldReceive('getLastError')->andReturn(false);
+
+        $newsletterLists = NewsletterListCollection::createFromConfig(
+            [
+                'lists' => [
+                    'list1' => ['id' => 123],
+                    'list2' => ['id' => 456],
+                ],
+                'defaultListName' => 'list1',
+            ]
+
+        );
+
+        $this->newsletter = new Newsletter($this->mailChimpApi, $newsletterLists);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_subscribe_an_email_adress_to_a_list()
+    public function tearDown()
     {
-        $this->list
-            ->shouldReceive('subscribe')
-            ->with('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
+        Mockery::close();
 
-        $this->newsletter
-            ->subscribe('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
+        parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function it_can_update_an_email_subscribed_to_a_list()
+    /** @test */
+    public function it_can_subscribe_someone()
     {
-        $this->list
-            ->shouldReceive('updateMember')
-            ->with('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
+        $email = 'freek@spatie.be';
 
-        $this->newsletter
-            ->updateMember('freek@spatie.be', ['firstName' => 'Freek', 'lastName' => 'Van der Herten'], 'testlist');
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('post')->withArgs([
+            $url,
+            [
+                'email_address' => $email,
+                'status' => 'subscribed',
+                'email_type' => 'html',
+            ],
+        ]);
+
+        $this->newsletter->subscribe($email);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_unsubscribe_an_email_address_from_a_list()
+    /** @test */
+    public function it_can_subscribe_someone_with_merge_fields()
     {
-        $this->list
-            ->shouldReceive('unsubscribe')
-            ->with('freek@spatie.be', 'testlist');
+        $email = 'freek@spatie.be';
 
-        $this->newsletter
-            ->unsubscribe('freek@spatie.be', 'testlist');
+        $mergeFields = ['FNAME' => 'Freek'];
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('post')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'merge_fields' => $mergeFields,
+                    'email_type' => 'html',
+                ],
+            ]);
+
+        $this->newsletter->subscribe($email, $mergeFields);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_create_a_campaign()
+    /** @test */
+    public function it_can_subscribe_someone_to_an_alternative_list()
     {
-        $this->campaign
-            ->shouldReceive('create')
-            ->with('subject', 'content', 'testlist');
+        $email = 'freek@spatie.be';
 
-        $this->newsletter
-            ->createCampaign('subject', 'content', 'testlist');
+        $url = 'lists/456/members';
+
+        $this->mailChimpApi->shouldReceive('post')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'email_type' => 'html',
+                ],
+            ]);
+
+        $this->newsletter->subscribe($email, [], 'list2');
     }
 
-    /**
-     * @test
-     */
-    public function it_can_update_a_campaign()
+    /** @test */
+    public function it_can_override_the_defaults_when_subscribing_someone()
     {
-        $this->campaign
-            ->shouldReceive('update')
-            ->with('campaignId', 'fieldName', ['key' => 'value']);
+        $email = 'freek@spatie.be';
 
-        $this->newsletter
-            ->updateCampaign('campaignId', 'fieldName', ['key' => 'value']);
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('post')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'pending',
+                    'email_type' => 'text',
+                ],
+            ]);
+
+        $this->newsletter->subscribe($email, [], '', ['email_type' => 'text', 'status' => 'pending']);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_delete_a_campaign()
+    /** @test */
+    public function it_can_unsubscribe_someone()
     {
-        $this->campaign
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
             ->shouldReceive('delete')
-            ->with('campaignId');
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}"]);
 
-        $this->newsletter
-            ->deleteCampaign('campaignId');
+        $this->newsletter->unsubscribe('freek@spatie.be');
     }
 
-    /**
-     * @test
-     */
-    public function it_can_send_a_test_campaign()
+    /** @test */
+    public function it_can_unsubscribe_someone_from_a_specific_list()
     {
-        $this->campaign
-            ->shouldReceive('sendTest')
-            ->with('campaignId', ['user1@example.org', 'user2@example.org'], 'sendType');
+        $email = 'freek@spatie.be';
 
-        $this->newsletter
-            ->sendTestCampaign('campaignId', ['user1@example.org', 'user2@example.org'], 'sendType');
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('delete')
+            ->once()
+            ->withArgs(["lists/456/members/{$subscriberHash}"]);
+
+        $this->newsletter->unsubscribe('freek@spatie.be', 'list2');
     }
 
-    /**
-     * @test
-     */
-    public function it_can_send_a_campaign()
+    /** @test */
+    public function it_exposes_the_api()
     {
-        $this->campaign
-            ->shouldReceive('send')
-            ->with('campaignId');
+        $api = $this->newsletter->getApi();
 
-        $this->newsletter
-            ->sendCampaign('campaignId');
+        $this->assertSame($this->mailChimpApi, $api);
+    }
+
+    /** @test */
+    public function it_can_get_the_member()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}"]);
+
+        $this->newsletter->getMember($email);
+    }
+
+    /** @test */
+    public function it_can_get_the_member_from_a_specific_list()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(["lists/456/members/{$subscriberHash}"]);
+
+        $this->newsletter->getMember($email, 'list2');
+    }
+
+    /** @test */
+    public function is_can_create_a_campaign()
+    {
+        $fromName = 'Spatie';
+        $replyTo = 'info@spatie.be';
+        $subject = 'This is a subject';
+        $html = '<b>This is the content</b>';
+        $listName = 'list1';
+        $options = ['extraOption' => 'extraValue'];
+        $contentOptions = ['plain text' => 'this is the plain text content'];
+
+        $campaignId = 'newCampaignId';
+
+        $this->mailChimpApi
+            ->shouldReceive('post')
+            ->once()
+            ->withArgs(
+                [
+                    'campaigns',
+                    [
+                        'type' => 'regular',
+                        'recipients' => [
+                            'list_id' => 123,
+                        ],
+                        'settings' => [
+                            'subject_line' => $subject,
+                            'from_name' => $fromName,
+                            'reply_to' => $replyTo,
+                        ],
+                        'extraOption' => 'extraValue',
+                    ],
+                ]
+            )
+            ->andReturn(['id' => $campaignId]);
+
+        $this->mailChimpApi
+            ->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                "campaigns/{$campaignId}/content",
+                [
+                    'html' => $html,
+                    'plain text' => 'this is the plain text content',
+                ],
+            ]);
+
+        $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
     }
 }
