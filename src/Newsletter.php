@@ -62,7 +62,7 @@ class Newsletter
      * @param string $email
      * @param string $listName
      *
-     * @return array|bool|false
+     * @return array|bool
      *
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
      */

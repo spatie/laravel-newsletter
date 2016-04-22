@@ -95,6 +95,8 @@ After you've installed the package and filled in the values in the config-file w
 use Newsletter;
 ```
 
+### Subscribing and unsubscribing
+
 Subscribing an email address can be done like this:
 
 ```php
@@ -126,7 +128,25 @@ You can also unsubscribe someone from a specific list:
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 ```
 
-There's also a method provided to create a campaign:
+### Getting subscriber info
+
+You can get information on a subscriber by using the `getMember`-function:
+```php
+Newsletter::getMember('lord.vetinari@discworld.com')
+```
+
+This will return an array with information on the subscriber. If there's no one subscribed with that
+e-mailaddress the function will return `false`
+
+There's also a convience method to check if some in subscribed:
+
+```php
+Newsletter::hasMember('nanny.ogg@discworld.com') //returns a bool
+```
+
+### Creating a campaign
+
+This is how you create a campaign:
 ```php
 /**
  * @param string $fromName
@@ -144,9 +164,25 @@ There's also a method provided to create a campaign:
 public function createCampaign($fromName, $replyTo, $subject, $html = '', $listName = '', $options = [], $contentOptions = [])
 ```
 
+Note the campaign will only be created, no mails will be sent out.
+
+### Handling errors
+
+If something went wrong you can get the last error with
+```
+Newsletter::getLastError();
+```
+
+If you just want to make sure if the last action succeeded you can to this:
+```php
+Newsletter::lastActionSucceed();
+```
+
+### Need something else?
+
 If you need more functionality you get an instance of the underlying [MailChimp Api](https://github.com/drewm/mailchimp-api) with:
 
-```
+```php
 $api = Newsletter::getApi();
 ```
 
