@@ -6,7 +6,27 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-newsletter.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-newsletter)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
 
-This package provides an easy way to integrate MailChimp with Laravel 5. Behind the scenes v3 for the MailChimp API is used.
+This package provides an easy way to integrate MailChimp with Laravel 5. Behind the scenes v3 for the MailChimp API is used. Here are some examples of what you can do with the package:
+
+```phpNewsletter::subscribe('rincewind@discworld.com');
+
+Newsletter::unsubscribe('the.luggage@discworld.com');
+
+//Merge variables can be passed as the second argument
+Newsletter::subscribe('sam.vines@discworld.com', ['firstName'=>'Sam', 'lastName'=>'Vines']);
+
+//Subscribe someone to a specific list by using the third argument:
+Newsletter::subscribe('nanny.ogg@discworld.com', ['firstName'=>'Nanny', 'lastName'=>'Ogg'], 'Name of your list');
+
+//Get some member info, returns an array described in the official docs
+Newsletter::getMember('lord.vetinari@discworld.com');
+
+//Returns a boolean
+Newsletter::hasMember('greebo@discworld.com');
+
+//If you want to do something else, you can get an instance of the underlying API:
+Newsletter::getApi();
+```
 
 Spatie is a webdesign agency in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
