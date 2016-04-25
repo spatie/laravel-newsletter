@@ -8,7 +8,8 @@
 
 This package provides an easy way to integrate MailChimp with Laravel 5. Behind the scenes v3 for the MailChimp API is used. Here are some examples of what you can do with the package:
 
-```phpNewsletter::subscribe('rincewind@discworld.com');
+```php
+Newsletter::subscribe('rincewind@discworld.com');
 
 Newsletter::unsubscribe('the.luggage@discworld.com');
 
