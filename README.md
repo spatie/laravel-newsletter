@@ -190,7 +190,7 @@ Note the campaign will only be created, no mails will be sent out.
 ### Handling errors
 
 If something went wrong you can get the last error with
-```
+```php
 Newsletter::getLastError();
 ```
 
