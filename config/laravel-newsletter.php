@@ -14,6 +14,13 @@ return [
         'defaultListName' => 'subscribers',
 
         /*
+         * Specify the subscribe status when new users sign up:
+         * subscribed - This address is on the list and ready to receive email. You can only send campaigns to ‘subscribed’ addresses.
+         * pending - This address requested to be added with double-opt-in but hasn’t confirmed their subscription yet.
+         */
+        'defaultSubscribeStatus' => 'subscribed',
+
+        /*
          * Here you can define properties of the lists you want to
          * send campaigns.
          */

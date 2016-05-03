@@ -3,6 +3,7 @@
 namespace Spatie\Newsletter;
 
 use DrewM\MailChimp\MailChimp;
+use Spatie\Newsletter\Exceptions\InvalidSubscribeStatus;
 
 class Newsletter
 {
@@ -39,7 +40,7 @@ class Newsletter
 
         $defaultOptions = [
             'email_address' => $email,
-            'status' => 'subscribed',
+            'status' => $this->getSubscribeStatus(),
             'email_type' => 'html',
         ];
 
@@ -86,11 +87,11 @@ class Newsletter
     public function hasMember($email, $listName = '')
     {
         $response = $this->getMember($email, $listName);
-        
+
         if (! isset($response['email_address'])) {
             return false;
         }
-        
+
         if ($response['email_address'] != $email) {
             return false;
         }
@@ -210,5 +211,17 @@ class Newsletter
     protected function getSubscriberHash($email)
     {
         return $this->mailChimp->subscriberHash($email);
+    }
+
+    protected function getSubscribeStatus()
+    {
+        $subscribeStatus = config('laravel-newsletter.defaultSubscribeStatus');
+
+        if ($subscribeStatus == "subscribed" || $configSubscribeStatus == "pending") {
+            return $subscribeStatus;
+        }
+        else {
+            throw InvalidSubscribeStatus::invalidStatus($subscribeStatus);
+        }
     }
 }
