@@ -217,7 +217,7 @@ class Newsletter
     {
         $subscribeStatus = config('laravel-newsletter.defaultSubscribeStatus');
 
-        if ($subscribeStatus == "subscribed" || $configSubscribeStatus == "pending") {
+        if ($subscribeStatus == "subscribed" || $subscribeStatus == "pending") {
             return $subscribeStatus;
         }
         else {
