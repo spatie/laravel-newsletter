@@ -66,7 +66,7 @@ To publish the config file to `app/config/laravel-newsletter.php` run:
 php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"
 ```
 
-This wil publish a file `laravel-newsletter.php` in your config directory with the following contents: 
+This wil publish a file `laravel-newsletter.php` in your config directory with the following contents:
 ```php
 return [
 
@@ -81,6 +81,13 @@ return [
          *  this list name will be used.
          */
         'defaultListName' => 'subscribers',
+
+        /*
+         * Specify the subscribe status when new users sign up:
+         * subscribed - This address is on the list and ready to receive email. You can only send campaigns to ‘subscribed’ addresses.
+         * pending - This address requested to be added with double-opt-in but hasn’t confirmed their subscription yet.
+         */
+        'defaultSubscribeStatus' => 'subscribed',
 
         /*
          * Here you can define properties of the lists you want to

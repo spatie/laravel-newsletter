@@ -264,4 +264,25 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
     }
+
+    /** @test */
+    public function it_will_throw_an_exception_when_using_a_subscribe_status_that_is_invalid()
+    {
+        $this->setExpectedException(InvalidSubscribeStatus::class);
+
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('post')->withArgs([
+            $url,
+            [
+                'email_address' => $email,
+                'status' => 'blabla',
+                'email_type' => 'html',
+            ],
+        ]);
+
+        $this->newsletter->subscribe($email);
+    }
 }
