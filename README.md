@@ -196,7 +196,7 @@ Newsletter::getLastError();
 
 If you just want to make sure if the last action succeeded you can to this:
 ```php
-Newsletter::lastActionSucceed();
+Newsletter::lastActionSucceeded();
 ```
 
 ### Need something else?
