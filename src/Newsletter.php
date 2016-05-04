@@ -215,7 +215,7 @@ class Newsletter
 
     protected function getDefaultSubscribeStatus()
     {
-        $defaultSubscribeStatus = config('laravel-newsletter.defaultSubscribeStatus');
+        $defaultSubscribeStatus = $this->app['config']['laravel-newsletter.defaultSubscribeStatus'];
 
         if (! in_array($defaultSubscribeStatus, ['subscribed', 'pending'])) {
             throw InvalidSubscribeStatus::invalidStatus($defaultSubscribeStatus);
