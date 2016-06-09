@@ -45,7 +45,7 @@ You must also install this service provider.
 // config/app.php
 'providers' => [
     ...
-    'Spatie\Newsletter\NewsletterServiceProvider',
+    Spatie\Newsletter\NewsletterServiceProvider::class,
     ...
 ];
 ```
@@ -56,7 +56,7 @@ If you want to make use of the facade you must install it as well.
 // config/app.php
 'aliases' => [
     ..
-    'Newsletter' => 'Spatie\Newsletter\NewsletterFacade',
+    'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
 ];
 ```
 
