@@ -2,6 +2,9 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+#3.0.3 - 2016-07-11
+- improvements on handling of emailadresses with capitals
+
 #3.0.2 - 2016-04-22
 - make has `hasMember` more robust
 
