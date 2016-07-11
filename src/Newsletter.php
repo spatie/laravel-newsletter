@@ -90,8 +90,8 @@ class Newsletter
         if (! isset($response['email_address'])) {
             return false;
         }
-        
-        if ($response['email_address'] != $email) {
+
+        if (strtolower($response['email_address']) != strtolower($email)) {
             return false;
         }
 
