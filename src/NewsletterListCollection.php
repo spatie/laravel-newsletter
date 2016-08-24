@@ -37,7 +37,7 @@ class NewsletterListCollection extends Collection
      */
     public function findByName($name)
     {
-        if ((string)$name === '') {
+        if ((string) $name === '') {
             return $this->getDefault();
         }
 
@@ -48,7 +48,6 @@ class NewsletterListCollection extends Collection
         }
 
         throw InvalidNewsletterList::noListWithName($name);
-
     }
 
     /**
@@ -64,6 +63,6 @@ class NewsletterListCollection extends Collection
             }
         }
 
-            throw InvalidNewsletterList::defaultListDoesNotExist($this->defaultListName);
+        throw InvalidNewsletterList::defaultListDoesNotExist($this->defaultListName);
     }
 }
