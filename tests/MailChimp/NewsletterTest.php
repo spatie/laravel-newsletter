@@ -54,8 +54,8 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             $url,
             [
                 'email_address' => $email,
-                'status' => 'subscribed',
-                'email_type' => 'html',
+                'status'        => 'subscribed',
+                'email_type'    => 'html',
             ],
         ]);
 
@@ -77,9 +77,9 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 $url,
                 [
                     'email_address' => $email,
-                    'status' => 'subscribed',
-                    'merge_fields' => $mergeFields,
-                    'email_type' => 'html',
+                    'status'        => 'subscribed',
+                    'merge_fields'  => $mergeFields,
+                    'email_type'    => 'html',
                 ],
             ]);
 
@@ -99,8 +99,8 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 $url,
                 [
                     'email_address' => $email,
-                    'status' => 'subscribed',
-                    'email_type' => 'html',
+                    'status'        => 'subscribed',
+                    'email_type'    => 'html',
                 ],
             ]);
 
@@ -120,8 +120,8 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 $url,
                 [
                     'email_address' => $email,
-                    'status' => 'pending',
-                    'email_type' => 'text',
+                    'status'        => 'pending',
+                    'email_type'    => 'text',
                 ],
             ]);
 
@@ -236,14 +236,14 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 [
                     'campaigns',
                     [
-                        'type' => 'regular',
+                        'type'       => 'regular',
                         'recipients' => [
                             'list_id' => 123,
                         ],
                         'settings' => [
                             'subject_line' => $subject,
-                            'from_name' => $fromName,
-                            'reply_to' => $replyTo,
+                            'from_name'    => $fromName,
+                            'reply_to'     => $replyTo,
                         ],
                         'extraOption' => 'extraValue',
                     ],
@@ -257,7 +257,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->withArgs([
                 "campaigns/{$campaignId}/content",
                 [
-                    'html' => $html,
+                    'html'       => $html,
                     'plain text' => 'this is the plain text content',
                 ],
             ]);
