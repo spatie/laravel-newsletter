@@ -32,24 +32,23 @@ class NewsletterListCollection extends Collection
      * @param string $name
      *
      * @return \Spatie\Newsletter\NewsletterList
-     * 
+     *
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
      */
     public function findByName($name)
     {
-        if ((string) $name === '') {
+        if ((string)$name === '') {
             return $this->getDefault();
         }
 
-        $list = $this->first(function ($index, NewsletterList $newletterList) use ($name) {
-            return $newletterList->getName() === $name;
-        });
-
-        if (is_null($list)) {
-            throw InvalidNewsletterList::noListWithName($name);
+        foreach ($this->items as $newsletterList) {
+            if ($newsletterList->getName() === $name) {
+                return $newsletterList;
+            }
         }
 
-        return $list;
+        throw InvalidNewsletterList::noListWithName($name);
+
     }
 
     /**
@@ -59,14 +58,12 @@ class NewsletterListCollection extends Collection
      */
     public function getDefault()
     {
-        $defaultList = $this->first(function ($index, NewsletterList $newletterList) {
-            return $newletterList->getName() === $this->defaultListName;
-        });
-
-        if (is_null($defaultList)) {
-            throw InvalidNewsletterList::defaultListDoesNotExist($this->defaultListName);
+        foreach ($this->items as $newsletterList) {
+            if ($newsletterList->getName() === $this->defaultListName) {
+                return $newsletterList;
+            }
         }
 
-        return $defaultList;
+            throw InvalidNewsletterList::defaultListDoesNotExist($this->defaultListName);
     }
 }
