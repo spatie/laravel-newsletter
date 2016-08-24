@@ -51,7 +51,7 @@ class Newsletter
 
         $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
@@ -70,7 +70,7 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
@@ -86,7 +86,7 @@ class Newsletter
     public function hasMember($email, $listName = '')
     {
         $response = $this->getMember($email, $listName);
-        
+
         if (! isset($response['email_address'])) {
             return false;
         }
@@ -148,7 +148,7 @@ class Newsletter
 
         $response = $this->mailChimp->post('campaigns', $options);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
@@ -156,7 +156,7 @@ class Newsletter
             return $response;
         }
 
-        if (!$this->updateContent($response['id'], $html, $contentOptions)) {
+        if (! $this->updateContent($response['id'], $html, $contentOptions)) {
             return false;
         }
 
@@ -171,7 +171,7 @@ class Newsletter
 
         $response = $this->mailChimp->put("campaigns/{$campaignId}/content", $options);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
@@ -199,7 +199,7 @@ class Newsletter
      */
     public function lastActionSucceeded()
     {
-        return !$this->mailChimp->getLastError();
+        return ! $this->mailChimp->getLastError();
     }
 
     /**
