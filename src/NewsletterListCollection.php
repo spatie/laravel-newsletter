@@ -31,9 +31,9 @@ class NewsletterListCollection extends Collection
     /**
      * @param string $name
      *
-     * @return \Spatie\Newsletter\NewsletterList
-     * 
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     *
+     * @return \Spatie\Newsletter\NewsletterList
      */
     public function findByName($name)
     {
@@ -53,9 +53,9 @@ class NewsletterListCollection extends Collection
     }
 
     /**
-     * @return \Spatie\Newsletter\NewsletterList
-     *
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     *
+     * @return \Spatie\Newsletter\NewsletterList
      */
     public function getDefault()
     {

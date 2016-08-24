@@ -29,9 +29,9 @@ class Newsletter
      * @param string $listName
      * @param array  $options
      *
-     * @return array|bool
-     *
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     *
+     * @return array|bool
      */
     public function subscribe($email, $mergeFields = [], $listName = '', $options = [])
     {
@@ -39,8 +39,8 @@ class Newsletter
 
         $defaultOptions = [
             'email_address' => $email,
-            'status' => 'subscribed',
-            'email_type' => 'html',
+            'status'        => 'subscribed',
+            'email_type'    => 'html',
         ];
 
         if (count($mergeFields)) {
@@ -62,9 +62,9 @@ class Newsletter
      * @param string $email
      * @param string $listName
      *
-     * @return array|bool
-     *
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     *
+     * @return array|bool
      */
     public function getMember($email, $listName = '')
     {
@@ -86,8 +86,8 @@ class Newsletter
     public function hasMember($email, $listName = '')
     {
         $response = $this->getMember($email, $listName);
-        
-        if (! isset($response['email_address'])) {
+
+        if (!isset($response['email_address'])) {
             return false;
         }
 
@@ -102,9 +102,9 @@ class Newsletter
      * @param $email
      * @param string $listName
      *
-     * @return array|false
-     *
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     *
+     * @return array|false
      */
     public function unsubscribe($email, $listName = '')
     {
@@ -124,23 +124,23 @@ class Newsletter
      * @param array  $options
      * @param array  $contentOptions
      *
-     * @return array|bool
-     *
      * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     *
+     * @return array|bool
      */
     public function createCampaign($fromName, $replyTo, $subject, $html = '', $listName = '', $options = [], $contentOptions = [])
     {
         $list = $this->lists->findByName($listName);
 
         $defaultOptions = [
-            'type' => 'regular',
+            'type'       => 'regular',
             'recipients' => [
                 'list_id' => $list->getId(),
             ],
             'settings' => [
                 'subject_line' => $subject,
-                'from_name' => $fromName,
-                'reply_to' => $replyTo,
+                'from_name'    => $fromName,
+                'reply_to'     => $replyTo,
             ],
         ];
 
