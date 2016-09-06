@@ -75,7 +75,7 @@ To publish the config file to `app/config/laravel-newsletter.php` run:
 php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"
 ```
 
-This wil publish a file `laravel-newsletter.php` in your config directory with the following contents: 
+This will publish a file `laravel-newsletter.php` in your config directory with the following contents: 
 ```php
 return [
 
@@ -135,7 +135,7 @@ use Newsletter;
 Newsletter::subscribe('rincewind@discworld.com');
 ```
 
-Let's unsubcribe someone:
+Let's unsubscribe someone:
 
 ```php
 Newsletter::unsubscribe('the.luggage@discworld.com');
@@ -160,15 +160,15 @@ Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 
 ### Getting subscriber info
 
-You can get information on a subscriber by using the `getMember`-function:
+You can get information on a subscriber by using the `getMember` function:
 ```php
 Newsletter::getMember('lord.vetinari@discworld.com');
 ```
 
 This will return an array with information on the subscriber. If there's no one subscribed with that
-e-mailaddress the function will return `false`
+e-mail address the function will return `false`
 
-There's also a convience method to check if some in subscribed:
+There's also a convenience method to check if someone is already subscribed:
 
 ```php
 Newsletter::hasMember('nanny.ogg@discworld.com'); //returns a bool
@@ -198,14 +198,14 @@ Note the campaign will only be created, no mails will be sent out.
 
 ### Handling errors
 
-If something went wrong you can get the last error with
+If something went wrong you can get the last error with:
 ```php
 Newsletter::getLastError();
 ```
 
-If you just want to make sure if the last action succeeded you can to this:
+If you just want to make sure if the last action succeeded you can use:
 ```php
-Newsletter::lastActionSucceeded();
+Newsletter::lastActionSucceeded(); //returns a bool
 ```
 
 ### Need something else?
