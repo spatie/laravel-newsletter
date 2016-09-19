@@ -70,10 +70,6 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        if (! $this->lastActionSucceeded()) {
-            return false;
-        }
-
         return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
     }
 
