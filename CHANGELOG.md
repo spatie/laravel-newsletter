@@ -2,6 +2,10 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+## 3.0.5 - 2016-09-20
+
+- fix for fail when calling `hasMember` multiple times
+
 ## 3.0.4 - 2016-08-24
 
 - add L5.3 compatiblity 
