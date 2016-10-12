@@ -147,7 +147,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 "lists/123/members/{$subscriberHash}",
                 [
                     'status' => 'unsubscribed',
-                ]
+                ],
             ]);
 
         $this->newsletter->unsubscribe('freek@spatie.be');
@@ -172,7 +172,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 "lists/456/members/{$subscriberHash}",
                 [
                     'status' => 'unsubscribed',
-                ]                
+                ],
             ]);
 
         $this->newsletter->unsubscribe('freek@spatie.be', 'list2');
