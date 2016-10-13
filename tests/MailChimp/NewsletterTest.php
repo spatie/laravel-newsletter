@@ -141,9 +141,14 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->andReturn($subscriberHash);
 
         $this->mailChimpApi
-            ->shouldReceive('delete')
+            ->shouldReceive('patch')
             ->once()
-            ->withArgs(["lists/123/members/{$subscriberHash}"]);
+            ->withArgs([
+                "lists/123/members/{$subscriberHash}",
+                [
+                    'status' => 'unsubscribed',
+                ],
+            ]);
 
         $this->newsletter->unsubscribe('freek@spatie.be');
     }
@@ -161,9 +166,14 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->andReturn($subscriberHash);
 
         $this->mailChimpApi
-            ->shouldReceive('delete')
+            ->shouldReceive('patch')
             ->once()
-            ->withArgs(["lists/456/members/{$subscriberHash}"]);
+            ->withArgs([
+                "lists/456/members/{$subscriberHash}",
+                [
+                    'status' => 'unsubscribed',
+                ],
+            ]);
 
         $this->newsletter->unsubscribe('freek@spatie.be', 'list2');
     }

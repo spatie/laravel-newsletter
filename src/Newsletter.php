@@ -106,7 +106,9 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        $response = $this->mailChimp->delete("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+        $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [
+            'status' => 'unsubscribed',
+        ]);
 
         return $response;
     }
