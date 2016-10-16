@@ -158,6 +158,16 @@ You can also unsubscribe someone from a specific list:
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 ```
 
+### Deleting subscribers
+
+NOTE: Deleting is not the same as unsubscribing. Deleting loses all history (add/opt-in/edits) as well as removing them from the list. Unlike an unsubscribe, they can still be added back again later. This is for list-maintenance only. 
+If a subscriber is "opting out", you should `unsubscribe` instead!
+
+To delete a subscriber's record from the list permanently:
+```php
+Newsletter::delete('rincewind@discworld.com');
+```
+
 ### Getting subscriber info
 
 You can get information on a subscriber by using the `getMember` function:

@@ -114,6 +114,23 @@ class Newsletter
     }
 
     /**
+     * @param $email
+     * @param string $listName
+     *
+     * @return array|false
+     *
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
+    public function delete($email, $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $response = $this->mailChimp->delete("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+
+        return $response;
+    }
+
+    /**
      * @param string $fromName
      * @param string $replyTo
      * @param string $subject

@@ -179,6 +179,46 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_delete_someone()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('delete')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}"]);
+
+        $this->newsletter->delete('freek@spatie.be');
+    }
+
+    /** @test */
+    public function it_can_delete_someone_from_a_specific_list()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('delete')
+            ->once()
+            ->withArgs(["lists/456/members/{$subscriberHash}"]);
+
+        $this->newsletter->delete('freek@spatie.be', 'list2');
+    }
+
+    /** @test */
     public function it_exposes_the_api()
     {
         $api = $this->newsletter->getApi();
