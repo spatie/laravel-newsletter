@@ -261,6 +261,7 @@ class Newsletter
         }
 
         $options = array_merge($defaultOptions, $options);
+
         return $options;
     }
 }
