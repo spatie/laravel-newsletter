@@ -156,6 +156,19 @@ Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastNam
 ```
 That third argument is the name of a list you configured in the config file.
 
+You can also subscribe and/or update someone. The person will be subscribed or updated if he/she is already subscribed:
+
+ ```php
+ Newletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', lastname'=>'Bar']);
+ ```
+ 
+You can subscribe someone to one or more specific group(s)/interest(s) by using the fourth argument:
+
+```php
+Newsletter::subscribeOrUpdate('rincewind@dscworld.com', ['firstName'=>'Rince','lastName'=>'Wind'], 'subscribers', ['interests'=>['interestId'=>true, 'interestId'=>true]])
+```
+Simply add `false` if you want to remove someone from a group/interest.
+
 You can also unsubscribe someone from a specific list:
 ```php
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
