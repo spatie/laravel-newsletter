@@ -168,10 +168,10 @@ Newletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', 'la
 
 ### Deleting subscribers
 
-NOTE: Deleting is not the same as unsubscribing. Deleting loses all history (add/opt-in/edits) as well as removing them from the list. Unlike an unsubscribe, they can still be added back again later. This is for list-maintenance only.
-If a subscriber is "opting out", you should `unsubscribe` instead!
+Deleting is not the same as unsubscribing. Unlinke unsubscribing, deleting a member will result in the loss of all history (add/opt-in/edits) as well as removing them from the list. In most cases you want to use `unsubscribe` instead of `delete`.
 
-To delete a subscriber's record from the list permanently:
+Here's how to perform a delete:
+
 ```php
 Newsletter::delete('rincewind@discworld.com');
 ```
