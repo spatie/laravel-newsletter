@@ -60,6 +60,41 @@ class Newsletter
 
     /**
      * @param string $email
+     * @param array  $mergeFields
+     * @param string $listName
+     * @param array  $options
+     *
+     * @return array|bool
+     *
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
+    public function subscribeOrUpdate($email, $mergeFields = [], $listName = '', $options = [])
+    {
+        $list = $this->lists->findByName($listName);
+
+        $defaultOptions = [
+            'email_address' => $email,
+            'status' => 'subscribed',
+            'email_type' => 'html',
+        ];
+
+        if (count($mergeFields)) {
+            $defaultOptions['merge_fields'] = $mergeFields;
+        }
+
+        $options = array_merge($defaultOptions, $options);
+
+        $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param string $email
      * @param string $listName
      *
      * @return array|bool
