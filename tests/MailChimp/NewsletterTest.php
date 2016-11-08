@@ -69,8 +69,15 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $url = 'lists/123/members';
 
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
         $this->mailChimpApi->shouldReceive('put')->withArgs([
-            $url,
+            "{$url}/{$subscriberHash}",
             [
                 'email_address' => $email,
                 'status' => 'subscribed',
@@ -114,10 +121,17 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $url = 'lists/123/members';
 
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
         $this->mailChimpApi->shouldReceive('put')
             ->once()
             ->withArgs([
-                $url,
+                "{$url}/{$subscriberHash}",
                 [
                     'email_address' => $email,
                     'status' => 'subscribed',
@@ -157,10 +171,17 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $url = 'lists/456/members';
 
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
         $this->mailChimpApi->shouldReceive('put')
             ->once()
             ->withArgs([
-                $url,
+                "{$url}/{$subscriberHash}",
                 [
                     'email_address' => $email,
                     'status' => 'subscribed',
@@ -199,10 +220,17 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $url = 'lists/123/members';
 
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
         $this->mailChimpApi->shouldReceive('put')
             ->once()
             ->withArgs([
-                $url,
+                "{$url}/{$subscriberHash}",
                 [
                     'email_address' => $email,
                     'status' => 'pending',
