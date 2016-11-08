@@ -2,6 +2,10 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+## 3.2.0 - 2016-11-08
+
+- add `subscribeOrUpdate` method
+
 ## 3.1.0 - 2016-10-17
 
 - add `delete` method
