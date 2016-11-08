@@ -37,17 +37,7 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        $defaultOptions = [
-            'email_address' => $email,
-            'status' => 'subscribed',
-            'email_type' => 'html',
-        ];
-
-        if (count($mergeFields)) {
-            $defaultOptions['merge_fields'] = $mergeFields;
-        }
-
-        $options = array_merge($defaultOptions, $options);
+        $options = $this->getSubscriptionOptions($email, $mergeFields, $options);
 
         $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options);
 
@@ -72,17 +62,7 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        $defaultOptions = [
-            'email_address' => $email,
-            'status' => 'subscribed',
-            'email_type' => 'html',
-        ];
-
-        if (count($mergeFields)) {
-            $defaultOptions['merge_fields'] = $mergeFields;
-        }
-
-        $options = array_merge($defaultOptions, $options);
+        $options = $this->getSubscriptionOptions($email, $mergeFields, $options);
 
         $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
 
@@ -260,5 +240,27 @@ class Newsletter
     protected function getSubscriberHash($email)
     {
         return $this->mailChimp->subscriberHash($email);
+    }
+
+    /**
+     * @param $email
+     * @param $mergeFields
+     * @param $options
+     * @return array
+     */
+    protected function getSubscriptionOptions($email, $mergeFields, $options)
+    {
+        $defaultOptions = [
+            'email_address' => $email,
+            'status' => 'subscribed',
+            'email_type' => 'html',
+        ];
+
+        if (count($mergeFields)) {
+            $defaultOptions['merge_fields'] = $mergeFields;
+        }
+
+        $options = array_merge($defaultOptions, $options);
+        return $options;
     }
 }

@@ -8,7 +8,7 @@ All Notable changes to `laravel-newsletter` will be documented in this file
 
 ## 3.0.6 - 2016-10-13
 
-- when unsubcribing a user the status of that user will be set to `unsubscribed` instead out downright deleting the user
+- when unsubcribing a user the status of that user will be set to `unsubscribed` instead of downright deleting the user
 
 ## 3.0.5 - 2016-09-20
 
