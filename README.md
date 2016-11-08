@@ -161,9 +161,9 @@ You can also unsubscribe someone from a specific list:
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 ```
 
-You can also subscribe and/or update someone. He/She will subscribed or updated if he/she is already subscribed:
+You can also subscribe and/or update someone. He/She will be subscribed or updated if he/she is already subscribed:
 ```php
-Newletter::unsubscribe('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
+Newletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
 ```
 
 ### Deleting subscribers
