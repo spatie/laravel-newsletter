@@ -20,6 +20,9 @@ Newsletter::subscribe('sam.vines@discworld.com', ['firstName'=>'Sam', 'lastName'
 //Subscribe someone to a specific list by using the third argument:
 Newsletter::subscribe('nanny.ogg@discworld.com', ['firstName'=>'Nanny', 'lastName'=>'Ogg'], 'Name of your list');
 
+//Subscribe or update someone
+Newsletter::subscribeOrUpdate('sam.vines@discworld.com', ['firstName'=>'Foo', 'lastName'=>'Bar']);
+
 //Get some member info, returns an array described in the official docs
 Newsletter::getMember('lord.vetinari@discworld.com');
 
@@ -75,7 +78,7 @@ To publish the config file to `app/config/laravel-newsletter.php` run:
 php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"
 ```
 
-This will publish a file `laravel-newsletter.php` in your config directory with the following contents: 
+This will publish a file `laravel-newsletter.php` in your config directory with the following contents:
 ```php
 return [
 
@@ -125,7 +128,7 @@ After you've installed the package and filled in the values in the config-file w
 use Newsletter;
 ```
 
-### Subscribing and unsubscribing
+### Subscribing, updating and unsubscribing
 
 Subscribing an email address can be done like this:
 
@@ -158,9 +161,14 @@ You can also unsubscribe someone from a specific list:
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 ```
 
+You can also subscribe and/or update someone. He/She will subscribed or updated if he/she is already subscribed:
+```php
+Newletter::unsubscribe('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
+```
+
 ### Deleting subscribers
 
-NOTE: Deleting is not the same as unsubscribing. Deleting loses all history (add/opt-in/edits) as well as removing them from the list. Unlike an unsubscribe, they can still be added back again later. This is for list-maintenance only. 
+NOTE: Deleting is not the same as unsubscribing. Deleting loses all history (add/opt-in/edits) as well as removing them from the list. Unlike an unsubscribe, they can still be added back again later. This is for list-maintenance only.
 If a subscriber is "opting out", you should `unsubscribe` instead!
 
 To delete a subscriber's record from the list permanently:

@@ -63,6 +63,25 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_subscribe_or_update_someone()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('put')->withArgs([
+            $url,
+            [
+                'email_address' => $email,
+                'status' => 'subscribed',
+                'email_type' => 'html',
+            ],
+        ]);
+
+        $this->newsletter->subscribeOrUpdate($email);
+    }
+
+    /** @test */
     public function it_can_subscribe_someone_with_merge_fields()
     {
         $email = 'freek@spatie.be';
@@ -87,6 +106,30 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_subscribe_or_update_someone_with_merge_fields()
+    {
+        $email = 'freek@spatie.be';
+
+        $mergeFields = ['FNAME' => 'Freek'];
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'merge_fields' => $mergeFields,
+                    'email_type' => 'html',
+                ],
+            ]);
+
+        $this->newsletter->subscribeOrUpdate($email, $mergeFields);
+    }
+
+    /** @test */
     public function it_can_subscribe_someone_to_an_alternative_list()
     {
         $email = 'freek@spatie.be';
@@ -108,6 +151,27 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_subscribe_or_update_someone_to_an_alternative_list()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/456/members';
+
+        $this->mailChimpApi->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'email_type' => 'html',
+                ],
+            ]);
+
+        $this->newsletter->subscribeOrUpdate($email, [], 'list2');
+    }
+
+    /** @test */
     public function it_can_override_the_defaults_when_subscribing_someone()
     {
         $email = 'freek@spatie.be';
@@ -126,6 +190,27 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ]);
 
         $this->newsletter->subscribe($email, [], '', ['email_type' => 'text', 'status' => 'pending']);
+    }
+
+    /** @test */
+    public function it_can_override_the_defaults_when_subscribing_or_updating_someone()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                $url,
+                [
+                    'email_address' => $email,
+                    'status' => 'pending',
+                    'email_type' => 'text',
+                ],
+            ]);
+
+        $this->newsletter->subscribeOrUpdate($email, [], '', ['email_type' => 'text', 'status' => 'pending']);
     }
 
     /** @test */
