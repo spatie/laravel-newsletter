@@ -84,7 +84,7 @@ class Newsletter
 
         $options = array_merge($defaultOptions, $options);
 
-        $response = $this->mailChimp->put("lists/{$list->getId()}/members/" . $this->getSubscriberHash($email), $options);
+        $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
 
         if (! $this->lastActionSucceeded()) {
             return false;
