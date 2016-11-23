@@ -22,6 +22,8 @@ class NewsletterServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Newsletter::class, function () {
             $mailChimp = new Mailchimp(config('laravel-newsletter.apiKey'));
+            
+            $mailChimp->verify_ssl = config('laravel-newsletter.ssl');
 
             $configuredLists = NewsletterListCollection::createFromConfig(config('laravel-newsletter'));
 
