@@ -9,11 +9,6 @@ return [
         'apiKey' => env('MAILCHIMP_APIKEY'),
 
         /*
-         * Use HTTP or HTTPS protocol
-         */
-        'ssl' => env('MAILCHIMP_SSL', true),
-
-        /*
          * When not specifying a listname in the various methods, use the list with this name
          */
         'defaultListName' => 'subscribers',
@@ -41,4 +36,9 @@ return [
                 'id' => env('MAILCHIMP_LIST_ID'),
             ],
         ],
+        
+        /*
+         * If you're having trouble with https connections, set this to false.
+         */
+        'ssl' => true,
 ];
