@@ -2,6 +2,10 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+## 3.3.0 - 2016-11-24
+
+- add support for connection to MailChimp via http
+
 ## 3.2.0 - 2016-11-08
 
 - add `subscribeOrUpdate` method
