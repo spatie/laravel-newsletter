@@ -3,9 +3,9 @@
 namespace Spatie\Newsletter\Test;
 
 use PHPUnit_Framework_TestCase;
-use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 use Spatie\Newsletter\NewsletterList;
 use Spatie\Newsletter\NewsletterListCollection;
+use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 
 class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
 {
