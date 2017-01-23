@@ -2,6 +2,10 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+## 3.4.0 - 2017-01-23
+
+- add support for Laravel 5.4
+
 ## 3.3.0 - 2016-11-24
 
 - add support for connection to MailChimp via http
