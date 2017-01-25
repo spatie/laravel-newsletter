@@ -2,8 +2,8 @@
 
 namespace Spatie\Newsletter\Test;
 
-use DrewM\MailChimp\MailChimp;
 use Mockery;
+use DrewM\MailChimp\MailChimp;
 use PHPUnit_Framework_TestCase;
 use Spatie\Newsletter\Newsletter;
 use Spatie\Newsletter\NewsletterListCollection;
