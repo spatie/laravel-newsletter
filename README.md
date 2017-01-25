@@ -161,7 +161,7 @@ That third argument is the name of a list you configured in the config file.
 You can also subscribe and/or update someone. The person will be subscribed or updated if he/she is already subscribed:
 
  ```php
- Newletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
+ Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
  ```
  
 You can subscribe someone to one or more specific group(s)/interest(s) by using the fourth argument:
@@ -174,11 +174,6 @@ Simply add `false` if you want to remove someone from a group/interest.
 You can also unsubscribe someone from a specific list:
 ```php
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
-```
-
-You can also subscribe and/or update someone. He/She will be subscribed or updated if he/she is already subscribed:
-```php
-Newletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
 ```
 
 ### Deleting subscribers
