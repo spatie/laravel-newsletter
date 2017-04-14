@@ -39,15 +39,15 @@ Spatie is a webdesign agency in Antwerp, Belgium. You'll find an overview of all
 
 ## Postcardware
 
-You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment you are required to send us a postcard from your hometown, mentioning which of our package(s) you are using.
+You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment we appreciated you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
 
 Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
 
-The best postcards will get published on the open source page on our website.
+All postcards will are published [on our website](https://spatie.be/en/opensource/laravel).
 
 ## Installation
 
-You can install this package via Composer using:
+You can install this package via composer using:
 
 ```bash
 composer require spatie/laravel-newsletter
