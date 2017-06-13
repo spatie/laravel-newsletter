@@ -177,7 +177,7 @@ Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 
 ### Deleting subscribers
 
-Deleting is not the same as unsubscribing. Unlinke unsubscribing, deleting a member will result in the loss of all history (add/opt-in/edits) as well as removing them from the list. In most cases you want to use `unsubscribe` instead of `delete`.
+Deleting is not the same as unsubscribing. Unlike unsubscribing, deleting a member will result in the loss of all history (add/opt-in/edits) as well as removing them from the list. In most cases you want to use `unsubscribe` instead of `delete`.
 
 Here's how to perform a delete:
 
