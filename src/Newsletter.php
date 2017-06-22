@@ -142,11 +142,11 @@ class Newsletter
     public function updateEmailAddress($currentEmailAddress, $newEmailAddress, $listName = '')
     {
         $list = $this->lists->findByName($listName);
-        
+
         $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($currentEmailAddress)}", [
             'email_address' => $newEmailAddress,
         ]);
-        
+
         return $response;
     }
 
