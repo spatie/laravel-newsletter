@@ -127,6 +127,28 @@ class Newsletter
 
         return $response;
     }
+    
+    /**
+     * Update the email address of an existing list member
+     *
+     * @param string $currentEmailAddress
+     * @param string $newEmailAddress
+     * @param string $listName
+     *
+     * @return array|false
+     *
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
+    public function updateEmailAddress($currentEmailAddress, $newEmailAddress, $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+        
+        $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($currentEmailAddress)}", [
+            'email_address' => $newEmailAddress
+        ]);
+        
+        return $response;
+    }
 
     /**
      * @param $email
