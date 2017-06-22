@@ -127,7 +127,7 @@ class Newsletter
 
         return $response;
     }
-    
+
     /**
      * Update the email address of an existing list member.
      *
