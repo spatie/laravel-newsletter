@@ -2,6 +2,10 @@
 
 All Notable changes to `laravel-newsletter` will be documented in this file
 
+## 3.5.0 - 2017-06-23
+
+- add method to update existing email address
+
 ## 3.4.0 - 2017-01-23
 
 - add support for Laravel 5.4
