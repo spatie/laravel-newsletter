@@ -240,6 +240,33 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $this->newsletter->subscribeOrUpdate($email, [], '', ['email_type' => 'text', 'status' => 'pending']);
     }
+    
+    /** @test */
+    public function it_can_change_the_email_address_of_a_subscriber()
+    {
+        $email = 'freek@spatie.be';
+        $newEmail = 'phreak@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi->shouldReceive('patch')
+            ->once()
+            ->withArgs([
+                "{$url}/{$subscriberHash}",
+                [
+                    'email_address' => $email,
+                ],
+            ]);
+
+        $this->newsletter->updateEmailAddress($email, $newEmail);        
+    }
 
     /** @test */
     public function it_can_unsubscribe_someone()
