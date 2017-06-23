@@ -25,7 +25,7 @@ Newsletter::subscribe('nanny.ogg@discworld.com', ['firstName'=>'Nanny', 'lastNam
 Newsletter::subscribeOrUpdate('sam.vines@discworld.com', ['firstName'=>'Foo', 'lastName'=>'Bar']);
 
 // Change the email address of an existing subscriber
-Newsletter:updateEmailAddress('rincewind@discworld.com', 'the.luggage@discworld.com');
+Newsletter::updateEmailAddress('rincewind@discworld.com', 'the.luggage@discworld.com');
 
 //Get some member info, returns an array described in the official docs
 Newsletter::getMember('lord.vetinari@discworld.com');
