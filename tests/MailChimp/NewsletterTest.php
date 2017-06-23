@@ -240,7 +240,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
         $this->newsletter->subscribeOrUpdate($email, [], '', ['email_type' => 'text', 'status' => 'pending']);
     }
-    
+
     /** @test */
     public function it_can_change_the_email_address_of_a_subscriber()
     {
@@ -265,7 +265,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
                 ],
             ]);
 
-        $this->newsletter->updateEmailAddress($email, $newEmail);        
+        $this->newsletter->updateEmailAddress($email, $newEmail);
     }
 
     /** @test */
