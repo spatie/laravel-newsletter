@@ -256,12 +256,13 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->withArgs([$email])
             ->andReturn($subscriberHash);
 
-        $this->mailChimpApi->shouldReceive('patch')
+        $this->mailChimpApi
+            ->shouldReceive('patch')
             ->once()
             ->withArgs([
                 "{$url}/{$subscriberHash}",
                 [
-                    'email_address' => $email,
+                    'email_address' => $newEmail,
                 ],
             ]);
 
