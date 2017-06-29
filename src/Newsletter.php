@@ -74,6 +74,19 @@ class Newsletter
     }
 
     /**
+     * @param string $listName
+     *
+     * @param array $parameters
+     * @return array|bool
+     */
+    public function getMembers($listName = '', $parameters = [])
+    {
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("lists/{$list->getId()}/members", $parameters);
+    }
+
+    /**
      * @param string $email
      * @param string $listName
      *
@@ -86,6 +99,21 @@ class Newsletter
         $list = $this->lists->findByName($listName);
 
         return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+    }
+
+    /**
+     * @param string $email
+     * @param string $listName
+     *
+     * @return array|bool
+     *
+     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
+     */
+    public function getMemberActivity($email, $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/activity");
     }
 
     /**
@@ -215,6 +243,12 @@ class Newsletter
         return $response;
     }
 
+    /**
+     * @param $campaignId
+     * @param $html
+     * @param array $options
+     * @return array|bool|false
+     */
     public function updateContent($campaignId, $html, $options = [])
     {
         $defaultOptions = compact('html');
