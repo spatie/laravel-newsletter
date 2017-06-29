@@ -373,7 +373,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
         $this->mailChimpApi
             ->shouldReceive('get')
             ->once()
-            ->withArgs(["lists/123/members", []]);
+            ->withArgs(['lists/123/members', []]);
 
         $this->newsletter->getMembers();
     }
