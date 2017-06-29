@@ -368,6 +368,17 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_get_the_list_members()
+    {
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(["lists/123/members", []]);
+
+        $this->newsletter->getMembers();
+    }
+
+    /** @test */
     public function it_can_get_the_member()
     {
         $email = 'freek@spatie.be';
@@ -385,6 +396,26 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
             ->withArgs(["lists/123/members/{$subscriberHash}"]);
 
         $this->newsletter->getMember($email);
+    }
+
+    /** @test */
+    public function it_can_get_the_member_activity()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}/activity"]);
+
+        $this->newsletter->getMemberActivity($email);
     }
 
     /** @test */

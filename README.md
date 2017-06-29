@@ -30,6 +30,12 @@ Newsletter::updateEmailAddress('rincewind@discworld.com', 'the.luggage@discworld
 //Get some member info, returns an array described in the official docs
 Newsletter::getMember('lord.vetinari@discworld.com');
 
+//Get the member activity, returns an array with recent activity for a given user
+Newsletter::getMemberActivity('lord.vetinari@discworld.com');
+
+//Get the members for a given list, optionally filtered by passing a second array of parameters
+Newsletter::getMembers();
+
 //Returns a boolean
 Newsletter::hasMember('greebo@discworld.com');
 
