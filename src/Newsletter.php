@@ -126,7 +126,7 @@ class Newsletter
     {
         $response = $this->getMember($email, $listName);
 
-        if (! isset($response['email_address'])) {
+        if (! ($response['status'] == 'subscribed')) {
             return false;
         }
 
