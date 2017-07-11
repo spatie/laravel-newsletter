@@ -20,7 +20,7 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
     {
         $this->mailChimpApi = Mockery::mock(MailChimp::class);
 
-        $this->mailChimpApi->shouldReceive('getLastError')->andReturn(false);
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
 
         $newsletterLists = NewsletterListCollection::createFromConfig(
             [
