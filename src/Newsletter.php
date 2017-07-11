@@ -285,7 +285,7 @@ class Newsletter
      */
     public function lastActionSucceeded()
     {
-        return ! $this->mailChimp->getLastError();
+        return $this->mailChimp->success();
     }
 
     /**
