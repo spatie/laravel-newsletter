@@ -216,7 +216,7 @@ Newsletter::hasMember('nanny.ogg@discworld.com'); //returns a bool
 In addition to this you can also check if a user is subscribed to your list:
 
 ```php
-Newsletter:isSubscribed('lord.vetinari@discworld.com'); //returns a bool
+Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a bool
 ```
 
 ### Creating a campaign
