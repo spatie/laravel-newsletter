@@ -36,6 +36,9 @@ Newsletter::getMemberActivity('lord.vetinari@discworld.com');
 //Get the members for a given list, optionally filtered by passing a second array of parameters
 Newsletter::getMembers();
 
+//Check if a member is subscribed to a list
+Newsletter::isSubscribed('rincewind@discworld.com');
+
 //Returns a boolean
 Newsletter::hasMember('greebo@discworld.com');
 
@@ -208,6 +211,12 @@ There's also a convenience method to check if someone is already subscribed:
 
 ```php
 Newsletter::hasMember('nanny.ogg@discworld.com'); //returns a bool
+```
+
+In addition to this you can also check if a user is subscribed to your list:
+
+```php
+Newsletter:isSubscribed('lord.vetinari@discworld.com'); //returns a bool
 ```
 
 ### Creating a campaign
