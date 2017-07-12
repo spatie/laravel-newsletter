@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file
 
+## 3.7.0 - 2017-07-12
+
+- add `isSubscribed`
+
 ## 3.6.1 - 2017-07-11
 
 - fix `lastActionSucceeded` check
