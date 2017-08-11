@@ -10,28 +10,18 @@ class NewsletterList
     /** @var array */
     public $properties = [];
 
-    /**
-     * @param string $name
-     * @param array  $properties
-     */
-    public function __construct($name, array $properties)
+    public function __construct(string $name, array $properties)
     {
         $this->name = $name;
         $this->properties = $properties;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->properties['id'];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

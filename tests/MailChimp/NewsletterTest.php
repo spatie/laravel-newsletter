@@ -4,11 +4,11 @@ namespace Spatie\Newsletter\Test;
 
 use Mockery;
 use DrewM\MailChimp\MailChimp;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Spatie\Newsletter\Newsletter;
 use Spatie\Newsletter\NewsletterListCollection;
 
-class NewsletterTest extends PHPUnit_Framework_TestCase
+class NewsletterTest extends TestCase
 {
     /** @var Mockery\Mock */
     protected $mailChimpApi;
@@ -38,9 +38,13 @@ class NewsletterTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        Mockery::close();
-
         parent::tearDown();
+
+        if ($container = Mockery::getContainer()) {
+            $this->addToAssertionCount($container->mockery_getExpectationCount());
+        }
+
+        Mockery::close();
     }
 
     /** @test */
