@@ -221,22 +221,16 @@ Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a bool
 
 ### Creating a campaign
 
-This is how you create a campaign:
+This the signature of `createCampaign`:
 ```php
-/**
- * @param string $fromName
- * @param string $replyTo
- * @param string $subject
- * @param string $html
- * @param string $listName
- * @param array  $options
- * @param array  $contentOptions
- *
- * @return array|bool
- *
- * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
- */
-public function createCampaign($fromName, $replyTo, $subject, $html = '', $listName = '', $options = [], $contentOptions = [])
+public function createCampaign(
+        string $fromName,
+        string $replyTo,
+        string $subject,
+        string $html = '',
+        string $listName = '',
+        array $options = [],
+        array $contentOptions = [])
 ```
 
 Note the campaign will only be created, no mails will be sent out.

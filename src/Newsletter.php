@@ -131,19 +131,7 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * @param string $fromName
-     * @param string $replyTo
-     * @param string $subject
-     * @param string $html
-     * @param string $listName
-     * @param array  $options
-     * @param array  $contentOptions
-     *
-     * @return array|bool
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
+
     public function createCampaign(
         string $fromName,
         string $replyTo,
