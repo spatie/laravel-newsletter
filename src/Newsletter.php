@@ -131,7 +131,6 @@ class Newsletter
         return $response;
     }
 
-
     public function createCampaign(
         string $fromName,
         string $replyTo,
