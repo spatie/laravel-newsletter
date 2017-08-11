@@ -50,8 +50,6 @@ class NewsletterListCollectionTest extends TestCase
     /** @test */
     public function it_will_throw_an_exception_when_using_a_default_list_that_does_not_exist()
     {
-
-
         $newsletterListCollection = NewsletterListCollection::createFromConfig(
             [
                 'lists' => [
