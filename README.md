@@ -66,24 +66,7 @@ composer require spatie/laravel-newsletter
 
 You must also install this service provider.
 
-```php
-// config/app.php
-'providers' => [
-    ...
-    Spatie\Newsletter\NewsletterServiceProvider::class,
-    ...
-];
-```
-
-If you want to make use of the facade you must install it as well.
-
-```php
-// config/app.php
-'aliases' => [
-    ..
-    'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
-];
-```
+The package will automatically register itself.
 
 To publish the config file to `app/config/laravel-newsletter.php` run:
 
