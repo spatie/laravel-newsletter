@@ -2,10 +2,10 @@
 
 namespace Spatie\Newsletter\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Spatie\Newsletter\NewsletterList;
 
-class NewsletterListTest extends PHPUnit_Framework_TestCase
+class NewsletterListTest extends TestCase
 {
     protected $newsletterList;
 

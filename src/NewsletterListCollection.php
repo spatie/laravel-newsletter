@@ -10,11 +10,6 @@ class NewsletterListCollection extends Collection
     /** @var string */
     public $defaultListName = '';
 
-    /**
-     * @param array $config
-     *
-     * @return static
-     */
     public static function createFromConfig(array $config)
     {
         $collection = new static();
@@ -28,14 +23,7 @@ class NewsletterListCollection extends Collection
         return $collection;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return \Spatie\Newsletter\NewsletterList
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function findByName($name)
+    public function findByName(string $name): NewsletterList
     {
         if ((string) $name === '') {
             return $this->getDefault();
@@ -50,12 +38,7 @@ class NewsletterListCollection extends Collection
         throw InvalidNewsletterList::noListWithName($name);
     }
 
-    /**
-     * @return \Spatie\Newsletter\NewsletterList
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function getDefault()
+    public function getDefault(): NewsletterList
     {
         foreach ($this->items as $newsletterList) {
             if ($newsletterList->getName() === $this->defaultListName) {

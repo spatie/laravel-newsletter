@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file
 
+## 4.0.0 - 2017-08-30
+
+- added support for Laravel 5.5, dropped support for Laravel 5.4
+- renamed config file from `laravel-newsletter` to `newsletter`
+
 ## 3.7.0 - 2017-07-12
 
 - add `isSubscribed`

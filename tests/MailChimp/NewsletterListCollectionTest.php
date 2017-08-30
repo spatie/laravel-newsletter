@@ -2,12 +2,12 @@
 
 namespace Spatie\Newsletter\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Spatie\Newsletter\NewsletterList;
 use Spatie\Newsletter\NewsletterListCollection;
 use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 
-class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
+class NewsletterListCollectionTest extends TestCase
 {
     protected $newsletterListCollection;
 
@@ -34,7 +34,7 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(NewsletterList::class, $list);
 
-        $this->assertSame(2, $list->getId());
+        $this->assertEquals(2, $list->getId());
     }
 
     /** @test */
@@ -44,14 +44,12 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(NewsletterList::class, $list);
 
-        $this->assertSame(3, $list->getId());
+        $this->assertEquals(3, $list->getId());
     }
 
     /** @test */
     public function it_will_throw_an_exception_when_using_a_default_list_that_does_not_exist()
     {
-        $this->setExpectedException(InvalidNewsletterList::class);
-
         $newsletterListCollection = NewsletterListCollection::createFromConfig(
             [
                 'lists' => [
@@ -62,13 +60,15 @@ class NewsletterListCollectionTest extends PHPUnit_Framework_TestCase
             ]
         );
 
+        $this->expectException(InvalidNewsletterList::class);
+
         $newsletterListCollection->findByName('');
     }
 
     /** @test */
     public function it_will_throw_an_exception_when_trying_to_find_a_list_that_does_not_exist()
     {
-        $this->setExpectedException(InvalidNewsletterList::class);
+        $this->expectException(InvalidNewsletterList::class);
 
         $this->newsletterListCollection->findByName('blabla');
     }

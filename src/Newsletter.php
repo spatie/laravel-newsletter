@@ -12,10 +12,6 @@ class Newsletter
     /** * @var \Spatie\Newsletter\NewsletterListCollection */
     protected $lists;
 
-    /**
-     * @param \DrewM\MailChimp\MailChimp                  $mailChimp
-     * @param \Spatie\Newsletter\NewsletterListCollection $lists
-     */
     public function __construct(MailChimp $mailChimp, NewsletterListCollection $lists)
     {
         $this->mailChimp = $mailChimp;
@@ -23,17 +19,7 @@ class Newsletter
         $this->lists = $lists;
     }
 
-    /**
-     * @param string $email
-     * @param array  $mergeFields
-     * @param string $listName
-     * @param array  $options
-     *
-     * @return array|bool
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function subscribe($email, $mergeFields = [], $listName = '', $options = [])
+    public function subscribe(string $email, array $mergeFields = [], string $listName = '', array $options = [])
     {
         $list = $this->lists->findByName($listName);
 
@@ -48,17 +34,7 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * @param string $email
-     * @param array  $mergeFields
-     * @param string $listName
-     * @param array  $options
-     *
-     * @return array|bool
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function subscribeOrUpdate($email, $mergeFields = [], $listName = '', $options = [])
+    public function subscribeOrUpdate(string $email, array $mergeFields = [], string $listName = '', array $options = [])
     {
         $list = $this->lists->findByName($listName);
 
@@ -73,56 +49,28 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * @param string $listName
-     *
-     * @param array $parameters
-     * @return array|bool
-     */
-    public function getMembers($listName = '', $parameters = [])
+    public function getMembers(string $listName = '', array $parameters = [])
     {
         $list = $this->lists->findByName($listName);
 
         return $this->mailChimp->get("lists/{$list->getId()}/members", $parameters);
     }
 
-    /**
-     * @param string $email
-     * @param string $listName
-     *
-     * @return array|bool
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function getMember($email, $listName = '')
+    public function getMember(string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
         return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
     }
 
-    /**
-     * @param string $email
-     * @param string $listName
-     *
-     * @return array|bool
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function getMemberActivity($email, $listName = '')
+    public function getMemberActivity(string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
         return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/activity");
     }
 
-    /**
-     * @param string $email
-     * @param string $listName
-     *
-     * @return bool
-     */
-    public function hasMember($email, $listName = '')
+    public function hasMember(string $email, string $listName = ''): bool
     {
         $response = $this->getMember($email, $listName);
 
@@ -137,13 +85,7 @@ class Newsletter
         return true;
     }
 
-    /**
-     * @param string $email
-     * @param string $listName
-     *
-     * @return bool
-     */
-    public function isSubscribed($email, $listName = '')
+    public function isSubscribed(string $email, string $listName = ''): bool
     {
         $response = $this->getMember($email, $listName);
 
@@ -158,15 +100,7 @@ class Newsletter
         return true;
     }
 
-    /**
-     * @param $email
-     * @param string $listName
-     *
-     * @return array|false
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function unsubscribe($email, $listName = '')
+    public function unsubscribe(string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
@@ -177,18 +111,7 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * Update the email address of an existing list member.
-     *
-     * @param string $currentEmailAddress
-     * @param string $newEmailAddress
-     * @param string $listName
-     *
-     * @return array|false
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function updateEmailAddress($currentEmailAddress, $newEmailAddress, $listName = '')
+    public function updateEmailAddress(string $currentEmailAddress, string $newEmailAddress, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
@@ -199,15 +122,7 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * @param $email
-     * @param string $listName
-     *
-     * @return array|false
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function delete($email, $listName = '')
+    public function delete(string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
@@ -216,20 +131,14 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * @param string $fromName
-     * @param string $replyTo
-     * @param string $subject
-     * @param string $html
-     * @param string $listName
-     * @param array  $options
-     * @param array  $contentOptions
-     *
-     * @return array|bool
-     *
-     * @throws \Spatie\Newsletter\Exceptions\InvalidNewsletterList
-     */
-    public function createCampaign($fromName, $replyTo, $subject, $html = '', $listName = '', $options = [], $contentOptions = [])
+    public function createCampaign(
+        string $fromName,
+        string $replyTo,
+        string $subject,
+        string $html = '',
+        string $listName = '',
+        array $options = [],
+        array $contentOptions = [])
     {
         $list = $this->lists->findByName($listName);
 
@@ -264,13 +173,7 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * @param $campaignId
-     * @param $html
-     * @param array $options
-     * @return array|bool|false
-     */
-    public function updateContent($campaignId, $html, $options = [])
+    public function updateContent(string $campaignId, string $html, array $options = [])
     {
         $defaultOptions = compact('html');
 
@@ -285,10 +188,7 @@ class Newsletter
         return $response;
     }
 
-    /**
-     * @return \DrewM\MailChimp\MailChimp
-     */
-    public function getApi()
+    public function getApi(): MailChimp
     {
         return $this->mailChimp;
     }
@@ -301,31 +201,17 @@ class Newsletter
         return $this->mailChimp->getLastError();
     }
 
-    /**
-     * @return bool
-     */
-    public function lastActionSucceeded()
+    public function lastActionSucceeded(): bool
     {
         return $this->mailChimp->success();
     }
 
-    /**
-     * @param string $email
-     *
-     * @return string
-     */
-    protected function getSubscriberHash($email)
+    protected function getSubscriberHash(string $email): string
     {
         return $this->mailChimp->subscriberHash($email);
     }
 
-    /**
-     * @param $email
-     * @param $mergeFields
-     * @param $options
-     * @return array
-     */
-    protected function getSubscriptionOptions($email, $mergeFields, $options)
+    protected function getSubscriptionOptions(string $email, array $mergeFields, array $options): array
     {
         $defaultOptions = [
             'email_address' => $email,
