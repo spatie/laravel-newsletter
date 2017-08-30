@@ -34,6 +34,13 @@ class Newsletter
         return $response;
     }
 
+    public function subscribePending(string $email, array $mergeFields = [], string $listName = '', array $options = [])
+    {
+        $options = array_merge($options, ['status' => 'pending']);
+
+        return $this->subscribe($email, $mergeFields, $listName, $options);
+    }
+
     public function subscribeOrUpdate(string $email, array $mergeFields = [], string $listName = '', array $options = [])
     {
         $list = $this->lists->findByName($listName);
