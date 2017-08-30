@@ -67,6 +67,25 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_can_subscribe_someone_as_pending()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('post')->withArgs([
+            $url,
+            [
+                'email_address' => $email,
+                'status' => 'pending',
+                'email_type' => 'html',
+            ],
+        ]);
+
+        $this->newsletter->subscribe($email);
+    }
+
+    /** @test */
     public function it_can_subscribe_or_update_someone()
     {
         $email = 'freek@spatie.be';
