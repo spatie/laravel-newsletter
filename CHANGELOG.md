@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file
 
+## 4.1.0 - 2017-08-31
+
+- add `subscribePending`
+
 ## 4.0.0 - 2017-08-30
 
 - added support for Laravel 5.5, dropped support for Laravel 5.4
