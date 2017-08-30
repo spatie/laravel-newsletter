@@ -82,7 +82,7 @@ class NewsletterTest extends TestCase
             ],
         ]);
 
-        $this->newsletter->subscribe($email);
+        $this->newsletter->subscribePending($email);
     }
 
     /** @test */
