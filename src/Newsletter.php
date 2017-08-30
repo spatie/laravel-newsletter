@@ -34,11 +34,18 @@ class Newsletter
         return $response;
     }
 
+    public function subscribePending(string $email, array $mergeFields = [], string $listName = '', array $options = [])
+    {
+        $options = array_merge($options, ['status' => 'pending']);
+
+        return $this->subscribe($email, $mergeFields, $listName, $options);
+    }
+
     public function subscribeOrUpdate(string $email, array $mergeFields = [], string $listName = '', array $options = [])
     {
         $list = $this->lists->findByName($listName);
 
-        $options = $this->getSubscriptionOptions($email, $mergeFields, $options);
+        $options = $this->getSubscriptionOptions($email, $mergeFields, $options, $options);
 
         $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
 
