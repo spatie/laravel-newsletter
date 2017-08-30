@@ -21,6 +21,9 @@ Newsletter::subscribe('sam.vines@discworld.com', ['firstName'=>'Sam', 'lastName'
 //Subscribe someone to a specific list by using the third argument:
 Newsletter::subscribe('nanny.ogg@discworld.com', ['firstName'=>'Nanny', 'lastName'=>'Ogg'], 'Name of your list');
 
+//Subscribe someone to a specific list and require them to confirm via email:
+Newsletter::subscribePending('nanny.ogg@discworld.com', ['firstName'=>'Nanny', 'lastName'=>'Ogg'], 'Name of your list');
+
 //Subscribe or update someone
 Newsletter::subscribeOrUpdate('sam.vines@discworld.com', ['firstName'=>'Foo', 'lastName'=>'Bar']);
 
@@ -157,7 +160,7 @@ You can also subscribe and/or update someone. The person will be subscribed or u
  ```php
  Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
  ```
- 
+
 You can subscribe someone to one or more specific group(s)/interest(s) by using the fourth argument:
 
 ```php
