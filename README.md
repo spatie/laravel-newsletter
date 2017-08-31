@@ -69,7 +69,13 @@ composer require spatie/laravel-newsletter
 
 You must also install this service provider.
 
-The package will automatically register itself.
+Add Laravel Newletters provider to app/config/app.php
+```
+'providers' => [
+    ...
+    Spatie\Newsletter\NewsletterServiceProvider::class
+],
+```
 
 To publish the config file to `app/config/laravel-newsletter.php` run:
 
