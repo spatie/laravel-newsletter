@@ -109,6 +109,12 @@ return [
 ];
 ```
 
+## Updating from 3.x to 4.x
+
+There is a new name for our config file. We've changed the name from `laravel-newsletter.php` to `newsletter.php`.
+
+If you are upgrading to 4.x, package is looking for the new config file name. In that case, you have to rename the file in your `app\config` folder.
+
 ## Usage
 
 After you've installed the package and filled in the values in the config-file working with this package will be a breeze. All the following examples use the facade. Don't forget to import it at the top of your file.
