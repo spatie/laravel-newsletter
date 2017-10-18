@@ -10,7 +10,7 @@ class NewsletterListCollection extends Collection
     /** @var string */
     public $defaultListName = '';
 
-    public static function createFromConfig(array $config)
+    public static function createFromConfig(array $config): NewsletterListCollection
     {
         $collection = new static();
 
@@ -25,7 +25,7 @@ class NewsletterListCollection extends Collection
 
     public function findByName(string $name): NewsletterList
     {
-        if ((string) $name === '') {
+        if ($name === '') {
             return $this->getDefault();
         }
 
