@@ -3,25 +3,24 @@
 return [
 
         /*
-         * The api key of a MailChimp account. You can find yours here:
-         * https://us10.admin.mailchimp.com/account/api-key-popup/
+         * The API key of a MailChimp account. You can find yours at
+         * https://us10.admin.mailchimp.com/account/api-key-popup/.
          */
         'apiKey' => env('MAILCHIMP_APIKEY'),
 
         /*
-         * When not specifying a listname in the various methods, use the list with this name
+         * The listName to use when no listName has been specified in a method.
          */
         'defaultListName' => 'subscribers',
 
         /*
-         * Here you can define properties of the lists you want to
-         * send campaigns.
+         * Here you can define properties of the lists.
          */
         'lists' => [
 
             /*
              * This key is used to identify this list. It can be used
-             * in the various methods provided by this package.
+             * as the listName parameter provided in the various methods.
              *
              * You can set it to any string you want and you can add
              * as many lists as you want.
@@ -29,9 +28,9 @@ return [
             'subscribers' => [
 
                 /*
-                 * A mail chimp list id. Check the mailchimp docs if you don't know
+                 * A MailChimp list id. Check the MailChimp docs if you don't know
                  * how to get this value:
-                 * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
+                 * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
                  */
                 'id' => env('MAILCHIMP_LIST_ID'),
             ],
