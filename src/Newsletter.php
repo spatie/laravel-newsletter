@@ -9,7 +9,7 @@ class Newsletter
     /** @var \DrewM\MailChimp\MailChimp */
     protected $mailChimp;
 
-    /** * @var \Spatie\Newsletter\NewsletterListCollection */
+    /** @var \Spatie\Newsletter\NewsletterListCollection */
     protected $lists;
 
     public function __construct(MailChimp $mailChimp, NewsletterListCollection $lists)

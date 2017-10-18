@@ -11,7 +11,7 @@ class InvalidNewsletterList extends Exception
      */
     public static function noListsDefined()
     {
-        return new static('There are no lists defined');
+        return new static('There are no lists defined.');
     }
 
     /**
@@ -21,7 +21,7 @@ class InvalidNewsletterList extends Exception
      */
     public static function noListWithName($name)
     {
-        return new static("There is no list named `{$name}`");
+        return new static("There is no list named `{$name}`.");
     }
 
     /**
@@ -31,6 +31,6 @@ class InvalidNewsletterList extends Exception
      */
     public static function defaultListDoesNotExist($defaultListName)
     {
-        return new static("Could not find a default list named `{$defaultListName}`");
+        return new static("Could not find a default list named `{$defaultListName}`.");
     }
 }
