@@ -71,41 +71,45 @@ This will publish a file `newsletter.php` in your config directory with the foll
 ```php
 return [
 
-        /*
-         * The api key of a MailChimp account. You can find yours here:
-         * https://us10.admin.mailchimp.com/account/api-key-popup/
-         */
-        'apiKey' => env('MAILCHIMP_APIKEY'),
+    /*
+     * The API key of a MailChimp account. You can find yours at
+     * https://us10.admin.mailchimp.com/account/api-key-popup/.
+     */
+    'apiKey' => env('MAILCHIMP_APIKEY'),
+
+    /*
+     * The listName to use when no listName has been specified in a method.
+     */
+    'defaultListName' => 'subscribers',
+
+    /*
+     * Here you can define properties of the lists.
+     */
+    'lists' => [
 
         /*
-         * When not specifying a listname in the various methods,
-         *  this list name will be used.
+         * This key is used to identify this list. It can be used
+         * as the listName parameter provided in the various methods.
+         *
+         * You can set it to any string you want and you can add
+         * as many lists as you want.
          */
-        'defaultListName' => 'subscribers',
-
-        /*
-         * Here you can define properties of the lists you want to
-         * send campaigns.
-         */
-        'lists' => [
+        'subscribers' => [
 
             /*
-             * This key is used to identify this list. It can be used
-             * in the various methods provided by this package.
-             *
-             * You can set it to any string you want and you can add
-             * as many lists as you want.
+             * A MailChimp list id. Check the MailChimp docs if you don't know
+             * how to get this value:
+             * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
              */
-            'subscribers' => [
-
-                /*
-                 * A mail chimp list id. Check the mailchimp docs if you don't know
-                 * how to get this value:
-                 * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
-                 */
-                 'id' => env('MAILCHIMP_LIST_ID'),
-            ],
+            'id' => env('MAILCHIMP_LIST_ID'),
         ],
+    ],
+
+    /*
+     * If you're having trouble with https connections, set this to false.
+     */
+    'ssl' => true,
+
 ];
 ```
 
@@ -192,13 +196,13 @@ e-mail address the function will return `false`
 There's also a convenience method to check if someone is already subscribed:
 
 ```php
-Newsletter::hasMember('nanny.ogg@discworld.com'); //returns a bool
+Newsletter::hasMember('nanny.ogg@discworld.com'); //returns a boolean
 ```
 
 In addition to this you can also check if a user is subscribed to your list:
 
 ```php
-Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a bool
+Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a boolean
 ```
 
 ### Creating a campaign
@@ -206,13 +210,13 @@ Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a bool
 This the signature of `createCampaign`:
 ```php
 public function createCampaign(
-        string $fromName,
-        string $replyTo,
-        string $subject,
-        string $html = '',
-        string $listName = '',
-        array $options = [],
-        array $contentOptions = [])
+    string $fromName,
+    string $replyTo,
+    string $subject,
+    string $html = '',
+    string $listName = '',
+    array $options = [],
+    array $contentOptions = [])
 ```
 
 Note the campaign will only be created, no mails will be sent out.
@@ -226,7 +230,7 @@ Newsletter::getLastError();
 
 If you just want to make sure if the last action succeeded you can use:
 ```php
-Newsletter::lastActionSucceeded(); //returns a bool
+Newsletter::lastActionSucceeded(); //returns a boolean
 ```
 
 ### Need something else?
