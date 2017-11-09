@@ -10,7 +10,7 @@ class NewsletterListCollection extends Collection
     /** @var string */
     public $defaultListName = '';
 
-    public static function createFromConfig(array $config): NewsletterListCollection
+    public static function createFromConfig(array $config): self
     {
         $collection = new static();
 
