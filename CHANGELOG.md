@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.2.0 - 2018-02-08
+- Added: Laravel 5.6 compatibility
+
 ## 4.1.0 - 2017-08-31
 - Added: `subscribePending`
 
