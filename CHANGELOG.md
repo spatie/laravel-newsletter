@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.2.1 - 2018-02-08
+- Fixed: `unsubscribe` now returns a boolean when it fails
+
 ## 4.2.0 - 2018-02-08
 - Added: Laravel 5.6 compatibility
 
