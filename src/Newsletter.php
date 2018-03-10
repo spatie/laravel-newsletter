@@ -114,7 +114,7 @@ class Newsletter
         $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [
             'status' => 'unsubscribed',
         ]);
-        
+
         if (! $this->lastActionSucceeded()) {
             return false;
         }
