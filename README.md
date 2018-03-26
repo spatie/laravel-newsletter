@@ -61,6 +61,12 @@ composer require spatie/laravel-newsletter
 
 The package will automatically register itself.
 
+Add this to `config/app.php` under `$providers`
+
+```bash
+Spatie\Newsletter\NewsletterServiceProvider::class,
+```
+
 To publish the config file to `config/newsletter.php` run:
 
 ```bash
