@@ -27,6 +27,9 @@ Newsletter::subscribePending('nanny.ogg@discworld.com', ['firstName'=>'Nanny', '
 //Subscribe or update someone
 Newsletter::subscribeOrUpdate('sam.vines@discworld.com', ['firstName'=>'Foo', 'lastName'=>'Bar']);
 
+//Update someone and apply pending status.
+Newsletter::updatePending('sam.vines@discworld.com', ['firstName'=>'Foo', 'lastName'=>'Bar']);
+
 // Change the email address of an existing subscriber
 Newsletter::updateEmailAddress('rincewind@discworld.com', 'the.luggage@discworld.com');
 
@@ -277,7 +280,7 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie).
 All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
