@@ -112,6 +112,32 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_can_update_someone_and_set_pending_status()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi->shouldReceive('patch')->withArgs([
+            "{$url}/{$subscriberHash}",
+            [
+                'email_address' => $email,
+                'status' => 'pending',
+                'email_type' => 'html',
+            ],
+        ]);
+
+        $this->newsletter->updatePending($email);
+    }
+
+    /** @test */
     public function it_can_subscribe_someone_with_merge_fields()
     {
         $email = 'freek@spatie.be';

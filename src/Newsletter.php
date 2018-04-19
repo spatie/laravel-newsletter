@@ -56,6 +56,23 @@ class Newsletter
         return $response;
     }
 
+    public function updatePending(string $email, array $mergeFields = [], string $listName = '', array $options = [])
+    {
+        $options = array_merge($options, ['status' => 'pending']);
+
+        $list = $this->lists->findByName($listName);
+
+        $options = $this->getSubscriptionOptions($email, $mergeFields, $options);
+
+        $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
+    }
+
     public function getMembers(string $listName = '', array $parameters = [])
     {
         $list = $this->lists->findByName($listName);
