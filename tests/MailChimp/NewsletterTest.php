@@ -2,9 +2,10 @@
 
 namespace Spatie\Newsletter\Test;
 
-use Mockery;
 use DrewM\MailChimp\MailChimp;
+use Mockery;
 use PHPUnit\Framework\TestCase;
+use Spatie\Newsletter\Exceptions\FailedResponse;
 use Spatie\Newsletter\Newsletter;
 use Spatie\Newsletter\NewsletterListCollection;
 
@@ -19,8 +20,6 @@ class NewsletterTest extends TestCase
     public function setUp()
     {
         $this->mailChimpApi = Mockery::mock(MailChimp::class);
-
-        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
 
         $newsletterLists = NewsletterListCollection::createFromConfig(
             [
@@ -54,6 +53,7 @@ class NewsletterTest extends TestCase
 
         $url = 'lists/123/members';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('post')->withArgs([
             $url,
             [
@@ -67,12 +67,40 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_throws_an_exception_if_subscribing_someone_fails()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('success')->andReturn(false);
+        $this->mailChimpApi->shouldReceive('post')->withArgs([
+            $url,
+            [
+                'email_address' => $email,
+                'status' => 'subscribed',
+                'email_type' => 'html',
+            ],
+        ])->andReturn('failure');
+
+        try {
+            $this->newsletter->subscribe($email);
+        } catch (FailedResponse $e) {
+            $this->assertEquals('failure', $e->response);
+            return;
+        }
+
+        $this->fail('Expected FailedResponse exception to be thrown');
+    }
+
+    /** @test */
     public function it_can_subscribe_someone_as_pending()
     {
         $email = 'freek@spatie.be';
 
         $url = 'lists/123/members';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('post')->withArgs([
             $url,
             [
@@ -86,6 +114,33 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_throws_an_exception_if_subscribing_someone_as_pending_fails()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $this->mailChimpApi->shouldReceive('success')->andReturn(false);
+        $this->mailChimpApi->shouldReceive('post')->withArgs([
+            $url,
+            [
+                'email_address' => $email,
+                'status' => 'pending',
+                'email_type' => 'html',
+            ],
+        ])->andReturn('failure');
+
+        try {
+            $this->newsletter->subscribePending($email);
+        } catch (FailedResponse $e) {
+            $this->assertEquals('failure', $e->response);
+            return;
+        }
+
+        $this->fail('Expected FailedResponse exception to be thrown');
+    }
+
+    /** @test */
     public function it_can_subscribe_or_update_someone()
     {
         $email = 'freek@spatie.be';
@@ -94,6 +149,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -112,6 +168,40 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_throws_an_exception_if_subscribing_or_updating_someone_fails()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('success')->andReturn(false);
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi->shouldReceive('put')->withArgs([
+            "{$url}/{$subscriberHash}",
+            [
+                'email_address' => $email,
+                'status' => 'subscribed',
+                'email_type' => 'html',
+            ],
+        ])->andReturn('failure');
+
+        try {
+            $this->newsletter->subscribeOrUpdate($email);
+        } catch (FailedResponse $e) {
+            $this->assertEquals('failure', $e->response);
+            return;
+        }
+
+        $this->fail('Expected FailedResponse exception to be thrown');
+    }
+
+    /** @test */
     public function it_can_subscribe_someone_with_merge_fields()
     {
         $email = 'freek@spatie.be';
@@ -120,6 +210,7 @@ class NewsletterTest extends TestCase
 
         $url = 'lists/123/members';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('post')
             ->once()
             ->withArgs([
@@ -146,6 +237,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -173,6 +265,7 @@ class NewsletterTest extends TestCase
 
         $url = 'lists/456/members';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('post')
             ->once()
             ->withArgs([
@@ -196,6 +289,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -222,6 +316,7 @@ class NewsletterTest extends TestCase
 
         $url = 'lists/123/members';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('post')
             ->once()
             ->withArgs([
@@ -245,6 +340,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -274,6 +370,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -299,6 +396,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -318,12 +416,46 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_throws_an_exception_if_trying_to_unsubscribe_someone_fails()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('success')->andReturn(false);
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('patch')
+            ->once()
+            ->withArgs([
+                "lists/123/members/{$subscriberHash}",
+                [
+                    'status' => 'unsubscribed',
+                ],
+            ])->andReturn('failure');
+
+        try {
+            $this->newsletter->unsubscribe('freek@spatie.be');
+        } catch (FailedResponse $e) {
+            $this->assertEquals('failure', $e->response);
+            return;
+        }
+
+        $this->fail('Expected FailedResponse exception to be thrown');
+    }
+
+    /** @test */
     public function it_can_unsubscribe_someone_from_a_specific_list()
     {
         $email = 'freek@spatie.be';
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -349,6 +481,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -369,6 +502,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -393,6 +527,7 @@ class NewsletterTest extends TestCase
     /** @test */
     public function it_can_get_the_list_members()
     {
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi
             ->shouldReceive('get')
             ->once()
@@ -408,6 +543,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -428,6 +564,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -448,6 +585,7 @@ class NewsletterTest extends TestCase
 
         $subscriberHash = 'abc123';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi->shouldReceive('subscriberHash')
             ->once()
             ->withArgs([$email])
@@ -474,6 +612,7 @@ class NewsletterTest extends TestCase
 
         $campaignId = 'newCampaignId';
 
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true);
         $this->mailChimpApi
             ->shouldReceive('post')
             ->once()
@@ -508,5 +647,106 @@ class NewsletterTest extends TestCase
             ]);
 
         $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
+    }
+
+    /** @test */
+    public function it_throws_an_exception_if_creating_a_campaign_fails()
+    {
+        $fromName = 'Spatie';
+        $replyTo = 'info@spatie.be';
+        $subject = 'This is a subject';
+        $html = '<b>This is the content</b>';
+        $listName = 'list1';
+        $options = ['extraOption' => 'extraValue'];
+        $contentOptions = ['plain text' => 'this is the plain text content'];
+
+        $this->mailChimpApi->shouldReceive('success')->andReturn(false);
+        $this->mailChimpApi
+            ->shouldReceive('post')
+            ->once()
+            ->withArgs(
+                [
+                    'campaigns',
+                    [
+                        'type' => 'regular',
+                        'recipients' => [
+                            'list_id' => 123,
+                        ],
+                        'settings' => [
+                            'subject_line' => $subject,
+                            'from_name' => $fromName,
+                            'reply_to' => $replyTo,
+                        ],
+                        'extraOption' => 'extraValue',
+                    ],
+                ]
+            )
+            ->andReturn('failure');
+
+        try {
+            $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
+        } catch (FailedResponse $e) {
+            $this->assertEquals('failure', $e->response);
+            return;
+        }
+
+        $this->fail('Expected FailedResponse exception to be thrown');
+    }
+
+    /** @test */
+    public function it_throws_an_exception_if_updating_a_campaigns_content_fails()
+    {
+        $fromName = 'Spatie';
+        $replyTo = 'info@spatie.be';
+        $subject = 'This is a subject';
+        $html = '<b>This is the content</b>';
+        $listName = 'list1';
+        $options = ['extraOption' => 'extraValue'];
+        $contentOptions = ['plain text' => 'this is the plain text content'];
+
+        $campaignId = 'newCampaignId';
+
+        $this->mailChimpApi->shouldReceive('success')->andReturn(true, false);
+        $this->mailChimpApi
+            ->shouldReceive('post')
+            ->once()
+            ->withArgs(
+                [
+                    'campaigns',
+                    [
+                        'type' => 'regular',
+                        'recipients' => [
+                            'list_id' => 123,
+                        ],
+                        'settings' => [
+                            'subject_line' => $subject,
+                            'from_name' => $fromName,
+                            'reply_to' => $replyTo,
+                        ],
+                        'extraOption' => 'extraValue',
+                    ],
+                ]
+            )
+            ->andReturn(['id' => $campaignId]);
+
+        $this->mailChimpApi
+            ->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                "campaigns/{$campaignId}/content",
+                [
+                    'html' => $html,
+                    'plain text' => 'this is the plain text content',
+                ],
+            ])->andReturn('failure');
+
+        try {
+            $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
+        } catch (FailedResponse $e) {
+            $this->assertEquals('failure', $e->response);
+            return;
+        }
+
+        $this->fail('Expected FailedResponse exception to be thrown');
     }
 }

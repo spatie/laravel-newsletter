@@ -3,6 +3,7 @@
 namespace Spatie\Newsletter;
 
 use DrewM\MailChimp\MailChimp;
+use Spatie\Newsletter\Exceptions\FailedResponse;
 
 class Newsletter
 {
@@ -27,8 +28,8 @@ class Newsletter
 
         $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options);
 
-        if (! $this->lastActionSucceeded()) {
-            return false;
+        if (!$this->lastActionSucceeded()) {
+            throw new FailedResponse($response);
         }
 
         return $response;
@@ -49,8 +50,8 @@ class Newsletter
 
         $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
 
-        if (! $this->lastActionSucceeded()) {
-            return false;
+        if (!$this->lastActionSucceeded()) {
+            throw new FailedResponse($response);
         }
 
         return $response;
@@ -77,11 +78,11 @@ class Newsletter
         return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/activity");
     }
 
-    public function hasMember(string $email, string $listName = ''): bool
+    public function hasMember(string $email, string $listName = '') : bool
     {
         $response = $this->getMember($email, $listName);
 
-        if (! isset($response['email_address'])) {
+        if (!isset($response['email_address'])) {
             return false;
         }
 
@@ -92,11 +93,11 @@ class Newsletter
         return true;
     }
 
-    public function isSubscribed(string $email, string $listName = ''): bool
+    public function isSubscribed(string $email, string $listName = '') : bool
     {
         $response = $this->getMember($email, $listName);
 
-        if (! isset($response)) {
+        if (!isset($response)) {
             return false;
         }
 
@@ -115,8 +116,8 @@ class Newsletter
             'status' => 'unsubscribed',
         ]);
 
-        if (! $this->lastActionSucceeded()) {
-            return false;
+        if (!$this->lastActionSucceeded()) {
+            throw new FailedResponse($response);
         }
 
         return $response;
@@ -169,16 +170,12 @@ class Newsletter
 
         $response = $this->mailChimp->post('campaigns', $options);
 
-        if (! $this->lastActionSucceeded()) {
-            return false;
+        if (!$this->lastActionSucceeded()) {
+            throw new FailedResponse($response);
         }
 
-        if ($html === '') {
-            return $response;
-        }
-
-        if (! $this->updateContent($response['id'], $html, $contentOptions)) {
-            return false;
+        if ($html !== '') {
+            $this->updateContent($response['id'], $html, $contentOptions);
         }
 
         return $response;
@@ -192,14 +189,14 @@ class Newsletter
 
         $response = $this->mailChimp->put("campaigns/{$campaignId}/content", $options);
 
-        if (! $this->lastActionSucceeded()) {
-            return false;
+        if (!$this->lastActionSucceeded()) {
+            throw new FailedResponse($response);
         }
 
         return $response;
     }
 
-    public function getApi(): MailChimp
+    public function getApi() : MailChimp
     {
         return $this->mailChimp;
     }
@@ -212,17 +209,17 @@ class Newsletter
         return $this->mailChimp->getLastError();
     }
 
-    public function lastActionSucceeded(): bool
+    public function lastActionSucceeded() : bool
     {
         return $this->mailChimp->success();
     }
 
-    protected function getSubscriberHash(string $email): string
+    protected function getSubscriberHash(string $email) : string
     {
         return $this->mailChimp->subscriberHash($email);
     }
 
-    protected function getSubscriptionOptions(string $email, array $mergeFields, array $options): array
+    protected function getSubscriptionOptions(string $email, array $mergeFields, array $options) : array
     {
         $defaultOptions = [
             'email_address' => $email,
