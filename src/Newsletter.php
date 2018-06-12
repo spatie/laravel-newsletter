@@ -149,8 +149,8 @@ class Newsletter
         string $html = '',
         string $listName = '',
         array $options = [],
-        array $contentOptions = [])
-    {
+        array $contentOptions = []
+    ) {
         $list = $this->lists->findByName($listName);
 
         $defaultOptions = [
