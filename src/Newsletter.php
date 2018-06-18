@@ -3,6 +3,7 @@
 namespace Spatie\Newsletter;
 
 use DrewM\MailChimp\MailChimp;
+use Spatie\Newsletter\Exceptions\CampaignException;
 
 class Newsletter
 {
@@ -196,6 +197,23 @@ class Newsletter
             return false;
         }
 
+        return $response;
+    }
+
+    public function sendCampaign(string $campaignId)
+    {
+        $response = $this->mailChimp->post("campaigns/{$campaignId}/actions/send");
+
+        $lastResponse = json_decode(($this->mailChimp->getLastResponse()['body']));
+
+        if ($lastResponse->status !== 200) {
+            throw CampaignException::withMessage($lastResponse->detail);
+        }
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+        
         return $response;
     }
 
