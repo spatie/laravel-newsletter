@@ -199,6 +199,17 @@ class Newsletter
         return $response;
     }
 
+    public function sendCampaign(string $campaignId)
+    {
+        $response = $this->mailChimp->post("campaigns/{$campaignId}/actions/send");
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
+    }
+
     public function getApi(): MailChimp
     {
         return $this->mailChimp;
