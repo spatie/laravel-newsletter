@@ -13,6 +13,4 @@ class CampaignException extends Exception
     {
         return new static($message);
     }
-
-
 }

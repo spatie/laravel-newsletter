@@ -206,7 +206,7 @@ class Newsletter
 
         $lastResponse = json_decode(($this->mailChimp->getLastResponse()['body']));
 
-        if($lastResponse->status !== 200) {
+        if ($lastResponse->status !== 200) {
             throw CampaignException::withMessage($lastResponse->detail);
         }
 
