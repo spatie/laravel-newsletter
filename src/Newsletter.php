@@ -210,12 +210,10 @@ class Newsletter
             throw CampaignException::withMessage($lastResponse->detail);
         }
 
-
         if (! $this->lastActionSucceeded()) {
             return false;
         }
-
-
+        
         return $response;
     }
 
