@@ -42,10 +42,10 @@ Newsletter::getMember('lord.vetinari@discworld.com');
 Newsletter::getMemberActivity('lord.vetinari@discworld.com');
 
 //Get the members for a given list, optionally filtered by passing a second array of parameters
-Newsletter::getMembers();
+Newsletter::getMembers('Name of your list');
 
 //Check if a member is subscribed to a list
-Newsletter::isSubscribed('rincewind@discworld.com');
+Newsletter::isSubscribed('rincewind@discworld.com', 'Name of your list');
 
 //Returns a boolean
 Newsletter::hasMember('greebo@discworld.com');
