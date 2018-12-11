@@ -104,7 +104,7 @@ return [
             /*
              * A MailChimp list id. Check the MailChimp docs if you don't know
              * how to get this value:
-             * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
+             * https://mailchimp.com/help/find-your-list-id/.
              */
             'id' => env('MAILCHIMP_LIST_ID'),
         ],
