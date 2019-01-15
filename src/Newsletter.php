@@ -173,7 +173,7 @@ class Newsletter
             return false;
         }
 
-        if ($html === '') {
+        if ($html === '' && count($contentOptions) === 0) {
             return $response;
         }
 
@@ -186,9 +186,11 @@ class Newsletter
 
     public function updateContent(string $campaignId, string $html, array $options = [])
     {
-        $defaultOptions = compact('html');
+        if($html !== ''){
+            $defaultOptions = compact('html');
 
-        $options = array_merge($defaultOptions, $options);
+            $options = array_merge($defaultOptions, $options);
+        }
 
         $response = $this->mailChimp->put("campaigns/{$campaignId}/content", $options);
 
