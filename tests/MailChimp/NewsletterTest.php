@@ -523,7 +523,7 @@ class NewsletterTest extends TestCase
                             'template' =>[
                                 'id' => 1234,
                                 'sections' => [
-                                    'content' => 'a simple content'
+                                    'content' => 'a simple content',
                                 ],
                             ],
                         ];
@@ -561,7 +561,7 @@ class NewsletterTest extends TestCase
                     'template' =>[
                         'id' => 1234,
                         'sections' => [
-                                'content' => 'a simple content'
+                                'content' => 'a simple content',
                         ],
                     ],
                 ],
