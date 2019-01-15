@@ -509,4 +509,64 @@ class NewsletterTest extends TestCase
 
         $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
     }
+
+    /** @test */
+    public function is_can_create_a_campaign_without_html()
+    {
+        $fromName = 'Spatie';
+        $replyTo = 'info@spatie.be';
+        $subject = 'This is a subject';
+        $html = '';
+        $listName = 'list1';
+        $options = ['extraOption' => 'extraValue'];
+        $contentOptions = [
+                            'template' =>[
+                                'id' => 1234,
+                                'sections' => [
+                                    'content' => "a simple content"
+                                ]
+                            ]
+                        ];
+
+        $campaignId = 'newCampaignId';
+
+        $this->mailChimpApi
+            ->shouldReceive('post')
+            ->once()
+            ->withArgs(
+                [
+                    'campaigns',
+                    [
+                        'type' => 'regular',
+                        'recipients' => [
+                            'list_id' => 123,
+                        ],
+                        'settings' => [
+                            'subject_line' => $subject,
+                            'from_name' => $fromName,
+                            'reply_to' => $replyTo,
+                        ],
+                        'extraOption' => 'extraValue',
+                    ],
+                ]
+            )
+            ->andReturn(['id' => $campaignId]);
+
+        $this->mailChimpApi
+            ->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                "campaigns/{$campaignId}/content",
+                [
+                    'template' =>[
+                        'id' => 1234,
+                        'sections' => [
+                                'content' => "a simple content"
+                        ]
+                    ]
+                ],
+            ]);
+
+        $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
+    }
 }
