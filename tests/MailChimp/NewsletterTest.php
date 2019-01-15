@@ -524,8 +524,8 @@ class NewsletterTest extends TestCase
                                 'id' => 1234,
                                 'sections' => [
                                     'content' => 'a simple content'
-                                ]
-                            ]
+                                ],
+                            ],
                         ];
 
         $campaignId = 'newCampaignId';
@@ -562,8 +562,8 @@ class NewsletterTest extends TestCase
                         'id' => 1234,
                         'sections' => [
                                 'content' => 'a simple content'
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
             ]);
 
