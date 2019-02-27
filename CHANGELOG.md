@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.2.3 - 2019-02-28
+- Added: Laravel 5.8 compatibility
+
 ## 4.2.2 - 2018-09-04
 - Added: Laravel 5.7 compatibility
 
