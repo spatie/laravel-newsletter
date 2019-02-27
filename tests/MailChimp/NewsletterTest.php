@@ -16,7 +16,7 @@ class NewsletterTest extends TestCase
     /** @var \Spatie\Newsletter\Newsletter */
     protected $newsletter;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->mailChimpApi = Mockery::mock(MailChimp::class);
 
@@ -36,7 +36,7 @@ class NewsletterTest extends TestCase
         $this->newsletter = new Newsletter($this->mailChimpApi, $newsletterLists);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         parent::tearDown();
 

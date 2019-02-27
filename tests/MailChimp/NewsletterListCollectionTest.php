@@ -11,7 +11,7 @@ class NewsletterListCollectionTest extends TestCase
 {
     protected $newsletterListCollection;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
