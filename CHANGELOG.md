@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.3.0 - 2019-02-28
+- drop support for L5.7 and below, PHP 7.1 and PHPUnit 7
+
 ## 4.2.3 - 2019-02-28
 - Added: Laravel 5.8 compatibility
 
