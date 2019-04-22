@@ -56,6 +56,18 @@ class Newsletter
         return $response;
     }
 
+    public function assignTagsToContact(string $email, string $listName = '', $tags = [])
+    {
+        $list = $this->lists->findByName($listName);
+        $response = $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", $tags);
+      
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
+    }
+
     public function getMembers(string $listName = '', array $parameters = [])
     {
         $list = $this->lists->findByName($listName);
