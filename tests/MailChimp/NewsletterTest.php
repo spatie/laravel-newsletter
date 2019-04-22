@@ -462,7 +462,7 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
-    public function is_can_create_a_campaign()
+    public function it_can_create_a_campaign()
     {
         $fromName = 'Spatie';
         $replyTo = 'info@spatie.be';
