@@ -267,9 +267,6 @@ class Newsletter
     public function addRemoveTags(array $tags, string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
-        // $payload = collect($tags)->mapWithKeys(function ($tag) {
-        //     return [$tag => 'active'];
-        // })->toArray();
         return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
             'tags' => $tags,
         ]);
