@@ -55,20 +55,6 @@ class Newsletter
 
         return $response;
     }
-    /**
-    * add and remove tag from contact list 
-    **/
-    public function assignTagsToContact(string $email, string $listName = '', $tags = [])
-    {
-        $list = $this->lists->findByName($listName);
-        $response = $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", $tags);
-      
-        if (! $this->lastActionSucceeded()) {
-            return false;
-        }
-
-        return $response;
-    }
 
     public function getMembers(string $listName = '', array $parameters = [])
     {
@@ -251,5 +237,41 @@ class Newsletter
         $options = array_merge($defaultOptions, $options);
 
         return $options;
+    }
+
+    public function getTags(string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags");
+    }
+    public function addTags(array $tags, string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+        $payload = collect($tags)->mapWithKeys(function ($tag) {
+            return [$tag => 'active'];
+        })->toArray();
+        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
+            'tags' => $tags,
+        ]);
+    }
+    public function removeTags(array $tags, string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+        $payload = collect($tags)->mapWithKeys(function ($tag) {
+            return [$tag => 'inactive'];
+        })->toArray();
+        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
+            'tags' => $payload,
+        ]);
+    }
+    public function addRemoveTags(array $tags, string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+        // $payload = collect($tags)->mapWithKeys(function ($tag) {
+        //     return [$tag => 'active'];
+        // })->toArray();
+        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
+            'tags' => $tags,
+        ]);
     }
 }
