@@ -55,7 +55,9 @@ class Newsletter
 
         return $response;
     }
-
+    /**
+    * add and remove tag from contact list 
+    **/
     public function assignTagsToContact(string $email, string $listName = '', $tags = [])
     {
         $list = $this->lists->findByName($listName);
