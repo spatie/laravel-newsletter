@@ -175,14 +175,6 @@ class Newsletter
         ]);
     }
 
-    public function addRemoveContactTags(array $tags, string $email, string $listName = '')
-    {
-        $list = $this->lists->findByName($listName);
-        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
-            'tags' => $tags,
-        ]);
-    }
-    
     public function createCampaign(
         string $fromName,
         string $replyTo,
