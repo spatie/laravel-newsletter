@@ -183,6 +183,18 @@ In addition to this you can also check if a user is subscribed to your list:
 Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a boolean
 ```
 
+You can get the members for a given list, optionally filtered by passing a second array of parameters. As documented in Mailchimp API, it'll return the first 10 results unless indicated otherwise:
+
+```php
+Newsletter::getMembers();
+```
+
+Also, you can retrieve the full list of members for a given list, paginating over the results. It retries if there's a failure (network, api), useful for large lists:
+
+```php
+Newsletter::getAllMembers();
+```
+
 ### Creating a campaign
 
 This the signature of `createCampaign`:

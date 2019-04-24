@@ -2,6 +2,7 @@
 
 namespace Spatie\Newsletter;
 
+use Exception;
 use DrewM\MailChimp\MailChimp;
 
 class Newsletter
@@ -61,6 +62,39 @@ class Newsletter
         $list = $this->lists->findByName($listName);
 
         return $this->mailChimp->get("lists/{$list->getId()}/members", $parameters);
+    }
+
+    /**
+     *  Get all the members from a list, trying to recover from failure (useful for large lists).
+     *
+     * @return array
+     * @throws \Exception thrown by Mailchimp API
+     * @throws \DomainException if we can't get a valid result
+     * */
+    public function getAllMembers(string $listName = '', array $parameters = []): array
+    {
+        $total = $this->getMembers($listName, $parameters)['total_items'];
+
+        $members = [];
+
+        for ($i = 0; $i < $total; $i += 500) {
+            $payload = array_merge($parameters, ['count'  => 500, 'offset' => $i]);
+
+            $members = array_merge(
+                $members,
+                $this->retry(function () use ($payload, $listName) {
+                    $members = $this->getMembers($listName, $payload);
+
+                    if (! is_array($members) || ! isset($members['members'])) {
+                        throw new \DomainException($this->getLastError());
+                    }
+
+                    return $members['members'];
+                })
+            );
+        }
+
+        return $members;
     }
 
     public function getMember(string $email, string $listName = '')
@@ -279,5 +313,18 @@ class Newsletter
         $options = array_merge($defaultOptions, $options);
 
         return $options;
+    }
+
+    private function retry($callback, int $max = 10)
+    {
+        while ($max-- > 0) {
+            try {
+                return $callback();
+            } catch (Exception $e) {
+                sleep(10);
+            }
+        }
+
+        throw($e);
     }
 }
