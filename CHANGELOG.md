@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.4.0 - 2019-04-24
+- add functions to manage tags
+
 ## 4.3.0 - 2019-02-28
 - drop support for L5.7 and below, PHP 7.1 and PHPUnit 7
 
