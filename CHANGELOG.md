@@ -2,18 +2,6 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
-## 4.3.0 - 2019-02-28
-- drop support for L5.7 and below, PHP 7.1 and PHPUnit 7
-
-## 4.2.3 - 2019-02-28
-- Added: Laravel 5.8 compatibility
-
-## 4.2.2 - 2018-09-04
-- Added: Laravel 5.7 compatibility
-
-## 4.2.1 - 2018-02-08
-- Fixed: `unsubscribe` now returns a boolean when it fails
-
 ## 4.2.0 - 2018-02-08
 - Added: Laravel 5.6 compatibility
 

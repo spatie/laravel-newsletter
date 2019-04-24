@@ -115,10 +115,6 @@ class Newsletter
             'status' => 'unsubscribed',
         ]);
 
-        if (! $this->lastActionSucceeded()) {
-            return false;
-        }
-
         return $response;
     }
 
@@ -238,7 +234,6 @@ class Newsletter
 
         return $options;
     }
-
     public function getContactTags(string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);

@@ -8,14 +8,9 @@
 
 This package provides an easy way to integrate MailChimp with Laravel 5. Behind the scenes v3 for the MailChimp API is used. Here are some examples of what you can do with the package:
 
-> Please note the at the time of this writing the default merge variables in MailChimp are named `FNAME` and `LNAME`. In our examples we use `firstName` and `lastName` for extra readability. Make sure you rename those merge variables at MailChimp in order to make these examples work.
+> Please note the at the time of this writing the default merge variables in MailChimp are named `FNAME` and `LNAME`. In our examples we use `firstName` and `lastName` for extra readability.
 
 ```php
-// at the top of your class
-use Newsletter;
-
-// ...
-
 Newsletter::subscribe('rincewind@discworld.com');
 
 Newsletter::unsubscribe('the.luggage@discworld.com');
