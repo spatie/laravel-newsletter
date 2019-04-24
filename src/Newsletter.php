@@ -65,7 +65,6 @@ class Newsletter
     }
 
     /**
-     * 
      *  Get all the members from a list, trying to recover from failure (useful for large lists)
      * 
      * @return array
@@ -79,23 +78,20 @@ class Newsletter
         $members = [];
 
         for ($i = 0; $i < $total; $i += 500) {
-
             $payload = array_merge($parameters, ['count'  => 500, 'offset' => $i]);
 
             $members = array_merge(
                 $members,
                 $this->retry(function () use ($payload, $listName) {
-
                     $members = $this->getMembers($listName, $payload);
 
-                    if ( ! is_array($members) || ! isset($members['members'])) {
+                    if (! is_array($members) || ! isset($members['members'])) {
                         throw new \DomainException($this->getLastError());
                     }
 
                     return $members['members'];
                 })
             );
-
         }
 
         return $members;
@@ -314,9 +310,7 @@ class Newsletter
     {
         while ($max-- > 0) {
             try {
-
                 return $callback();
-
             } catch (Exception $e) {
                 sleep(10);
             }

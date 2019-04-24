@@ -595,7 +595,7 @@ class NewsletterTest extends TestCase
     /** @test */
     public function it_retries_get_the_list_of_all_members()
     {
-        require_once(__DIR__.'/Sleep.php');
+        require_once __DIR__.'/Sleep.php';
 
         $this->mailChimpApi
             ->shouldReceive('get')->once()->withArgs(['lists/123/members', []])->andReturn(['total_items' => 999])
@@ -611,7 +611,7 @@ class NewsletterTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        require_once(__DIR__.'/Sleep.php');
+        require_once __DIR__.'/Sleep.php';
 
         $this->mailChimpApi
             ->shouldReceive('get')->once()->withArgs(['lists/123/members', []])->andReturn(['total_items' => 10])
@@ -626,7 +626,7 @@ class NewsletterTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('foo');
 
-        require_once(__DIR__.'/Sleep.php');
+        require_once __DIR__.'/Sleep.php';
 
         $this->mailChimpApi
             ->shouldReceive('get')->once()->withArgs(['lists/123/members', []])->andReturn(['total_items' => 10])
