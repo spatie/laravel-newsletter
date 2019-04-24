@@ -50,6 +50,15 @@ Newsletter::isSubscribed('rincewind@discworld.com');
 //Returns a boolean
 Newsletter::hasMember('greebo@discworld.com');
 
+// Get the tags for a member in a given list
+Newsletter::getTags('lord.vetinari@discworld.com');
+
+// Add tags for a member in a given list, any new tags will be created
+Newsletter::addTags(['tag-1', 'tag-2'], 'lord.vetinari@discworld.com');
+
+// Remove tags for a member in a given list, any new tags will be created
+Newsletter::removeTags(['tag-1', 'tag-2'], 'lord.vetinari@discworld.com');
+
 //If you want to do something else, you can get an instance of the underlying API:
 Newsletter::getApi();
 ```

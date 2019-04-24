@@ -462,7 +462,7 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
-    public function is_can_create_a_campaign()
+    public function it_can_create_a_campaign()
     {
         $fromName = 'Spatie';
         $replyTo = 'info@spatie.be';
@@ -508,5 +508,74 @@ class NewsletterTest extends TestCase
             ]);
 
         $this->newsletter->createCampaign($fromName, $replyTo, $subject, $html, $listName, $options, $contentOptions);
+    }
+
+    /** @test */
+    public function it_can_get_member_tags()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}/tags"])
+            ->andReturn('all-the-member-tags');
+
+        $actual = $this->newsletter->getTags($email);
+
+        $this->assertSame('all-the-member-tags', $actual);
+    }
+
+    /** @test */
+    public function it_can_add_member_tags()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('post')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => ['tag-1' => 'active', 'tag-2' => 'active']]])
+            ->andReturn('the-post-response');
+
+        $actual = $this->newsletter->addTags(['tag-1', 'tag-2'], $email);
+
+        $this->assertSame('the-post-response', $actual);
+    }
+
+    /** @test */
+    public function it_can_remove_member_tags()
+    {
+        $email = 'freek@spatie.be';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi
+            ->shouldReceive('post')
+            ->once()
+            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => ['tag-1' => 'inactive', 'tag-2' => 'inactive']]])
+            ->andReturn('the-post-response');
+
+        $actual = $this->newsletter->removeTags(['tag-1', 'tag-2'], $email);
+
+        $this->assertSame('the-post-response', $actual);
     }
 }
