@@ -66,7 +66,7 @@ class Newsletter
 
     /**
      *  Get all the members from a list, trying to recover from failure (useful for large lists)
-     * 
+     *
      * @return array
      * @throws \Exception thrown by Mailchimp API
      * @throws \DomainException if we can't get a valid result
