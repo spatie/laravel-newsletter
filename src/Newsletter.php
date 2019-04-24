@@ -239,12 +239,12 @@ class Newsletter
         return $options;
     }
 
-    public function getTags(string $email, string $listName = '')
+    public function getContactTags(string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
         return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags");
     }
-    public function addTags(array $tags, string $email, string $listName = '')
+    public function addContactTags(array $tags, string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
         $payload = collect($tags)->mapWithKeys(function ($tag) {
@@ -254,7 +254,7 @@ class Newsletter
             'tags' => $tags,
         ]);
     }
-    public function removeTags(array $tags, string $email, string $listName = '')
+    public function removeContactTags(array $tags, string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
         $payload = collect($tags)->mapWithKeys(function ($tag) {
@@ -264,7 +264,7 @@ class Newsletter
             'tags' => $payload,
         ]);
     }
-    public function addRemoveTags(array $tags, string $email, string $listName = '')
+    public function addRemoveContactTags(array $tags, string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
         return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
