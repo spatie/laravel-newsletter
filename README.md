@@ -41,8 +41,11 @@ Newsletter::getMember('lord.vetinari@discworld.com');
 //Get the member activity, returns an array with recent activity for a given user
 Newsletter::getMemberActivity('lord.vetinari@discworld.com');
 
-//Get the members for a given list, optionally filtered by passing a second array of parameters
+//Get the members for a given list, optionally filtered by passing a second array of parameters. As documented in Mailchimp API, it'll return the first 10 results unless indicated otherwise
 Newsletter::getMembers();
+
+//Retrieve the full list of members for a given list, paginating over the results. It retries if there's a failure (network, api), useful for large lists
+Newsletter::getAllMembers();
 
 //Check if a member is subscribed to a list
 Newsletter::isSubscribed('rincewind@discworld.com');

@@ -578,4 +578,61 @@ class NewsletterTest extends TestCase
 
         $this->assertSame('the-post-response', $actual);
     }
+
+    /** @test */
+    public function it_can_get_the_list_of_all_members()
+    {
+        $this->mailChimpApi
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', []])->andReturn(['total_items' => 1501])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 0, 'count' => 500]])->andReturn(['members' => ['a']])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 500, 'count' => 500]])->andReturn(['members' => ['b']])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 1000, 'count' => 500]])->andReturn(['members' => ['c']])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 1500, 'count' => 500]])->andReturn(['members' => ['d']]);
+
+        $this->assertSame(['a', 'b', 'c', 'd'], $this->newsletter->getAllMembers());
+    }
+
+    /** @test */
+    public function it_retries_get_the_list_of_all_members()
+    {
+        require_once(__DIR__.'/Sleep.php');
+
+        $this->mailChimpApi
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', []])->andReturn(['total_items' => 999])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 0, 'count' => 500]])->andReturn(['members' => ['a']])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 500, 'count' => 500]])->twice()->andThrow(new \Exception)
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 500, 'count' => 500]])->andReturn(['members' => ['b']]);
+
+        $this->assertSame(['a', 'b'], $this->newsletter->getAllMembers());
+    }
+
+    /** @test */
+    public function it_fails_get_the_list_of_all_members()
+    {
+        $this->expectException(\Exception::class);
+
+        require_once(__DIR__.'/Sleep.php');
+
+        $this->mailChimpApi
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', []])->andReturn(['total_items' => 10])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 0, 'count' => 500]])->times(10)->andThrow(new \Exception);
+
+        $this->newsletter->getAllMembers();
+    }
+
+    /** @test */
+    public function it_fails_get_the_list_of_all_members2()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('foo');
+
+        require_once(__DIR__.'/Sleep.php');
+
+        $this->mailChimpApi
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', []])->andReturn(['total_items' => 10])
+            ->shouldReceive('get')->once()->withArgs(['lists/123/members', ['offset' => 0, 'count' => 500]])->times(10)->andReturn(null)
+            ->shouldReceive('getLastError')->times(10)->andReturn('foo');
+
+        $this->newsletter->getAllMembers();
+    }
 }
