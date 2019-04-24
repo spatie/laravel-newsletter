@@ -115,6 +115,10 @@ class Newsletter
             'status' => 'unsubscribed',
         ]);
 
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
         return $response;
     }
 
@@ -138,6 +142,47 @@ class Newsletter
         return $response;
     }
 
+    public function getTags(string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags");
+    }
+
+    public function addTags(array $tags, string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $payload = collect($tags)->mapWithKeys(function ($tag) {
+            return [$tag => 'active'];
+        })->toArray();
+
+        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
+            'tags' => $payload
+        ]);
+    }
+
+    public function removeTags(array $tags, string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $payload = collect($tags)->mapWithKeys(function ($tag) {
+            return [$tag => 'inactive'];
+        })->toArray();
+
+        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
+            'tags' => $payload
+        ]);
+    }
+
+    public function addRemoveContactTags(array $tags, string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
+            'tags' => $tags,
+        ]);
+    }
+    
     public function createCampaign(
         string $fromName,
         string $replyTo,
@@ -233,37 +278,5 @@ class Newsletter
         $options = array_merge($defaultOptions, $options);
 
         return $options;
-    }
-    public function getContactTags(string $email, string $listName = '')
-    {
-        $list = $this->lists->findByName($listName);
-        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags");
-    }
-    public function addContactTags(array $tags, string $email, string $listName = '')
-    {
-        $list = $this->lists->findByName($listName);
-        $payload = collect($tags)->mapWithKeys(function ($tag) {
-            return [$tag => 'active'];
-        })->toArray();
-        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
-            'tags' => $tags,
-        ]);
-    }
-    public function removeContactTags(array $tags, string $email, string $listName = '')
-    {
-        $list = $this->lists->findByName($listName);
-        $payload = collect($tags)->mapWithKeys(function ($tag) {
-            return [$tag => 'inactive'];
-        })->toArray();
-        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
-            'tags' => $payload,
-        ]);
-    }
-    public function addRemoveContactTags(array $tags, string $email, string $listName = '')
-    {
-        $list = $this->lists->findByName($listName);
-        return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
-            'tags' => $tags,
-        ]);
     }
 }
