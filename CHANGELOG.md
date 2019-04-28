@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.4.1 - 2019-04-28
+- fix functions to manage tags
+
 ## 4.4.0 - 2019-04-24
 - add functions to manage tags
 
