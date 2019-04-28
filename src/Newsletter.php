@@ -153,8 +153,8 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        $payload = collect($tags)->mapWithKeys(function ($tag) {
-            return [$tag => 'active'];
+        $payload = collect($tags)->map(function ($tag) {
+            return ['name' => $tag, 'status' => 'active'];
         })->toArray();
 
         return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
@@ -166,8 +166,8 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        $payload = collect($tags)->mapWithKeys(function ($tag) {
-            return [$tag => 'inactive'];
+        $payload = collect($tags)->map(function ($tag) {
+            return ['name' => $tag, 'status' => 'inactive'];
         })->toArray();
 
         return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [

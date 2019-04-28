@@ -548,7 +548,7 @@ class NewsletterTest extends TestCase
         $this->mailChimpApi
             ->shouldReceive('post')
             ->once()
-            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => ['tag-1' => 'active', 'tag-2' => 'active']]])
+            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => [['name' => 'tag-1', 'status' => 'active'], ['name' => 'tag-2', 'status' => 'active']]]])
             ->andReturn('the-post-response');
 
         $actual = $this->newsletter->addTags(['tag-1', 'tag-2'], $email);
@@ -571,7 +571,7 @@ class NewsletterTest extends TestCase
         $this->mailChimpApi
             ->shouldReceive('post')
             ->once()
-            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => ['tag-1' => 'inactive', 'tag-2' => 'inactive']]])
+            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => [['name' => 'tag-1', 'status' => 'inactive'], ['name' => 'tag-2', 'status' => 'inactive']]]])
             ->andReturn('the-post-response');
 
         $actual = $this->newsletter->removeTags(['tag-1', 'tag-2'], $email);
