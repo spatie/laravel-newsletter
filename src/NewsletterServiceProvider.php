@@ -21,6 +21,11 @@ class NewsletterServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Newsletter::class, function () {
+            $driver = config('newsletter.driver', 'api');
+            if (is_null($driver) || $driver === 'log') {
+                return new NullDriver($driver === 'log');
+            }
+
             $mailChimp = new Mailchimp(config('newsletter.apiKey'));
 
             $mailChimp->verify_ssl = config('newsletter.ssl', true);

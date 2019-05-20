@@ -3,6 +3,13 @@
 return [
 
     /*
+     * The driver to use to interact with MailChimp API.
+     * You may use "log" or "null" to prevent calling the
+     * API directly from your environment.
+     */
+    'driver' => env('MAILCHIMP_DRIVER', 'api'),
+
+    /*
      * The API key of a MailChimp account. You can find yours at
      * https://us10.admin.mailchimp.com/account/api-key-popup/.
      */
