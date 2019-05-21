@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.5.0 - 2019-05-21
+- add `null` driver
+
 ## 4.4.1 - 2019-04-28
 - fix functions to manage tags
 

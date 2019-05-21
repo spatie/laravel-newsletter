@@ -86,6 +86,13 @@ This will publish a file `newsletter.php` in your config directory with the foll
 return [
 
     /*
+     * The driver to use to interact with MailChimp API.
+     * You may use "log" or "null" to prevent calling the
+     * API directly from your environment.
+     */
+    'driver' => env('MAILCHIMP_DRIVER', 'api'),
+
+    /*
      * The API key of a MailChimp account. You can find yours at
      * https://us10.admin.mailchimp.com/account/api-key-popup/.
      */
@@ -123,7 +130,6 @@ return [
      * If you're having trouble with https connections, set this to false.
      */
     'ssl' => true,
-
 ];
 ```
 
