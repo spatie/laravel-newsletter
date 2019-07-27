@@ -203,6 +203,16 @@ Here's how to perform a delete:
 Newsletter::delete('rincewind@discworld.com');
 ```
 
+### Deleting subscribers permanently
+
+Delete all personally identifiable information related to a list member, and remove them from a list. This will make it impossible to re-import the list member.
+
+Here's how to perform a permanent delete:
+
+```php
+Newsletter::deletePermanently('rincewind@discworld.com');
+```
+
 ### Getting subscriber info
 
 You can get information on a subscriber by using the `getMember` function:
