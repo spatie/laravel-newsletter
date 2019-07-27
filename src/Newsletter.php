@@ -142,6 +142,15 @@ class Newsletter
         return $response;
     }
 
+    public function deletePermanently(string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $response = $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/actions/delete-permanent");
+
+        return $response;
+    }
+
     public function getTags(string $email, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
