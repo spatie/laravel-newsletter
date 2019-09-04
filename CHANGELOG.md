@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.6.0 - 2019-09-04
+- Added: Laravel 6.0 compatibility
+
 ## 4.5.0 - 2019-05-21
 - add `null` driver
 
