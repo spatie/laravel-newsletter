@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.7.1 - 2019-09-16
+- Changed: Updated Laravel 6 compatibility for future versions
+
 ## 4.7.0 - 2019-09-13
 - Added: Ability to permanently delete list members
 
