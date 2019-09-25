@@ -2,8 +2,6 @@
 
 namespace Spatie\Newsletter;
 
-use DrewM\MailChimp\MailChimp;
-
 class ApiDriver implements Newsletter
 {
     /** @var \DrewM\MailChimp\MailChimp */
@@ -54,7 +52,7 @@ class ApiDriver implements Newsletter
         $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}",
             $options);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 

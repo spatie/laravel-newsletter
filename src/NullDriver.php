@@ -57,6 +57,7 @@ class NullDriver implements Newsletter
     public function isSubscribed(string $email, string $listName = ''): bool
     {
         $this->log('isSubscribed', func_get_args());
+
         return true;
     }
 
@@ -125,6 +126,7 @@ class NullDriver implements Newsletter
     public function hasMember(string $email, string $listName = ''): bool
     {
         $this->log('hasMember', func_get_args());
+
         return true;
     }
 

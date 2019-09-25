@@ -2,7 +2,6 @@
 
 namespace Spatie\Newsletter;
 
-use DrewM\MailChimp\MailChimp;
 interface Newsletter
 {
     public function subscribe(string $email, array $mergeFields = [], string $listName = '', array $options = []);
