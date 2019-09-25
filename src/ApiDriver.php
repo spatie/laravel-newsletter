@@ -2,12 +2,14 @@
 
 namespace Spatie\Newsletter;
 
+use DrewM\MailChimp\MailChimp;
+
 class ApiDriver implements Newsletter
 {
-    /** @var \DrewM\MailChimp\MailChimp */
+    /** @var MailChimp */
     protected $mailChimp;
 
-    /** @var \Spatie\Newsletter\NewsletterListCollection */
+    /** @var NewsletterListCollection */
     protected $lists;
 
     public function __construct(MailChimp $mailChimp, NewsletterListCollection $lists)
