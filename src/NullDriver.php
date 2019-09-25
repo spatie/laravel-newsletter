@@ -131,7 +131,7 @@ class NullDriver implements Newsletter
     private function log($name, $arguments)
     {
         if ($this->logCalls) {
-            Log::debug('Called Spatie Newsletter facade method: ' . $name . ' with:', $arguments);
+            Log::debug('Called Spatie Newsletter facade method: '.$name.' with:', $arguments);
         }
     }
 }

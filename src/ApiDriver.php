@@ -27,7 +27,7 @@ class ApiDriver implements Newsletter
 
         $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
@@ -86,7 +86,7 @@ class ApiDriver implements Newsletter
     {
         $response = $this->getMember($email, $listName);
 
-        if (!isset($response['email_address'])) {
+        if (! isset($response['email_address'])) {
             return false;
         }
 
@@ -101,7 +101,7 @@ class ApiDriver implements Newsletter
     {
         $response = $this->getMember($email, $listName);
 
-        if (!isset($response)) {
+        if (! isset($response)) {
             return false;
         }
 
@@ -120,7 +120,7 @@ class ApiDriver implements Newsletter
             'status' => 'unsubscribed',
         ]);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
@@ -217,7 +217,7 @@ class ApiDriver implements Newsletter
 
         $response = $this->mailChimp->post('campaigns', $options);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
@@ -225,7 +225,7 @@ class ApiDriver implements Newsletter
             return $response;
         }
 
-        if (!$this->updateContent($response['id'], $html, $contentOptions)) {
+        if (! $this->updateContent($response['id'], $html, $contentOptions)) {
             return false;
         }
 
@@ -240,7 +240,7 @@ class ApiDriver implements Newsletter
 
         $response = $this->mailChimp->put("campaigns/{$campaignId}/content", $options);
 
-        if (!$this->lastActionSucceeded()) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 

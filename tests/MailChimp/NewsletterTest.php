@@ -591,7 +591,7 @@ class NewsletterTest extends TestCase
             ->once()
             ->withArgs([
                 "lists/123/members/{$subscriberHash}/tags",
-                ['tags' => [['name' => 'tag-1', 'status' => 'active'], ['name' => 'tag-2', 'status' => 'active']]]
+                ['tags' => [['name' => 'tag-1', 'status' => 'active'], ['name' => 'tag-2', 'status' => 'active']]],
             ])
             ->andReturn('the-post-response');
 
@@ -617,7 +617,7 @@ class NewsletterTest extends TestCase
             ->once()
             ->withArgs([
                 "lists/123/members/{$subscriberHash}/tags",
-                ['tags' => [['name' => 'tag-1', 'status' => 'inactive'], ['name' => 'tag-2', 'status' => 'inactive']]]
+                ['tags' => [['name' => 'tag-1', 'status' => 'inactive'], ['name' => 'tag-2', 'status' => 'inactive']]],
             ])
             ->andReturn('the-post-response');
 
