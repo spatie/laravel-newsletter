@@ -6,7 +6,6 @@ use Mockery;
 use DrewM\MailChimp\MailChimp;
 use PHPUnit\Framework\TestCase;
 use Spatie\Newsletter\ApiDriver;
-use Spatie\Newsletter\Newsletter;
 use Spatie\Newsletter\NewsletterListCollection;
 
 class NewsletterTest extends TestCase
