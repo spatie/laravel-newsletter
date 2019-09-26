@@ -14,16 +14,6 @@ class NullDriverTest extends \PHPUnit\Framework\TestCase
     }
 
     /** @test */
-    public function it_can_be_call_with_any_method()
-    {
-        $subject = new NullDriver();
-
-        $this->assertNull($subject->whatever());
-        $this->assertNull($subject->subscription());
-        $this->assertNull($subject->addTags('jason@testing.com', ['tags']));
-    }
-
-    /** @test */
     public function it_logs_the_method_call_when_log_is_set()
     {
         $subject = new NullDriver(true);
@@ -33,10 +23,15 @@ class NullDriverTest extends \PHPUnit\Framework\TestCase
 
         $log->shouldReceive('debug')->twice();
 
-        $this->assertNull($subject->whatever());
-        $this->assertNull($subject->addTags('jason@testing.com', ['tags']));
+        $this->assertNull($subject->unsubscribe('jason@testing.com', 'test list'));
+        $this->assertNull($subject->addTags(['tags'], 'jason@testing.com'));
 
-        $log->shouldHaveReceived('debug', ['Called Spatie Newsletter facade method: whatever with:', []]);
-        $log->shouldHaveReceived('debug', ['Called Spatie Newsletter facade method: addTags with:', ['jason@testing.com', ['tags']]]);
+        $log->shouldHaveReceived(
+            'debug', ['Called Spatie Newsletter facade method: unsubscribe with:', ['jason@testing.com', 'test list']]
+        );
+        $log->shouldHaveReceived(
+            'debug',
+            ['Called Spatie Newsletter facade method: addTags with:', [['tags'], 'jason@testing.com']]
+        );
     }
 }

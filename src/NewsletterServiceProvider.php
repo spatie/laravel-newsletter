@@ -32,7 +32,7 @@ class NewsletterServiceProvider extends ServiceProvider
 
             $configuredLists = NewsletterListCollection::createFromConfig(config('newsletter'));
 
-            return new Newsletter($mailChimp, $configuredLists);
+            return new ApiDriver($mailChimp, $configuredLists);
         });
 
         $this->app->alias(Newsletter::class, 'newsletter');

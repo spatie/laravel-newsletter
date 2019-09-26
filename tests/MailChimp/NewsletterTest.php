@@ -5,7 +5,7 @@ namespace Spatie\Newsletter\Test;
 use Mockery;
 use DrewM\MailChimp\MailChimp;
 use PHPUnit\Framework\TestCase;
-use Spatie\Newsletter\Newsletter;
+use Spatie\Newsletter\ApiDriver;
 use Spatie\Newsletter\NewsletterListCollection;
 
 class NewsletterTest extends TestCase
@@ -16,7 +16,7 @@ class NewsletterTest extends TestCase
     /** @var \Spatie\Newsletter\Newsletter */
     protected $newsletter;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->mailChimpApi = Mockery::mock(MailChimp::class);
 
@@ -33,10 +33,10 @@ class NewsletterTest extends TestCase
 
         );
 
-        $this->newsletter = new Newsletter($this->mailChimpApi, $newsletterLists);
+        $this->newsletter = new ApiDriver($this->mailChimpApi, $newsletterLists);
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -588,7 +588,10 @@ class NewsletterTest extends TestCase
         $this->mailChimpApi
             ->shouldReceive('post')
             ->once()
-            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => [['name' => 'tag-1', 'status' => 'active'], ['name' => 'tag-2', 'status' => 'active']]]])
+            ->withArgs([
+                "lists/123/members/{$subscriberHash}/tags",
+                ['tags' => [['name' => 'tag-1', 'status' => 'active'], ['name' => 'tag-2', 'status' => 'active']]],
+            ])
             ->andReturn('the-post-response');
 
         $actual = $this->newsletter->addTags(['tag-1', 'tag-2'], $email);
@@ -611,7 +614,10 @@ class NewsletterTest extends TestCase
         $this->mailChimpApi
             ->shouldReceive('post')
             ->once()
-            ->withArgs(["lists/123/members/{$subscriberHash}/tags", ['tags' => [['name' => 'tag-1', 'status' => 'inactive'], ['name' => 'tag-2', 'status' => 'inactive']]]])
+            ->withArgs([
+                "lists/123/members/{$subscriberHash}/tags",
+                ['tags' => [['name' => 'tag-1', 'status' => 'inactive'], ['name' => 'tag-2', 'status' => 'inactive']]],
+            ])
             ->andReturn('the-post-response');
 
         $actual = $this->newsletter->removeTags(['tag-1', 'tag-2'], $email);
