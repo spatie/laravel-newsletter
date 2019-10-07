@@ -69,7 +69,7 @@ class Newsletter
     {
         $list = $this->lists->findByName($listName);
 
-        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [] , $timeout);
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [], $timeout);
     }
 
     public function getMemberActivity(string $email, string $listName = '', $timeout = self::TIMEOUT)
