@@ -12,6 +12,8 @@ class Newsletter
     /** @var \Spatie\Newsletter\NewsletterListCollection */
     protected $lists;
 
+    const TIMEOUT = 10;
+
     public function __construct(MailChimp $mailChimp, NewsletterListCollection $lists)
     {
         $this->mailChimp = $mailChimp;
@@ -19,13 +21,13 @@ class Newsletter
         $this->lists = $lists;
     }
 
-    public function subscribe(string $email, array $mergeFields = [], string $listName = '', array $options = [])
+    public function subscribe(string $email, array $mergeFields = [], string $listName = '', array $options = [], $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
         $options = $this->getSubscriptionOptions($email, $mergeFields, $options);
 
-        $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options);
+        $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options, $timeout);
 
         if (! $this->lastActionSucceeded()) {
             return false;
@@ -34,20 +36,20 @@ class Newsletter
         return $response;
     }
 
-    public function subscribePending(string $email, array $mergeFields = [], string $listName = '', array $options = [])
+    public function subscribePending(string $email, array $mergeFields = [], string $listName = '', array $options = [], $timeout = self::TIMEOUT)
     {
         $options = array_merge($options, ['status' => 'pending']);
 
-        return $this->subscribe($email, $mergeFields, $listName, $options);
+        return $this->subscribe($email, $mergeFields, $listName, $options, $timeout);
     }
 
-    public function subscribeOrUpdate(string $email, array $mergeFields = [], string $listName = '', array $options = [])
+    public function subscribeOrUpdate(string $email, array $mergeFields = [], string $listName = '', array $options = [], $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
         $options = $this->getSubscriptionOptions($email, $mergeFields, $options);
 
-        $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
+        $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options, $timeout);
 
         if (! $this->lastActionSucceeded()) {
             return false;
@@ -56,30 +58,30 @@ class Newsletter
         return $response;
     }
 
-    public function getMembers(string $listName = '', array $parameters = [])
+    public function getMembers(string $listName = '', array $parameters = [], $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
-        return $this->mailChimp->get("lists/{$list->getId()}/members", $parameters);
+        return $this->mailChimp->get("lists/{$list->getId()}/members", $parameters, $timeout);
     }
 
-    public function getMember(string $email, string $listName = '')
+    public function getMember(string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
-        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [] , $timeout);
     }
 
-    public function getMemberActivity(string $email, string $listName = '')
+    public function getMemberActivity(string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
-        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/activity");
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/activity", [], $timeout);
     }
 
-    public function hasMember(string $email, string $listName = ''): bool
+    public function hasMember(string $email, string $listName = '', $timeout = self::TIMEOUT): bool
     {
-        $response = $this->getMember($email, $listName);
+        $response = $this->getMember($email, $listName, $timeout);
 
         if (! isset($response['email_address'])) {
             return false;
@@ -92,9 +94,9 @@ class Newsletter
         return true;
     }
 
-    public function isSubscribed(string $email, string $listName = ''): bool
+    public function isSubscribed(string $email, string $listName = '', $timeout = self::TIMEOUT): bool
     {
-        $response = $this->getMember($email, $listName);
+        $response = $this->getMember($email, $listName, $timeout);
 
         if (! isset($response)) {
             return false;
@@ -107,13 +109,13 @@ class Newsletter
         return true;
     }
 
-    public function unsubscribe(string $email, string $listName = '')
+    public function unsubscribe(string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
         $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [
             'status' => 'unsubscribed',
-        ]);
+        ], $timeout);
 
         if (! $this->lastActionSucceeded()) {
             return false;
@@ -122,43 +124,43 @@ class Newsletter
         return $response;
     }
 
-    public function updateEmailAddress(string $currentEmailAddress, string $newEmailAddress, string $listName = '')
+    public function updateEmailAddress(string $currentEmailAddress, string $newEmailAddress, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
         $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($currentEmailAddress)}", [
             'email_address' => $newEmailAddress,
-        ]);
+        ], $timeout);
 
         return $response;
     }
 
-    public function delete(string $email, string $listName = '')
+    public function delete(string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
-        $response = $this->mailChimp->delete("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+        $response = $this->mailChimp->delete("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [], $timeout);
 
         return $response;
     }
 
-    public function deletePermanently(string $email, string $listName = '')
+    public function deletePermanently(string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
-        $response = $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/actions/delete-permanent");
+        $response = $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/actions/delete-permanent", [], $timeout);
 
         return $response;
     }
 
-    public function getTags(string $email, string $listName = '')
+    public function getTags(string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
-        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags");
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [], $timeout);
     }
 
-    public function addTags(array $tags, string $email, string $listName = '')
+    public function addTags(array $tags, string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
@@ -168,10 +170,10 @@ class Newsletter
 
         return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
             'tags' => $payload,
-        ]);
+        ], $timeout);
     }
 
-    public function removeTags(array $tags, string $email, string $listName = '')
+    public function removeTags(array $tags, string $email, string $listName = '', $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
@@ -181,7 +183,7 @@ class Newsletter
 
         return $this->mailChimp->post("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}/tags", [
             'tags' => $payload,
-        ]);
+        ], $timeout);
     }
 
     public function createCampaign(
@@ -191,7 +193,8 @@ class Newsletter
         string $html = '',
         string $listName = '',
         array $options = [],
-        array $contentOptions = [])
+        array $contentOptions = [],
+        $timeout = self::TIMEOUT)
     {
         $list = $this->lists->findByName($listName);
 
@@ -209,7 +212,7 @@ class Newsletter
 
         $options = array_merge($defaultOptions, $options);
 
-        $response = $this->mailChimp->post('campaigns', $options);
+        $response = $this->mailChimp->post('campaigns', $options, $timeout);
 
         if (! $this->lastActionSucceeded()) {
             return false;
@@ -219,20 +222,20 @@ class Newsletter
             return $response;
         }
 
-        if (! $this->updateContent($response['id'], $html, $contentOptions)) {
+        if (! $this->updateContent($response['id'], $html, $contentOptions, $timeout)) {
             return false;
         }
 
         return $response;
     }
 
-    public function updateContent(string $campaignId, string $html, array $options = [])
+    public function updateContent(string $campaignId, string $html, array $options = [], $timeout = self::TIMEOUT)
     {
         $defaultOptions = compact('html');
 
         $options = array_merge($defaultOptions, $options);
 
-        $response = $this->mailChimp->put("campaigns/{$campaignId}/content", $options);
+        $response = $this->mailChimp->put("campaigns/{$campaignId}/content", $options, $timeout);
 
         if (! $this->lastActionSucceeded()) {
             return false;
