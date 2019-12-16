@@ -21,16 +21,16 @@ Newsletter::subscribe('rincewind@discworld.com');
 Newsletter::unsubscribe('the.luggage@discworld.com');
 
 //Merge variables can be passed as the second argument
-Newsletter::subscribe('sam.vines@discworld.com', ['firstName'=>'Sam', 'lastName'=>'Vines']);
+Newsletter::subscribe('sam.vines@discworld.com', ['FNAME'=>'Sam', 'LNAME'=>'Vines']);
 
 //Subscribe someone to a specific list by using the third argument:
-Newsletter::subscribe('nanny.ogg@discworld.com', ['firstName'=>'Nanny', 'lastName'=>'Ogg'], 'Name of your list');
+Newsletter::subscribe('nanny.ogg@discworld.com', ['FNAME'=>'Nanny', 'LNAME'=>'Ogg'], 'Name of your list');
 
 //Subscribe someone to a specific list and require them to confirm via email:
-Newsletter::subscribePending('nanny.ogg@discworld.com', ['firstName'=>'Nanny', 'lastName'=>'Ogg'], 'Name of your list');
+Newsletter::subscribePending('nanny.ogg@discworld.com', ['FNAME'=>'Nanny', 'LNAME'=>'Ogg'], 'Name of your list');
 
 //Subscribe or update someone
-Newsletter::subscribeOrUpdate('sam.vines@discworld.com', ['firstName'=>'Foo', 'lastName'=>'Bar']);
+Newsletter::subscribeOrUpdate('sam.vines@discworld.com', ['FNAME'=>'Foo', 'LNAME'=>'Bar']);
 
 // Change the email address of an existing subscriber
 Newsletter::updateEmailAddress('rincewind@discworld.com', 'the.luggage@discworld.com');
@@ -165,26 +165,26 @@ Newsletter::unsubscribe('the.luggage@discworld.com');
 
 You can pass some merge variables as the second argument:
 ```php
-Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
+Newsletter::subscribe('rincewind@discworld.com', ['FNAME'=>'Rince', 'LNAME'=>'Wind']);
 ```
 > Please note the at the time of this writing the default merge variables in MailChimp are named `FNAME` and `LNAME`. In our examples we use `firstName` and `lastName` for extra readability.
 
 You can subscribe someone to a specific list by using the third argument:
 ```php
-Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind'], 'subscribers');
+Newsletter::subscribe('rincewind@discworld.com', ['FNAME'=>'Rince', 'LNAME'=>'Wind'], 'subscribers');
 ```
 That third argument is the name of a list you configured in the config file.
 
 You can also subscribe and/or update someone. The person will be subscribed or updated if he/she is already subscribed:
 
  ```php
- Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Foo', 'lastname'=>'Bar']);
+ Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['FNAME'=>'Foo', 'LNAME'=>'Bar']);
  ```
 
 You can subscribe someone to one or more specific group(s)/interest(s) by using the fourth argument:
 
 ```php
-Newsletter::subscribeOrUpdate('rincewind@dscworld.com', ['firstName'=>'Rince','lastName'=>'Wind'], 'subscribers', ['interests'=>['interestId'=>true, 'interestId'=>true]])
+Newsletter::subscribeOrUpdate('rincewind@dscworld.com', ['FNAME'=>'Rince','LNAME'=>'Wind'], 'subscribers', ['interests'=>['interestId'=>true, 'interestId'=>true]])
 ```
 Simply add `false` if you want to remove someone from a group/interest.
 
