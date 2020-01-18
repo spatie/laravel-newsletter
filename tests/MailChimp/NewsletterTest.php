@@ -551,6 +551,23 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_the_interest_categories_for_a_list()
+    {
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs([
+                "lists/123/interest-categories",
+                [
+                    'count' => 10,
+                    'offset' => 0,
+                ]
+            ]);
+
+        $this->newsletter->getListInterestCategories();
+    }
+
+    /** @test */
     public function it_can_get_member_tags()
     {
         $email = 'freek@spatie.be';
