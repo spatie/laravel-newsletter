@@ -249,7 +249,7 @@ public function createCampaign(
     array $contentOptions = [])
 ```
 
-Note the campaign will only be created, no mails will be sent out.
+Note the campaign will only be created, no emails will be sent out.
 
 ### Handling errors
 
