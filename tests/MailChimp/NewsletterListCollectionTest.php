@@ -3,15 +3,15 @@
 namespace Spatie\Newsletter\Test;
 
 use PHPUnit\Framework\TestCase;
+use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 use Spatie\Newsletter\NewsletterList;
 use Spatie\Newsletter\NewsletterListCollection;
-use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 
 class NewsletterListCollectionTest extends TestCase
 {
     protected $newsletterListCollection;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
