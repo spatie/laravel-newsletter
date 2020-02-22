@@ -2,8 +2,8 @@
 
 namespace Spatie\Newsletter\Test;
 
-use Mockery;
 use DrewM\MailChimp\MailChimp;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 use Spatie\Newsletter\Newsletter;
 use Spatie\Newsletter\NewsletterListCollection;
@@ -16,7 +16,7 @@ class NewsletterTest extends TestCase
     /** @var \Spatie\Newsletter\Newsletter */
     protected $newsletter;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->mailChimpApi = Mockery::mock(MailChimp::class);
 
@@ -36,7 +36,7 @@ class NewsletterTest extends TestCase
         $this->newsletter = new Newsletter($this->mailChimpApi, $newsletterLists);
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -557,11 +557,11 @@ class NewsletterTest extends TestCase
             ->shouldReceive('get')
             ->once()
             ->withArgs([
-                "lists/123/interest-categories",
+                'lists/123/interest-categories',
                 [
                     'count' => 10,
                     'offset' => 0,
-                ]
+                ],
             ]);
 
         $this->newsletter->getListInterestCategories();
