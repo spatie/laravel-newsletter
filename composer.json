@@ -1,5 +1,5 @@
 {
-    "name": "spatie/laravel-newsletter",
+    "name": "pomelo/laravel-newsletter",
     "description": "Manage newsletters in Laravel",
     "keywords": [
         "laravel",
