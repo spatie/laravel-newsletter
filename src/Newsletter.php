@@ -241,7 +241,7 @@ class Newsletter
         return $response;
     }
 
-    public function getListInterestCategories(int $count = 10, int $offset = 0, string $type = null, string $listName = '')
+    public function getListInterestCategories(int $count = 100, int $offset = 0, string $type = null, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
@@ -257,7 +257,7 @@ class Newsletter
         return $this->mailChimp->get("lists/{$list->getId()}/interest-categories", $options);
     }
 
-    public function getInterestCategoryInterests(string $categoryId, int $count = 10, int $offset = 0, string $type = null, string $listName = '')
+    public function getInterestCategoryInterests(string $categoryId, int $count = 100, int $offset = 0, string $type = null, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
