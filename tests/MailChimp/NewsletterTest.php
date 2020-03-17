@@ -559,7 +559,7 @@ class NewsletterTest extends TestCase
             ->withArgs([
                 'lists/123/interest-categories',
                 [
-                    'count' => 10,
+                    'count' => 100,
                     'offset' => 0,
                 ],
             ]);
@@ -576,7 +576,7 @@ class NewsletterTest extends TestCase
             ->withArgs([
                 'lists/123/interest-categories/456/interests',
                 [
-                    'count' => 10,
+                    'count' => 100,
                     'offset' => 0,
                 ],
             ]);
