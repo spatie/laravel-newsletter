@@ -10,6 +10,16 @@ This package provides an easy way to integrate MailChimp with Laravel.
 
 Should you find that Mailchimp is too expensive for your use case, consider using [Mailcoach](https://mailcoach.app) instead. Mailcoach is a premium Laravel package that allows you to self host your email lists and campaigns.
 
+## Support us
+
+Learn how to create a package like this one, by watching our premium video course:
+
+[![Laravel Package training](https://spatie.be/github/package-training.jpg)](https://laravelpackage.training)
+
+We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+
+We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+
 ## Installation
 
 You can install this package via composer using:
@@ -77,12 +87,6 @@ return [
     'ssl' => true,
 ];
 ```
-
-## Support us
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us). 
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Usage
 
