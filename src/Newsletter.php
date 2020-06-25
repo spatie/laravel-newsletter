@@ -279,7 +279,7 @@ class Newsletter
     }
 
     /**
-     * @return array|false
+     * @return string|false
      */
     public function getLastError()
     {

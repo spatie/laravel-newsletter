@@ -9,7 +9,7 @@ class NewsletterListTest extends TestCase
 {
     protected $newsletterList;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
