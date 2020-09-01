@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^7.3",
-        "illuminate/support": "~5.8.0|^6.0|^7.0",
+        "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0",
         "drewm/mailchimp-api": "^2.4",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
