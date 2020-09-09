@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.8.1 - 2020-03-03
+
+- Add support for Laravel 8
+
 ## 4.8.0 - 2020-03-03
 
 - add support for laravel 7

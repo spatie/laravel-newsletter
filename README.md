@@ -2,8 +2,7 @@
 [![Latest Version](https://img.shields.io/github/release/spatie/laravel-newsletter.svg?style=flat-square)](https://github.com/spatie/laravel-newsletter/releases)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/laravel-newsletter/run-tests?label=tests)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-newsletter.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-newsletter)
-[![StyleCI](https://styleci.io/repos/35035915/shield?branch=master)](https://styleci.io/repos/35035915)
+![Check & fix styling](https://github.com/spatie/laravel-newsletter/workflows/Check%20&%20fix%20styling/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
 
 This package provides an easy way to integrate MailChimp with Laravel. 
