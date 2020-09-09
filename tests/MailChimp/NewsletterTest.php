@@ -30,7 +30,6 @@ class NewsletterTest extends TestCase
                 ],
                 'defaultListName' => 'list1',
             ]
-
         );
 
         $this->newsletter = new Newsletter($this->mailChimpApi, $newsletterLists);
