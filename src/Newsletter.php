@@ -96,7 +96,7 @@ class Newsletter
     {
         $response = $this->getMember($email, $listName);
 
-        if (! isset($response)) {
+        if (! $this->lastActionSucceeded()) {
             return false;
         }
 
