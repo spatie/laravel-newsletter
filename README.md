@@ -11,7 +11,7 @@ Should you find that Mailchimp is too expensive for your use case, consider usin
 
 ## Support us
 
-[![Image](https://github-ads.s3.eu-central-1.amazonaws.com/laravel-newsletter.jpg)](https://spatie.be/github-ad-click/laravel-newsletter)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-newsletter.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-newsletter)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
