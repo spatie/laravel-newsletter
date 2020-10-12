@@ -280,4 +280,35 @@ class Newsletter
 
         return $options;
     }
+
+    /**
+     * This method formats the error response coming from the Mailchimp API.
+     * So that the errors are easily readable by the logics written by user and can be handled accordingly.
+     *
+     */
+    public function getLastErrorFormatted()
+    {
+        $api_response = $this->getLastError();
+
+        if($api_response != null && is_string($api_response)){
+            $api_response_arr = explode(": ", $api_response);
+            $error_code = isset($api_response_arr[0]) && is_numeric($api_response_arr[0]) ? $api_response_arr[0] : null;
+            $error_message = $api_response_arr[1] ?? null;
+
+            $error_data = [];
+            if($error_message != null && is_string($error_message)){
+                $pattern = '/[a-z0-9_\-\+\.]+@[a-z0-9\-]+\.([a-z]{2,4})(?:\.[a-z]{2})?/i';
+                preg_match_all($pattern, $error_message, $matches);
+                $error_data['emails'] = $matches[0];
+            }
+
+            return [
+                "error_code" => $error_code,
+                "error_message" => $error_message,
+                "error_data" => $error_data
+            ];
+        }
+
+        return $api_response;
+    }
 }

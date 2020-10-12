@@ -206,6 +206,11 @@ If something went wrong you can get the last error with:
 Newsletter::getLastError();
 ```
 
+You can get the last error as a formatted response. Error code, message and error data are in separate fields. So that your logics can handle errors accordingly. 
+```php
+Newsletter::getLastErrorFormatted(); //returns an array
+```
+
 If you just want to make sure if the last action succeeded you can use:
 ```php
 Newsletter::lastActionSucceeded(); //returns a boolean

@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.8.3 - 2020-10-12
+
+- add new method for formatting API error response (As a fix for issue #237)
+
 ## 4.8.2 - 2020-09-30
 
 - ensure the last action succeeded on `isSubscribed` (#244)
