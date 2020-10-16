@@ -2,8 +2,8 @@
 
 namespace Spatie\Newsletter;
 
-use Exception;
 use DrewM\MailChimp\MailChimp;
+use Exception;
 
 class Newsletter
 {
@@ -78,7 +78,7 @@ class Newsletter
         $members = [];
 
         for ($i = 0; $i < $total; $i += 500) {
-            $payload = array_merge($parameters, ['count'  => 500, 'offset' => $i]);
+            $payload = array_merge($parameters, ['count' => 500, 'offset' => $i]);
 
             $members = array_merge(
                 $members,
