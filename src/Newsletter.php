@@ -3,6 +3,7 @@
 namespace Spatie\Newsletter;
 
 use DrewM\MailChimp\MailChimp;
+use Spatie\Newsletter\Exceptions\MailChimpClientException;
 
 class Newsletter
 {
@@ -252,6 +253,18 @@ class Newsletter
     public function getLastError()
     {
         return $this->mailChimp->getLastError();
+    }
+
+    /**
+     * @return string|false|MailChimpClientException
+     */
+    public function getLastErrorAsException()
+    {
+        if ($error = $this->getLastError()) {
+            return MailChimpClientException::fromClientString($error);
+        }
+
+        return $error;
     }
 
     public function lastActionSucceeded(): bool

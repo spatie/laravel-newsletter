@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.8.3 - 2020-10-23
+
+- Added `getLastErrorAsException` method
+
 ## 4.8.2 - 2020-09-30
 
 - ensure the last action succeeded on `isSubscribed` (#244)

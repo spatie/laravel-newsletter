@@ -5,6 +5,7 @@ namespace Spatie\Newsletter\Test;
 use DrewM\MailChimp\MailChimp;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Spatie\Newsletter\Exceptions\MailChimpClientException;
 use Spatie\Newsletter\Newsletter;
 use Spatie\Newsletter\NewsletterListCollection;
 
@@ -616,5 +617,19 @@ class NewsletterTest extends TestCase
         $actual = $this->newsletter->removeTags(['tag-1', 'tag-2'], $email);
 
         $this->assertSame('the-post-response', $actual);
+    }
+
+    /** @test */
+    public function it_provides_last_error_as_exception()
+    {
+        $this->mailChimpApi->shouldReceive('getLastError')
+            ->once()
+            ->andReturn('400: Please provide a valid email address.');
+
+        $this->assertInstanceOf(
+            MailChimpClientException::class,
+            $this->newsletter->getLastErrorAsException()
+        );
+
     }
 }
