@@ -32,7 +32,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Newsletter\\Test\\": "tests"
+            "Spatie\\Newsletter\\Test\\": "tests/MailChimp"
         }
     },
     "extra": {
