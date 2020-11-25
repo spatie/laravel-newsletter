@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.9.0 - 2020-11-25
+
+- add support for PHP 8.0 (#253)
+- drop support for Laravel 5.8 (#253)
+
 ## 4.8.2 - 2020-09-30
 
 - ensure the last action succeeded on `isSubscribed` (#244)
