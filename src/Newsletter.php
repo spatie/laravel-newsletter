@@ -281,6 +281,28 @@ class Newsletter
         return $options;
     }
 
+    public function getMarketingPermissions(string $listName = ''): array
+    {
+        $list = $this->lists->findByName($listName);
+
+        $response = $this->mailChimp->get("lists/{$list->getId()}/members");
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        $marketingPermissions = collect($response['members'][0]['marketing_permissions'])
+            ->map(function ($permission) {
+                return [
+                    'text' => $permission['text'],
+                    'id' => $permission['marketing_permission_id'],
+                ];
+            })
+            ->toArray();
+
+        return $marketingPermissions;
+    }
+
     public function setMarketingPermission(string $email, string $permission, bool $bool, string $listName = '')
     {
         $list = $this->lists->findByName($listName);
