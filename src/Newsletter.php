@@ -280,4 +280,30 @@ class Newsletter
 
         return $options;
     }
+
+    public function setMarketingPermission(string $email, string $permission, bool $bool, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $id = $list->getMarketingPermission($permission);
+
+        $permissions = [
+            "marketing_permissions" => [
+                [
+                    "marketing_permission_id" => $id,
+                    "enabled" => $bool,
+                ],
+            ],
+        ];
+
+        $options = $this->getSubscriptionOptions($email, [], $permissions);
+
+        $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
+    }
 }
