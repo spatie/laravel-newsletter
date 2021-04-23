@@ -43,6 +43,7 @@ return [
 
             /*
              * The GDPR marketing permissions of this audience.
+             * You can get a list of your permissions with this command: "php artisan newsletter:permissions"
              */
             'marketing_permissions' => [
                 // 'email' => '2a4819ebc7',
