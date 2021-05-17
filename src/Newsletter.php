@@ -281,7 +281,7 @@ class Newsletter
         return $options;
     }
 
-    public function getMarketingPermissions(string $listName = ''): array
+    public function getMarketingPermissions(string $listName = '')
     {
         $list = $this->lists->findByName($listName);
 
