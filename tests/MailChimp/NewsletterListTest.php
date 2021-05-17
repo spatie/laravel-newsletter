@@ -13,7 +13,12 @@ class NewsletterListTest extends TestCase
     {
         parent::setUp();
 
-        $this->newsletterList = new NewsletterList('subscriber', ['id' => 'abc123']);
+        $this->newsletterList = new NewsletterList('subscriber', [
+            'id' => 'abc123',
+            'marketing_permissions' => [
+                'email' => 'abc123'
+            ]
+        ]);
     }
 
     /** @test */
@@ -26,5 +31,11 @@ class NewsletterListTest extends TestCase
     public function it_can_determine_the_id_of_the_list()
     {
         $this->assertSame('abc123', $this->newsletterList->getId());
+    }
+
+    /** @test */
+    public function it_can_get_a_marketing_permission_of_the_list()
+    {
+        $this->assertSame('abc123', $this->newsletterList->getMarketingPermission('email'));
     }
 }
