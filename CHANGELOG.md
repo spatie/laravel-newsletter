@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 4.10.0 - 2021-05-18
+
+- add support for marketing permissions (#262)
+
 ## 4.9.0 - 2020-11-25
 
 - add support for PHP 8.0 (#253)
