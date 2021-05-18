@@ -25,8 +25,18 @@ class NewsletterTest extends TestCase
         $newsletterLists = NewsletterListCollection::createFromConfig(
             [
                 'lists' => [
-                    'list1' => ['id' => 123],
-                    'list2' => ['id' => 456],
+                    'list1' => [
+                        'id' => 123,
+                        'marketing_permissions' => [
+                            'email' => 'abc123',
+                        ],
+                    ],
+                    'list2' => [
+                        'id' => 456,
+                        'marketing_permissions' => [
+                            'email' => 'abc456',
+                        ],
+                    ],
                 ],
                 'defaultListName' => 'list1',
             ]
@@ -616,5 +626,138 @@ class NewsletterTest extends TestCase
         $actual = $this->newsletter->removeTags(['tag-1', 'tag-2'], $email);
 
         $this->assertSame('the-post-response', $actual);
+    }
+
+    /** @test */
+    public function it_can_get_the_marketing_permissions()
+    {
+        $members = [
+            [
+                'marketing_permissions' => [
+                    [
+                        'marketing_permission_id' => 'abc123',
+                        'text' => 'Email',
+                        'enabled' => false,
+                    ],
+                ],
+            ]
+        ];
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(['lists/123/members'])
+            ->andReturn(['members' => $members]);
+
+        $response = $this->newsletter->getMarketingPermissions();
+
+        $expectedResponse = [
+            [
+                'text' => 'Email',
+                'id' => 'abc123'
+            ]
+        ];
+
+        $this->assertSame($expectedResponse, $response);
+    }
+
+    /** @test */
+    public function it_can_get_the_marketing_permissions_of_a_specific_list()
+    {
+        $members = [
+            [
+                'marketing_permissions' => [
+                    [
+                        'marketing_permission_id' => 'abc456',
+                        'text' => 'Email',
+                        'enabled' => false,
+                    ],
+                ],
+            ]
+        ];
+
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(['lists/456/members'])
+            ->andReturn(['members' => $members]);
+
+        $response = $this->newsletter->getMarketingPermissions('list2');
+
+        $expectedResponse = [
+            [
+                'text' => 'Email',
+                'id' => 'abc456'
+            ]
+        ];
+
+        $this->assertSame($expectedResponse, $response);
+    }
+
+    /** @test */
+    public function it_can_set_a_marketing_permission()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/123/members';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                "{$url}/{$subscriberHash}",
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'email_type' => 'html',
+                    'marketing_permissions' => [
+                        [
+                            'marketing_permission_id' => 'abc123',
+                            'enabled' => true,
+                        ]
+                    ],
+                ],
+            ]);
+
+        $this->newsletter->setMarketingPermission($email, 'email', true);
+    }
+
+    public function it_can_set_a_marketing_permission_in_a_specific_list()
+    {
+        $email = 'freek@spatie.be';
+
+        $url = 'lists/456/members';
+
+        $subscriberHash = 'abc123';
+
+        $this->mailChimpApi->shouldReceive('subscriberHash')
+            ->once()
+            ->withArgs([$email])
+            ->andReturn($subscriberHash);
+
+        $this->mailChimpApi->shouldReceive('put')
+            ->once()
+            ->withArgs([
+                "{$url}/{$subscriberHash}",
+                [
+                    'email_address' => $email,
+                    'status' => 'subscribed',
+                    'email_type' => 'html',
+                    'marketing_permissions' => [
+                        [
+                            'marketing_permission_id' => 'abc456',
+                            'enabled' => true,
+                        ]
+                    ],
+                ],
+            ]);
+
+        $this->newsletter->setMarketingPermission($email, 'email', true, 'list2');
     }
 }

@@ -25,4 +25,9 @@ class NewsletterList
     {
         return $this->name;
     }
+
+    public function getMarketingPermission(string $key): string
+    {
+        return $this->properties['marketing_permissions'][$key];
+    }
 }
