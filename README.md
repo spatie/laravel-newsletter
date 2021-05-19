@@ -5,7 +5,7 @@
 ![Check & fix styling](https://github.com/spatie/laravel-newsletter/workflows/Check%20&%20fix%20styling/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
 
-This package provides an easy way to integrate MailChimp with Laravel. 
+This package provides an easy way to integrate MailChimp with Laravel.
 
 Should you find that Mailchimp is too expensive for your use case, consider using [Mailcoach](https://mailcoach.app) instead. Mailcoach is a premium Laravel package that allows you to self host your email lists and campaigns.
 
@@ -211,7 +211,7 @@ public function createCampaign(
 Note the campaign will only be created, no emails will be sent out.
 
 ### Working with GDRP marketing permissions
-If you're subject to GDRP, you need to [collect your users consent](https://mailchimp.com/help/collect-consent-with-gdpr-forms/). This package provides a simple artisan command that outputs a nice table with the names of your audience's marketing permissions and their ID's.
+If you are subject to GDRP, you need to [collect your user's consent](https://mailchimp.com/help/collect-consent-with-gdpr-forms/). This package provides a simple artisan command that outputs a nice table with the names and ID's of your audience's marketing permissions.
 
 Get the marketing permissions of your default list:
 ```bash
@@ -240,7 +240,7 @@ Next, you need to add the permissions to your list's config:
 ],
 ```
 
-Now you can easily update a subscriber's marketing permission. The first argument is the email, the second argument the permission key from the config, the third argument a boolean to enable/disable the permission, and an optional fourth argument is the name of a specific list.
+Now you can easily update a subscriber's marketing permissions. The first argument is the email, the second argument the permission key from the config, the third argument a boolean to enable/disable the permission, and an optional fourth argument is the name of a specific list.
 
 Update a subscriber's marketing permission:
 ```php
