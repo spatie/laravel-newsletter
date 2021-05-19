@@ -5,7 +5,7 @@
 ![Check & fix styling](https://github.com/spatie/laravel-newsletter/workflows/Check%20&%20fix%20styling/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
 
-This package provides an easy way to integrate MailChimp with Laravel. 
+This package provides an easy way to integrate MailChimp with Laravel.
 
 Should you find that Mailchimp is too expensive for your use case, consider using [Mailcoach](https://mailcoach.app) instead. Mailcoach is a premium Laravel package that allows you to self host your email lists and campaigns.
 
@@ -75,6 +75,16 @@ return [
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
              */
             'id' => env('MAILCHIMP_LIST_ID'),
+
+            /*
+             * The GDPR marketing permissions of this audience.
+             * You can get a list of your permissions with this command: "php artisan newsletter:permissions"
+             */
+            'marketing_permissions' => [
+                // 'email' => '2a4819ebc7',
+                // 'customized_online_advertising' => '4256fc7dc5',
+            ],
+
         ],
     ],
 
@@ -82,6 +92,7 @@ return [
      * If you're having trouble with https connections, set this to false.
      */
     'ssl' => true,
+
 ];
 ```
 
@@ -198,6 +209,43 @@ public function createCampaign(
 ```
 
 Note the campaign will only be created, no emails will be sent out.
+
+### Working with GDRP marketing permissions
+If you are subject to GDRP, you need to [collect your user's consent](https://mailchimp.com/help/collect-consent-with-gdpr-forms/). This package provides a simple artisan command that outputs a nice table with the names and ID's of your audience's marketing permissions.
+
+Get the marketing permissions of your default list:
+```bash
+php artisan newsletter:permissions
+```
+
+You may also get the permissions of a specific list:
+ ```bash
+php artisan newsletter:permissions subscribers
+```
+
+Next, you need to add the permissions to your list's config:
+```php
+'lists' => [
+
+    'subscribers' => [
+
+        'id' => env('MAILCHIMP_LIST_ID'),
+
+        'marketing_permissions' => [
+            'email' => '2a4819ebc7',
+            'customized_online_advertising' => '4256fc7dc5',
+        ],
+
+    ],
+],
+```
+
+Now you can easily update a subscriber's marketing permissions. The first argument is the email, the second argument the permission key from the config, the third argument a boolean to enable/disable the permission, and an optional fourth argument is the name of a specific list.
+
+Update a subscriber's marketing permission:
+```php
+Newsletter::setMarketingPermission('rincewind@discworld.com', 'email', true);
+```
 
 ### Handling errors
 
