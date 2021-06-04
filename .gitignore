@@ -1,6 +1,4 @@
 /vendor
 composer.phar
 composer.lock
-.php_cs.cache
-
-
+.php-cs-fixer.cache
