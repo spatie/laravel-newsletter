@@ -16,8 +16,8 @@ class NewsletterListTest extends TestCase
         $this->newsletterList = new NewsletterList('subscriber', [
             'id' => 'abc123',
             'marketing_permissions' => [
-                'email' => 'abc123'
-            ]
+                'email' => 'abc123',
+            ],
         ]);
     }
 

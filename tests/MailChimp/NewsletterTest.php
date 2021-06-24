@@ -640,7 +640,7 @@ class NewsletterTest extends TestCase
                         'enabled' => false,
                     ],
                 ],
-            ]
+            ],
         ];
 
         $this->mailChimpApi
@@ -654,8 +654,8 @@ class NewsletterTest extends TestCase
         $expectedResponse = [
             [
                 'text' => 'Email',
-                'id' => 'abc123'
-            ]
+                'id' => 'abc123',
+            ],
         ];
 
         $this->assertSame($expectedResponse, $response);
@@ -673,7 +673,7 @@ class NewsletterTest extends TestCase
                         'enabled' => false,
                     ],
                 ],
-            ]
+            ],
         ];
 
         $this->mailChimpApi
@@ -687,8 +687,8 @@ class NewsletterTest extends TestCase
         $expectedResponse = [
             [
                 'text' => 'Email',
-                'id' => 'abc456'
-            ]
+                'id' => 'abc456',
+            ],
         ];
 
         $this->assertSame($expectedResponse, $response);
@@ -720,7 +720,7 @@ class NewsletterTest extends TestCase
                         [
                             'marketing_permission_id' => 'abc123',
                             'enabled' => true,
-                        ]
+                        ],
                     ],
                 ],
             ]);
@@ -753,7 +753,7 @@ class NewsletterTest extends TestCase
                         [
                             'marketing_permission_id' => 'abc456',
                             'enabled' => true,
-                        ]
+                        ],
                     ],
                 ],
             ]);

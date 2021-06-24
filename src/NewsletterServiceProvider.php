@@ -4,7 +4,6 @@ namespace Spatie\Newsletter;
 
 use DrewM\MailChimp\MailChimp;
 use Illuminate\Support\ServiceProvider;
-use Spatie\Newsletter\NewsletterPermissions;
 
 class NewsletterServiceProvider extends ServiceProvider
 {
