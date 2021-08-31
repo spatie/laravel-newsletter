@@ -254,6 +254,19 @@ If something went wrong you can get the last error with:
 Newsletter::getLastError();
 ```
 
+Errors with fields will be in the errors array:
+```php
+Newsletter::getErrorsArray();
+/**
+ *    array:1 [
+ *        0 => array:2 [
+ *            "field" => "MMERGE1"
+ *            "message" => "Please enter the date"
+ *        ]
+ *    ]
+ */
+```
+
 If you just want to make sure if the last action succeeded you can use:
 ```php
 Newsletter::lastActionSucceeded(); //returns a boolean

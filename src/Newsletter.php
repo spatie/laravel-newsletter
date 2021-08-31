@@ -254,6 +254,19 @@ class Newsletter
         return $this->mailChimp->getLastError();
     }
 
+    public function getErrorsArray()
+    {
+        $response = $this->mailChimp->getLastResponse();
+
+        if (! isset($response['body'])) {
+            return [];
+        }
+
+        $response = json_decode($response['body'], true);
+
+        return $response['errors'] ?? [];
+    }
+
     public function lastActionSucceeded(): bool
     {
         return $this->mailChimp->success();
