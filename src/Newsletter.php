@@ -56,6 +56,13 @@ class Newsletter
         return $response;
     }
 
+    public function getList(string $listName = '', array $parameters = [])
+    {
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("lists/{$list->getId()}", $parameters);
+    }
+
     public function getMembers(string $listName = '', array $parameters = [])
     {
         $list = $this->lists->findByName($listName);

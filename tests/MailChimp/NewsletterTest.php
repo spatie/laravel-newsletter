@@ -440,6 +440,17 @@ class NewsletterTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_the_list()
+    {
+        $this->mailChimpApi
+            ->shouldReceive('get')
+            ->once()
+            ->withArgs(['lists/123', []]);
+
+        $this->newsletter->getList();
+    }
+
+    /** @test */
     public function it_can_get_the_list_members()
     {
         $this->mailChimpApi
