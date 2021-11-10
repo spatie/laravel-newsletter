@@ -147,6 +147,13 @@ Newsletter::subscribeOrUpdate('rincewind@dscworld.com', ['FNAME'=>'Rince','LNAME
 ```
 Simply add `false` if you want to remove someone from a group/interest.
 
+You can subscribe someone and specify it's language (for multilingual mailing) by using the fourth argument:
+
+```php
+Newsletter::subscribeOrUpdate('rincewind@dscworld.com', ['FNAME'=>'Rince','LNAME'=>'Wind'], 'subscribers', ['language'=> 'fr'])
+```
+This can easily be combined with your app current local using `app()->getLocale()` as value for the language argument.
+
 You can also unsubscribe someone from a specific list:
 ```php
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
