@@ -24,7 +24,7 @@ class NewsletterPermissions extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
     public function handle()
     {
@@ -32,9 +32,15 @@ class NewsletterPermissions extends Command
 
         $permissions = Newsletter::getMarketingPermissions($listName);
 
+        if (! $permissions) {
+            return Command::FAILURE;
+        }
+
         $this->table(
             ['Marketing Permission', 'ID'],
             $permissions
         );
+
+        return Command::SUCCESS;
     }
 }
