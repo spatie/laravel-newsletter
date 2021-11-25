@@ -33,6 +33,8 @@ class NewsletterPermissions extends Command
         $permissions = Newsletter::getMarketingPermissions($listName);
 
         if (! $permissions) {
+            $this->error('Permissions Failed');
+
             return Command::FAILURE;
         }
 
