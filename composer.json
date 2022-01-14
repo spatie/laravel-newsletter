@@ -12,13 +12,13 @@
         {
             "name": "Freek Van der Herten",
             "email": "freek@spatie.be",
-            "homepage": "https://murze.be",
+            "homepage": "https://spatie.be",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.3|^8.0",
-        "illuminate/support": "^8.0",
+        "illuminate/support": "^8.0|^9.0",
         "drewm/mailchimp-api": "^2.4"
     },
     "require-dev": {
