@@ -2,74 +2,57 @@
 
 namespace Spatie\Newsletter\Test;
 
-use PHPUnit\Framework\TestCase;
 use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 use Spatie\Newsletter\NewsletterList;
 use Spatie\Newsletter\NewsletterListCollection;
 
-class NewsletterListCollectionTest extends TestCase
-{
-    protected $newsletterListCollection;
+beforeEach(function () {
+    $this->newsletterListCollection = NewsletterListCollection::createFromConfig(
+        [
+            'lists' => [
+                'list1' => ['id' => 1],
+                'list2' => ['id' => 2],
+                'list3' => ['id' => 3],
+            ],
+            'defaultListName' => 'list3',
+        ]
+    );
+});
 
-    public function setUp(): void
-    {
-        parent::setUp();
+it('can find a list by its name', function () {
+    $list = $this->newsletterListCollection->findByName('list2');
 
-        $this->newsletterListCollection = NewsletterListCollection::createFromConfig(
-            [
-                'lists' => [
-                    'list1' => ['id' => 1],
-                    'list2' => ['id' => 2],
-                    'list3' => ['id' => 3],
-                ],
-                'defaultListName' => 'list3',
-            ]
-        );
-    }
+    $this->assertInstanceOf(NewsletterList::class, $list);
 
-    /** @test */
-    public function it_can_find_a_list_by_its_name()
-    {
-        $list = $this->newsletterListCollection->findByName('list2');
+    $this->assertEquals(2, $list->getId());
+});
 
-        $this->assertInstanceOf(NewsletterList::class, $list);
+it('will use the default list when not specifing a listname', function () {
+    $list = $this->newsletterListCollection->findByName('');
 
-        $this->assertEquals(2, $list->getId());
-    }
+    $this->assertInstanceOf(NewsletterList::class, $list);
 
-    /** @test */
-    public function it_will_use_the_default_list_when_not_specifing_a_listname()
-    {
-        $list = $this->newsletterListCollection->findByName('');
+    $this->assertEquals(3, $list->getId());
+});
 
-        $this->assertInstanceOf(NewsletterList::class, $list);
+it('will throw an exception when using a default list that does not exist', function () {
+    $newsletterListCollection = NewsletterListCollection::createFromConfig(
+        [
+            'lists' => [
+                'list1' => ['id' => 'list1'],
+            ],
 
-        $this->assertEquals(3, $list->getId());
-    }
+            'defaultListName' => 'list2',
+        ]
+    );
 
-    /** @test */
-    public function it_will_throw_an_exception_when_using_a_default_list_that_does_not_exist()
-    {
-        $newsletterListCollection = NewsletterListCollection::createFromConfig(
-            [
-                'lists' => [
-                    'list1' => ['id' => 'list1'],
-                ],
+    $this->expectException(InvalidNewsletterList::class);
 
-                'defaultListName' => 'list2',
-            ]
-        );
+    $newsletterListCollection->findByName('');
+});
 
-        $this->expectException(InvalidNewsletterList::class);
+it('will throw an exception when trying to find a list that does not exist', function () {
+    $this->expectException(InvalidNewsletterList::class);
 
-        $newsletterListCollection->findByName('');
-    }
-
-    /** @test */
-    public function it_will_throw_an_exception_when_trying_to_find_a_list_that_does_not_exist()
-    {
-        $this->expectException(InvalidNewsletterList::class);
-
-        $this->newsletterListCollection->findByName('blabla');
-    }
-}
+    $this->newsletterListCollection->findByName('blabla');
+});
