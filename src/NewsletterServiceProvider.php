@@ -26,7 +26,12 @@ class NewsletterServiceProvider extends ServiceProvider
                 return new NullDriver($driver === 'log');
             }
 
-            $mailChimp = new Mailchimp(config('newsletter.apiKey'));
+            $apiKey = config('newsletter.apiKey');
+            if (is_callable($apiKey)) {
+                $apiKey = $apiKey();
+            }
+
+            $mailChimp = new Mailchimp($apiKey);
 
             $mailChimp->verify_ssl = config('newsletter.ssl', true);
 
