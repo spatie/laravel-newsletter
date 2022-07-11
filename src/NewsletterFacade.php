@@ -8,6 +8,6 @@ class NewsletterFacade extends Facade
 {
     public static function getFacadeAccessor()
     {
-        return 'newsletter';
+        return 'Newsletter';
     }
 }
