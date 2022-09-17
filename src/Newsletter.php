@@ -226,6 +226,38 @@ class Newsletter
         return $response;
     }
 
+    public function getCampaigns(string $listName = '', array $options = [])
+    {
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("campaigns", $options);
+    }
+
+    public function getCampaign(string $campaignId, string $listName = '', array $options = [])
+    {
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("campaigns/{$campaignId}", $options);
+    }
+
+    public function getCampaignContent(string $campaignId, string $listName = '', array $options = [])
+    {
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("campaigns/{$campaignId}/content", $options);
+    }
+
+    public function sendCampaign(string $campaignId, string $listName = '', array $options = [])
+    {
+        $response = $this->mailChimp->post("campaigns/{$campaignId}/actions/send", $options);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
+    }
+
     public function updateContent(string $campaignId, string $html, array $options = [])
     {
         $defaultOptions = compact('html');
@@ -237,6 +269,15 @@ class Newsletter
         if (! $this->lastActionSucceeded()) {
             return false;
         }
+
+        return $response;
+    }
+
+    public function deleteCampaign(string $campaignId, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $response = $this->mailChimp->delete("campaigns/{$campaignId}");
 
         return $response;
     }
