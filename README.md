@@ -10,7 +10,7 @@
 
 This package provides an easy way to integrate MailChimp with Laravel.
 
-Should you find that Mailchimp is too expensive for your use case, consider using [Mailcoach](https://mailcoach.app) instead. Mailcoach is a premium Laravel package that allows you to self host your email lists and campaigns.
+Should you find that Mailchimp is too expensive for your use case, consider using [Mailcoach](https://mailcoach.app) instead. Mailcoach is a premium Laravel package that allows you to self-host your email lists and campaigns.
 
 ## Support us
 
