@@ -105,7 +105,11 @@ To use MailChimp, install this extra package.
 composer require drewm/mailchimp-api
 ```
 
-Next, you must provide values for the API key, endpoint and `list.subscribers.id`. You'll find these values in the MailChimp UI
+The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\MailChimpDriver::class`.
+
+Next, you must provide values for the API key and `list.subscribers.id`. You'll find these values in the MailChimp UI.
+
+The `endpoint` config value can be set to an empty string.
 
 ## Usage
 
@@ -214,6 +218,12 @@ If you need more functionality you get an instance of the underlying API with
 
 ```php
 $api = Newsletter::getApi();
+```
+
+If you're having troubles getting the MailChimp integration, you can see the last error with:
+
+```php
+Newsletter::getApi()->getLastError();
 ```
 
 ## Testing

@@ -20,7 +20,7 @@ class MailChimpDriver implements Driver
     {
         $this->mailChimp = new MailChimp(
             $arguments['api_key'] ?? '',
-            $arguments['end_point'] ?? '',
+            $arguments['endpoint'] ?? null,
         );
 
         $this->lists = $lists;
