@@ -12,7 +12,7 @@ This package provides an easy way to integrate subscriptions to email lists of v
 
 Currently this package support:
 
-- [Mailcoach](https://mailcoach.app), an affordable email marketing platform, built by us
+- [Mailcoach](https://mailcoach.app) (built by us :-))
 - [MailChimp](https://mailchimp.com)
 
 ## Support us
