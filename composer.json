@@ -26,14 +26,15 @@
         "drewm/mailchimp-api": "For working with MailChimp"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "mockery/mockery": "^1.4",
-        "spatie/ray": "^1.28",
-        "pestphp/pest": "^1.20",
-        "spatie/mailcoach-sdk-php": "^1.0",
         "drewm/mailchimp-api": "^2.5",
+        "guzzlehttp/guzzle": "^7.5",
+        "mockery/mockery": "^1.4",
+        "orchestra/testbench": "^7.11",
+        "pestphp/pest": "^1.20",
         "phpstan/phpstan": "^1.9",
-        "orchestra/testbench": "^7.11"
+        "phpunit/phpunit": "^9.5",
+        "spatie/mailcoach-sdk-php": "^1.0",
+        "spatie/ray": "^1.28"
     },
     "autoload": {
         "psr-4": {

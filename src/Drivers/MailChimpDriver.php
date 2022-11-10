@@ -18,7 +18,10 @@ class MailChimpDriver implements Driver
 
     public function __construct(array $arguments, Lists $lists)
     {
-        $this->mailChimp = new MailChimp($arguments['api_key'], $arguments['end_point']);
+        $this->mailChimp = new MailChimp(
+            $arguments['api_key'] ?? '',
+            $arguments['end_point'] ?? '',
+        );
 
         $this->lists = $lists;
     }
