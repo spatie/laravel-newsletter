@@ -20,8 +20,9 @@ class MailcoachDriver implements Driver
 
     public function __construct(array $arguments, Lists $lists)
     {
+
         $this->mailcoach = new Mailcoach(
-            $arguments['api_token'] ?? '',
+            $arguments['api_key'] ?? '',
             $arguments['endpoint'] ?? ''
         );
 
@@ -35,20 +36,22 @@ class MailcoachDriver implements Driver
 
     public function subscribe(
         string $email,
-        array $properties,
+        array $properties = [],
         string $listName = '',
         array $options = []
     ): Subscriber {
-        $emailListUuid = $this->lists->findByName($listName);
+        $emailListUuid = $this->lists->findByName($listName)->getId();
 
         $properties['email_list_uuid'] = $emailListUuid;
 
-        return $this->mailcoach->createSubscriber($email, $properties);
+        $properties['email'] = $email;
+
+        return $this->mailcoach->createSubscriber($emailListUuid, $properties);
     }
 
     public function subscribeOrUpdate(
         string $email,
-        array $properties,
+        array $properties = [],
         string $listName = '',
         array $options = []
     ): Subscriber {

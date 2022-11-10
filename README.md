@@ -8,9 +8,12 @@
 ![Check & fix styling](https://github.com/spatie/laravel-newsletter/workflows/Check%20&%20fix%20styling/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
 
-This package provides an easy way to integrate MailChimp with Laravel.
+This package provides an easy way to integrate subscriptions to email lists of various email services.
 
-Should you find that Mailchimp is too expensive for your use case, consider using [Mailcoach](https://mailcoach.app) instead. Mailcoach is a premium Laravel package that allows you to self-host your email lists and campaigns.
+Currently this package support:
+
+- [Mailcoach](https://mailcoach.app), an affordable email marketing platform, built by us
+- [MailChimp](https://mailchimp.com)
 
 ## Support us
 
@@ -28,15 +31,14 @@ You can install this package via composer using:
 composer require spatie/laravel-newsletter
 ```
 
-The package will automatically register itself.
-
 To publish the config file to `config/newsletter.php` run:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\Newsletter\NewsletterServiceProvider"
+php artisan vendor:publish --tag="newsletter-config"
 ```
 
 This will publish a file `newsletter.php` in your config directory with the following contents:
+
 ```php
 return [
 
@@ -45,22 +47,22 @@ return [
      * You may use "log" or "null" to prevent calling the
      * API directly from your environment.
      */
-    'driver' => env('MAILCHIMP_DRIVER', 'api'),
+    'driver' => env('NEWSLETTER_DRIVER', Spatie\Newsletter\Drivers\MailcoachDriver::class),
+
+    /**
+     * These arguments will be given to the driver.
+     */
+    'driver_arguments' => [
+        'api_key' => env('NEWSLETTER_API_KEY'),
+
+        'endpoint' => env('NEWSLETTER_ENDPOINT'),
+    ],
 
     /*
-     * The API key of a MailChimp account. You can find yours at
-     * https://us10.admin.mailchimp.com/account/api-key-popup/.
+     * The list name to use when no list name is specified in a method.
      */
-    'apiKey' => env('MAILCHIMP_APIKEY'),
+    'default_list_name' => 'subscribers',
 
-    /*
-     * The listName to use when no listName has been specified in a method.
-     */
-    'defaultListName' => 'subscribers',
-
-    /*
-     * Here you can define properties of the lists.
-     */
     'lists' => [
 
         /*
@@ -73,39 +75,44 @@ return [
         'subscribers' => [
 
             /*
-             * A MailChimp list id. Check the MailChimp docs if you don't know
-             * how to get this value:
+             * When using the Mailcoach driver, this should be Email list UUID
+             * which is displayed in the Mailcoach UI
+             *
+             * When using the MailChimp driver, this should be a MailChimp list id.
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
              */
-            'id' => env('MAILCHIMP_LIST_ID'),
-
-            /*
-             * The GDPR marketing permissions of this audience.
-             * You can get a list of your permissions with this command: "php artisan newsletter:permissions"
-             */
-            'marketing_permissions' => [
-                // 'email' => '2a4819ebc7',
-                // 'customized_online_advertising' => '4256fc7dc5',
-            ],
-
+            'id' => env('NEWSLETTER_LIST_ID'),
         ],
     ],
-
-    /*
-     * If you're having trouble with https connections, set this to false.
-     */
-    'ssl' => true,
 ];
 ```
 
-## Usage
+### Using Mailcoach
 
-Behind the scenes v3 for the MailChimp API is used.
+To let this package work with Mailcoach, you need to install the Mailcoach SDK.
+
+```bash
+composer require spatie/mailcoach-sdk-php
+```
+
+Next, you must provide values for the API key, endpoint and `list.subscribers.id` in the config file. You'll find the API key and endpoint in the [Mailcoach](https://mailcoach.app) settings screen. The value for `list.subscribers.id` must be the UUID of an email list on Mailcoach. You'll find this value on the settings screen of an email list
+
+### Using MailChimp
+
+To use MailChimp, install this extra package.
+
+```bash
+composer require drewm/mailchimp-api
+```
+
+Next, you must provide values for the API key, endpoint and `list.subscribers.id`. You'll find these values in the MailChimp UI
+
+## Usage
 
 After you've installed the package and filled in the values in the config-file working with this package will be a breeze. All the following examples use the facade. Don't forget to import it at the top of your file.
 
 ```php
-use Newsletter;
+use Spatie\Newsletter\Facades\Newsletter;
 ```
 
 ### Subscribing, updating and unsubscribing
@@ -124,32 +131,45 @@ Let's unsubscribe someone:
 Newsletter::unsubscribe('the.luggage@discworld.com');
 ```
 
-You can pass some merge variables as the second argument:
+For Mailcoach, you can pass extra attributes as the second argument:
+
+```php
+Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
+```
+
+For MailChimp you can pass merge variables as the second argument:
 ```php
 Newsletter::subscribe('rincewind@discworld.com', ['FNAME'=>'Rince', 'LNAME'=>'Wind']);
 ```
-> Please note the at the time of this writing the default merge variables in MailChimp are named `FNAME` and `LNAME`. In our examples we use `firstName` and `lastName` for extra readability.
 
-You can subscribe someone to a specific list by using the third argument:
+You can subscribe someone to a specific list by passing a list name:
 ```php
-Newsletter::subscribe('rincewind@discworld.com', ['FNAME'=>'Rince', 'LNAME'=>'Wind'], 'subscribers');
+Newsletter::subscribe('rincewind@discworld.com', listName: 'subscribers');
 ```
+
 That third argument is the name of a list you configured in the config file.
 
 You can also subscribe and/or update someone. The person will be subscribed or updated if he/she is already subscribed:
 
  ```php
- Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['FNAME'=>'Foo', 'LNAME'=>'Bar']);
+ Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
  ```
 
-You can subscribe someone to one or more specific group(s)/interest(s) by using the fourth argument:
+For MailChimp, You can subscribe someone to one or more specific group(s)/interest(s) by using the fourth argument:
 
 ```php
-Newsletter::subscribeOrUpdate('rincewind@dscworld.com', ['FNAME'=>'Rince','LNAME'=>'Wind'], 'subscribers', ['interests'=>['interestId'=>true, 'interestId'=>true]])
+Newsletter::subscribeOrUpdate(
+   'rincewind@dscworld.com', 
+   ['FNAME'=>'Rince','LNAME'=>'Wind'], 
+   'subscribers', 
+   ['interests'=>['interestId'=>true, 'interestId'=>true]],
+);
 ```
+
 Simply add `false` if you want to remove someone from a group/interest.
 
-You can also unsubscribe someone from a specific list:
+Here's how to unsubscribe someone from a specific list:
+
 ```php
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 ```
@@ -164,16 +184,6 @@ Here's how to perform a delete:
 Newsletter::delete('rincewind@discworld.com');
 ```
 
-### Deleting subscribers permanently
-
-Delete all personally identifiable information related to a list member, and remove them from a list. This will make it impossible to re-import the list member.
-
-Here's how to perform a permanent delete:
-
-```php
-Newsletter::deletePermanently('rincewind@discworld.com');
-```
-
 ### Getting subscriber info
 
 You can get information on a subscriber by using the `getMember` function:
@@ -181,8 +191,10 @@ You can get information on a subscriber by using the `getMember` function:
 Newsletter::getMember('lord.vetinari@discworld.com');
 ```
 
-This will return an array with information on the subscriber. If there's no one subscribed with that
-e-mail address the function will return `false`
+For MailCoach, this will return an instance of `Spatie\Mailcoach\Resources|Subscriber`
+For MailChimp, this will return an array with information on the subscriber. 
+
+If there's no one subscribed with that e-mail address the function will return `false`
 
 There's also a convenience method to check if someone is already subscribed:
 
@@ -198,7 +210,7 @@ Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a boolean
 
 ### Need something else?
 
-If you need more functionality you get an instance of the underlying [MailChimp Api](https://github.com/drewm/mailchimp-api) with:
+If you need more functionality you get an instance of the underlying API with
 
 ```php
 $api = Newsletter::getApi();
@@ -207,6 +219,7 @@ $api = Newsletter::getApi();
 ## Testing
 
 Run the tests with:
+
 ```bash
 vendor/bin/pest
 ```

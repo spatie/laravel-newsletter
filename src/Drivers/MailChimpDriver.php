@@ -33,7 +33,7 @@ class MailChimpDriver implements Driver
 
     public function subscribe(
         string $email,
-        array $properties,
+        array $properties = [],
         string $listName = '',
         array $options = []
     ) {
@@ -59,7 +59,7 @@ class MailChimpDriver implements Driver
 
     public function subscribeOrUpdate(
         string $email,
-        array $properties,
+        array $properties = [],
         string $listName = '',
         array $options = []
     ) {

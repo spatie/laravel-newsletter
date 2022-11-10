@@ -16,9 +16,9 @@ class NewsletterServiceProvider extends PackageServiceProvider
             ->hasConfigFile();
     }
 
-    public function registeringPackage()
+    public function bootingPackage()
     {
-        $this->app->singleton('newsletter', concrete: function () {
+        $this->app->singleton('newsletter', function () {
             /** @var class-string<Driver> $driverClass */
             $driverClass = config('newsletter.driver');
 
