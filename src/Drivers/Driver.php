@@ -10,9 +10,19 @@ interface Driver
 
     public function getApi();
 
-    public function subscribe(string $email, array $properties = [], string $listName = '', array $options = []);
+    public function subscribe(
+        string $email,
+        array $properties = [],
+        string $listName = '',
+        array $options = []
+    );
 
-    public function subscribeOrUpdate(string $email, array $properties = [], string $listName = '', array $options = []);
+    public function subscribeOrUpdate(
+        string $email,
+        array $properties = [],
+        string $listName = '',
+        array $options = []
+    );
 
     public function unsubscribe(string $email, string $listName = '');
 
