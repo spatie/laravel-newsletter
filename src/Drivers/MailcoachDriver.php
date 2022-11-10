@@ -20,7 +20,6 @@ class MailcoachDriver implements Driver
 
     public function __construct(array $arguments, Lists $lists)
     {
-
         $this->mailcoach = new Mailcoach(
             $arguments['api_key'] ?? '',
             $arguments['endpoint'] ?? ''
