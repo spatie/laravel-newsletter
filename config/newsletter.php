@@ -11,8 +11,6 @@ return [
 
     /**
      * These arguments will be given to the driver.
-     *
-     * For the MailChimp driver an endpoint is not necessary.
      */
     'driver_arguments' => [
         'api_key' => env('NEWSLETTER_API_KEY'),

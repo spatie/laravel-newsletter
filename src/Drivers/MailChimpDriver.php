@@ -2,11 +2,14 @@
 
 namespace Spatie\Newsletter\Drivers;
 
+use DrewM\MailChimp\MailChimp;
 use Spatie\Newsletter\Support\Lists;
 
 class MailChimpDriver implements Driver
 {
     protected Lists $lists;
+
+    protected MailChimp $mailChimp;
 
     public static function make(array $arguments, Lists $lists)
     {
@@ -15,12 +18,14 @@ class MailChimpDriver implements Driver
 
     public function __construct(array $arguments, Lists $lists)
     {
+        $this->mailChimp = new MailChimp($arguments['api_key'], $arguments['end_point']);
+
         $this->lists = $lists;
     }
 
-    public function getApi()
+    public function getApi(): MailChimp
     {
-        // TODO: Implement getApi() method.
+        return $this->mailChimp;
     }
 
     public function subscribe(
@@ -29,8 +34,27 @@ class MailChimpDriver implements Driver
         string $listName = '',
         array $options = []
     ) {
-        // TODO: Implement subscribe() method.
+        $list = $this->lists->findByName($listName);
+
+        $options = $this->getSubscriptionOptions($email, $properties, $options);
+
+        $response = $this->mailChimp->post("lists/{$list->getId()}/members", $options);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
     }
+
+    public function subscribePending(string $email, array $properties = [], string $listName = '', array $options = [])
+    {
+        $options = array_merge($options, ['status' => 'pending']);
+
+        return $this->subscribe($email, $properties, $listName, $options);
+    }
+
+
 
     public function subscribeOrUpdate(
         string $email,
@@ -38,31 +62,117 @@ class MailChimpDriver implements Driver
         string $listName = '',
         array $options = []
     ) {
-        // TODO: Implement subscribeOrUpdate() method.
+        $list = $this->lists->findByName($listName);
+
+        $options = $this->getSubscriptionOptions($email, $properties, $options);
+
+        $response = $this->mailChimp->put("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", $options);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
     }
 
-    public function unsubscribe(string $email, string $listName = '')
+    public function getMembers(string $listName = '', array $parameters = [])
     {
-        // TODO: Implement unsubscribe() method.
-    }
+        $list = $this->lists->findByName($listName);
 
-    public function delete(string $email, string $listName = '')
-    {
-        // TODO: Implement delete() method.
+        return $this->mailChimp->get("lists/{$list->getId()}/members", $parameters);
     }
 
     public function getMember(string $email, string $listName = '')
     {
-        // TODO: Implement getMember() method.
+        $list = $this->lists->findByName($listName);
+
+        return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+    }
+
+
+    public function unsubscribe(string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $response = $this->mailChimp->patch("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}", [
+            'status' => 'unsubscribed',
+        ]);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        return $response;
+    }
+
+    public function delete(string $email, string $listName = '')
+    {
+        $list = $this->lists->findByName($listName);
+
+        $response = $this->mailChimp->delete("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
+
+        return $response;
     }
 
     public function hasMember(string $email, string $listName = ''): bool
     {
-        // TODO: Implement hasMember() method.
+        $response = $this->getMember($email, $listName);
+
+        if (! isset($response['email_address'])) {
+            return false;
+        }
+
+        if (strtolower($response['email_address']) != strtolower($email)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function isSubscribed(string $email, string $listName = ''): bool
     {
-        // TODO: Implement isSubscribed() method.
+        $response = $this->getMember($email, $listName);
+
+        if (! $this->lastActionSucceeded()) {
+            return false;
+        }
+
+        if ($response['status'] != 'subscribed') {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function getSubscriptionOptions(string $email, array $mergeFields, array $options): array
+    {
+        $defaultOptions = [
+            'email_address' => $email,
+            'status' => 'subscribed',
+            'email_type' => 'html',
+        ];
+
+        if (count($mergeFields)) {
+            $defaultOptions['merge_fields'] = $mergeFields;
+        }
+
+        $options = array_merge($defaultOptions, $options);
+
+        return $options;
+    }
+
+    public function getLastError(): string|false
+    {
+        return $this->mailChimp->getLastError();
+    }
+
+    public function lastActionSucceeded(): bool
+    {
+        return $this->mailChimp->success();
+    }
+
+    protected function getSubscriberHash(string $email): string
+    {
+        return $this->mailChimp->subscriberHash($email);
     }
 }
