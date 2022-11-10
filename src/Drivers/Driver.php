@@ -18,11 +18,9 @@ interface Driver
 
     public function delete(string $email, string $listName = '');
 
-
     public function getMember(string $email, string $listName = '');
 
     public function hasMember(string $email, string $listName = ''): bool;
 
     public function isSubscribed(string $email, string $listName = ''): bool;
-
 }

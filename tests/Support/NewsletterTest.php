@@ -2,7 +2,7 @@
 
 use Spatie\Newsletter\Support\NewsletterList;
 
-beforeEach(function() {
+beforeEach(function () {
     $this->newsletterList = new NewsletterList('subscriber', [
         'id' => 'abc123',
         'marketing_permissions' => [
@@ -11,10 +11,10 @@ beforeEach(function() {
     ]);
 });
 
-it('it can determine the name of the list', function() {
+it('it can determine the name of the list', function () {
     expect($this->newsletterList->getName())->toBe('subscribers');
 });
 
-it('it can determine the id of the list', function()  {
+it('it can determine the id of the list', function () {
     expect($this->newsletterList->getId())->toBe('abc123');
 });

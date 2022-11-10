@@ -17,7 +17,7 @@ class NewsletterServiceProvider extends PackageServiceProvider
 
     public function registeringPackage()
     {
-        $this->app->singleton('newsletter', function() {
+        $this->app->singleton('newsletter', function () {
             /** @var class-string<\Spatie\Newsletter\Drivers\Driver> $driverClass */
             $driverClass = config('newsletter.driver');
 
@@ -26,7 +26,6 @@ class NewsletterServiceProvider extends PackageServiceProvider
 
             return $driverClass::make($arguments, $lists);
         });
-
 
         /*
         $this->app->singleton(Newsletter::class, function () {
@@ -47,6 +46,4 @@ class NewsletterServiceProvider extends PackageServiceProvider
         $this->app->alias(Newsletter::class, 'newsletter');
         */
     }
-
-
 }

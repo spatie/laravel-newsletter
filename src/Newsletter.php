@@ -311,10 +311,10 @@ class Newsletter
         $id = $list->getMarketingPermission($permission);
 
         $permissions = [
-            "marketing_permissions" => [
+            'marketing_permissions' => [
                 [
-                    "marketing_permission_id" => $id,
-                    "enabled" => $bool,
+                    'marketing_permission_id' => $id,
+                    'enabled' => $bool,
                 ],
             ],
         ];
