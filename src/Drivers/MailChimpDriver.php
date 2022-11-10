@@ -54,8 +54,6 @@ class MailChimpDriver implements Driver
         return $this->subscribe($email, $properties, $listName, $options);
     }
 
-
-
     public function subscribeOrUpdate(
         string $email,
         array $properties,
@@ -88,7 +86,6 @@ class MailChimpDriver implements Driver
 
         return $this->mailChimp->get("lists/{$list->getId()}/members/{$this->getSubscriberHash($email)}");
     }
-
 
     public function unsubscribe(string $email, string $listName = '')
     {
