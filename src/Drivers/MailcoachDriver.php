@@ -5,7 +5,6 @@ namespace Spatie\Newsletter\Drivers;
 use Exception;
 use Spatie\MailcoachSdk\Mailcoach;
 use Spatie\MailcoachSdk\Resources\Subscriber;
-use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 use Spatie\Newsletter\Support\Lists;
 
 class MailcoachDriver implements Driver

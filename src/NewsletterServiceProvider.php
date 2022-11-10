@@ -4,8 +4,8 @@ namespace Spatie\Newsletter;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Spatie\Newsletter\Support\Lists;
 use Spatie\Newsletter\Drivers\Driver;
+use Spatie\Newsletter\Support\Lists;
 
 class NewsletterServiceProvider extends PackageServiceProvider
 {
