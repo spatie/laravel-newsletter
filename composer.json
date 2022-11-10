@@ -1,6 +1,6 @@
 {
     "name": "spatie/laravel-newsletter",
-    "description": "Manage newsletters in Laravel",
+    "description": "Manage Mailcoach and MailChimp newsletters in Laravel",
     "keywords": [
         "laravel",
         "newsletter",
