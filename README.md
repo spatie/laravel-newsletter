@@ -134,7 +134,7 @@ Newsletter::unsubscribe('the.luggage@discworld.com');
 For Mailcoach, you can pass extra attributes as the second argument:
 
 ```php
-Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
+Newsletter::subscribe('rincewind@discworld.com', ['first_name' => 'Rince', 'last_name' => 'Wind']);
 ```
 
 For MailChimp you can pass merge variables as the second argument:
