@@ -1,24 +1,23 @@
 <?php
 
-namespace Spatie\Newsletter;
+namespace Spatie\Newsletter\Support;
 
 use Illuminate\Support\Collection;
 use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 
-class NewsletterListCollection extends Collection
+class Lists extends Collection
 {
-    /** @var string */
-    public $defaultListName = '';
+    public string $defaultListName = '';
 
     public static function createFromConfig(array $config): self
     {
-        $collection = new static();
+        $collection = new self();
 
         foreach ($config['lists'] as $name => $listProperties) {
             $collection->push(new NewsletterList($name, $listProperties));
         }
 
-        $collection->defaultListName = $config['defaultListName'];
+        $collection->defaultListName = $config['default_list_name'];
 
         return $collection;
     }
