@@ -17,7 +17,7 @@ class Lists extends Collection
             $collection->push(new NewsletterList($name, $listProperties));
         }
 
-        $collection->defaultListName = $config['defaultListName'];
+        $collection->defaultListName = $config['default_list_name'];
 
         return $collection;
     }

@@ -12,7 +12,7 @@ beforeEach(function () {
                 'list2' => ['id' => 2],
                 'list3' => ['id' => 3],
             ],
-            'defaultListName' => 'list3',
+            'default_list_name' => 'list3',
         ]
     );
 });
@@ -40,7 +40,7 @@ it('will throw an exception when the default list does not exist', function () {
                 'list1' => ['id' => 'list1'],
             ],
 
-            'defaultListName' => 'list2',
+            'default_list_name' => 'list2',
         ]
     );
 

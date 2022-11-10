@@ -19,13 +19,10 @@ return [
     ],
 
     /*
-     * The listName to use when no listName has been specified in a method.
+     * The list name to use when no list name is specified in a method.
      */
-    'defaultListName' => 'subscribers',
+    'default_list_name' => 'subscribers',
 
-    /*
-     * Here you can define properties of the lists.
-     */
     'lists' => [
 
         /*
