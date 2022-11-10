@@ -138,7 +138,7 @@ Newsletter::unsubscribe('the.luggage@discworld.com');
 For Mailcoach, you can pass extra attributes as the second argument:
 
 ```php
-Newsletter::subscribe('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
+Newsletter::subscribe('rincewind@discworld.com', ['first_name' => 'Rince', 'last_name' => 'Wind']);
 ```
 
 For MailChimp you can pass merge variables as the second argument:
@@ -156,7 +156,7 @@ That third argument is the name of a list you configured in the config file.
 You can also subscribe and/or update someone. The person will be subscribed or updated if he/she is already subscribed:
 
  ```php
- Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['firstName'=>'Rince', 'lastName'=>'Wind']);
+ Newsletter::subscribeOrUpdate('rincewind@discworld.com', ['first_name' => 'Rince', 'last_name' => 'Wind']);
  ```
 
 For MailChimp, You can subscribe someone to one or more specific group(s)/interest(s) by using the fourth argument:
