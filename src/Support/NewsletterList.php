@@ -1,14 +1,12 @@
 <?php
 
-namespace Spatie\Newsletter;
+namespace Spatie\Newsletter\Support;
 
 class NewsletterList
 {
-    /** @var string */
-    public $name;
+    public string $name;
 
-    /** @var array */
-    public $properties = [];
+    public array $properties = [];
 
     public function __construct(string $name, array $properties)
     {
@@ -24,10 +22,5 @@ class NewsletterList
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getMarketingPermission(string $key): string
-    {
-        return $this->properties['marketing_permissions'][$key];
     }
 }

@@ -6,7 +6,7 @@ use DrewM\MailChimp\MailChimp;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Spatie\Newsletter\Newsletter;
-use Spatie\Newsletter\NewsletterListCollection;
+use Spatie\Newsletter\Support\Lists;
 
 class NewsletterTest extends TestCase
 {
@@ -22,7 +22,7 @@ class NewsletterTest extends TestCase
 
         $this->mailChimpApi->shouldReceive('success')->andReturn(true);
 
-        $newsletterLists = NewsletterListCollection::createFromConfig(
+        $newsletterLists = Lists::createFromConfig(
             [
                 'lists' => [
                     'list1' => [

@@ -6,31 +6,18 @@ use Exception;
 
 class InvalidNewsletterList extends Exception
 {
-    /**
-     * @return static
-     */
-    public static function noListsDefined()
+    public static function noListWithName(string $name): self
     {
-        return new static('There are no lists defined.');
+        return new self("There is no list named `{$name}`.");
     }
 
-    /**
-     * @param string $name
-     *
-     * @return static
-     */
-    public static function noListWithName($name)
+    public static function noListWithId(string $id, string $name): self
     {
-        return new static("There is no list named `{$name}`.");
+        return new self("There is no list with id `{$id}`: (used for name `{$name}`.)");
     }
 
-    /**
-     * @param $defaultListName
-     *
-     * @return static
-     */
-    public static function defaultListDoesNotExist($defaultListName)
+    public static function defaultListDoesNotExist($defaultListName): self
     {
-        return new static("Could not find a default list named `{$defaultListName}`.");
+        return new self("Could not find a default list named `{$defaultListName}`.");
     }
 }

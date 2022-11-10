@@ -3,16 +3,17 @@
 namespace Spatie\Newsletter;
 
 use DrewM\MailChimp\MailChimp;
+use Spatie\Newsletter\Support\Lists;
 
 class Newsletter
 {
     /** @var \DrewM\MailChimp\MailChimp */
     protected $mailChimp;
 
-    /** @var \Spatie\Newsletter\NewsletterListCollection */
+    /** @var \Spatie\Newsletter\Support\Lists */
     protected $lists;
 
-    public function __construct(MailChimp $mailChimp, NewsletterListCollection $lists)
+    public function __construct(MailChimp $mailChimp, Lists $lists)
     {
         $this->mailChimp = $mailChimp;
 

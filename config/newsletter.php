@@ -7,13 +7,18 @@ return [
      * You may use "log" or "null" to prevent calling the
      * API directly from your environment.
      */
-    'driver' => env('MAILCHIMP_DRIVER', 'api'),
+    'driver' => env('NEWSLETTER_DRIVER', Spatie\Newsletter\Drivers\MailcoachDriver::class),
 
-    /*
-     * The API key of a MailChimp account. You can find yours at
-     * https://us10.admin.mailchimp.com/account/api-key-popup/.
+    /**
+     * These arguments will be given to the driver.
+     *
+     * For the MailChimp driver an endpoint is not necessary.
      */
-    'apiKey' => env('MAILCHIMP_APIKEY'),
+    'driver_arguments' => [
+        'api_key' => env('NEWSLETTER_API_KEY'),
+
+        'endpoint' => env('NEWSLETTER_ENDPOINT')
+    ],
 
     /*
      * The listName to use when no listName has been specified in a method.
@@ -35,27 +40,13 @@ return [
         'subscribers' => [
 
             /*
-             * A MailChimp list id. Check the MailChimp docs if you don't know
-             * how to get this value:
+             * When using the Mailcoach driver, this should be Email list UUID
+             * which is displayed in the Mailcoach UI
+             *
+             * When using the MailChimp driver, this should be a MailChimp list id.
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
              */
-            'id' => env('MAILCHIMP_LIST_ID'),
-
-            /*
-             * The GDPR marketing permissions of this audience.
-             * You can get a list of your permissions with this command: "php artisan newsletter:permissions"
-             */
-            'marketing_permissions' => [
-                // 'email' => '2a4819ebc7',
-                // 'customized_online_advertising' => '4256fc7dc5',
-            ],
-
+            'id' => env('NEWSLETTER_LIST_ID'),
         ],
     ],
-
-    /*
-     * If you're having trouble with https connections, set this to false.
-     */
-    'ssl' => true,
-
 ];

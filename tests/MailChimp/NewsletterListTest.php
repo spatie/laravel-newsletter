@@ -3,7 +3,7 @@
 namespace Spatie\Newsletter\Test;
 
 use PHPUnit\Framework\TestCase;
-use Spatie\Newsletter\NewsletterList;
+use Spatie\Newsletter\Support\NewsletterList;
 
 class NewsletterListTest extends TestCase
 {

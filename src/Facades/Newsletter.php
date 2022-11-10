@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Newsletter;
+namespace Spatie\Newsletter\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class NewsletterFacade extends Facade
+class Newsletter extends Facade
 {
     public static function getFacadeAccessor()
     {

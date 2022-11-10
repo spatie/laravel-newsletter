@@ -95,7 +95,6 @@ return [
      * If you're having trouble with https connections, set this to false.
      */
     'ssl' => true,
-
 ];
 ```
 
@@ -197,71 +196,6 @@ In addition to this you can also check if a user is subscribed to your list:
 Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a boolean
 ```
 
-### Creating a campaign
-
-This the signature of `createCampaign`:
-```php
-public function createCampaign(
-    string $fromName,
-    string $replyTo,
-    string $subject,
-    string $html = '',
-    string $listName = '',
-    array $options = [],
-    array $contentOptions = [])
-```
-
-Note the campaign will only be created, no emails will be sent out.
-
-### Working with GDRP marketing permissions
-If you are subject to GDRP, you need to [collect your user's consent](https://mailchimp.com/help/collect-consent-with-gdpr-forms/). This package provides a simple artisan command that outputs a nice table with the names and ID's of your audience's marketing permissions.
-
-Get the marketing permissions of your default list:
-```bash
-php artisan newsletter:permissions
-```
-
-You may also get the permissions of a specific list:
- ```bash
-php artisan newsletter:permissions subscribers
-```
-
-Next, you need to add the permissions to your list's config:
-```php
-'lists' => [
-
-    'subscribers' => [
-
-        'id' => env('MAILCHIMP_LIST_ID'),
-
-        'marketing_permissions' => [
-            'email' => '2a4819ebc7',
-            'customized_online_advertising' => '4256fc7dc5',
-        ],
-
-    ],
-],
-```
-
-Now you can easily update a subscriber's marketing permissions. The first argument is the email, the second argument the permission key from the config, the third argument a boolean to enable/disable the permission, and an optional fourth argument is the name of a specific list.
-
-Update a subscriber's marketing permission:
-```php
-Newsletter::setMarketingPermission('rincewind@discworld.com', 'email', true);
-```
-
-### Handling errors
-
-If something went wrong you can get the last error with:
-```php
-Newsletter::getLastError();
-```
-
-If you just want to make sure if the last action succeeded you can use:
-```php
-Newsletter::lastActionSucceeded(); //returns a boolean
-```
-
 ### Need something else?
 
 If you need more functionality you get an instance of the underlying [MailChimp Api](https://github.com/drewm/mailchimp-api) with:
@@ -274,7 +208,7 @@ $api = Newsletter::getApi();
 
 Run the tests with:
 ```bash
-vendor/bin/phpunit
+vendor/bin/pest
 ```
 
 ### Changelog
