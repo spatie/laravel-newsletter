@@ -15,7 +15,7 @@ return [
     'driver_arguments' => [
         'api_key' => env('NEWSLETTER_API_KEY'),
 
-        'endpoint' => env('NEWSLETTER_ENDPOINT')
+        'endpoint' => env('NEWSLETTER_ENDPOINT'),
     ],
 
     /*

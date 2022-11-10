@@ -4,7 +4,7 @@ use Spatie\Newsletter\Exceptions\InvalidNewsletterList;
 use Spatie\Newsletter\Support\Lists;
 use Spatie\Newsletter\Support\NewsletterList;
 
-beforeEach(function() {
+beforeEach(function () {
     $this->lists = Lists::createFromConfig(
         [
             'lists' => [
@@ -17,7 +17,7 @@ beforeEach(function() {
     );
 });
 
-it('can find a list by its name', function() {
+it('can find a list by its name', function () {
     $list = $this->lists->findByName('list2');
 
     $this->assertInstanceOf(NewsletterList::class, $list);
@@ -25,7 +25,7 @@ it('can find a list by its name', function() {
     $this->assertEquals(2, $list->getId());
 });
 
-it('can use the default list', function() {
+it('can use the default list', function () {
     $list = $this->lists->findByName('');
 
     $this->assertInstanceOf(NewsletterList::class, $list);
@@ -33,7 +33,7 @@ it('can use the default list', function() {
     $this->assertEquals(3, $list->getId());
 });
 
-it('will throw an exception when the default list does not exist', function() {
+it('will throw an exception when the default list does not exist', function () {
     $lists = Lists::createFromConfig(
         [
             'lists' => [
@@ -47,6 +47,6 @@ it('will throw an exception when the default list does not exist', function() {
     $lists->findByName('');
 })->throws(InvalidNewsletterList::class);
 
-it('will throw an exception when a list cannot be found', function() {
+it('will throw an exception when a list cannot be found', function () {
     $this->lists->findByName('blabla');
 })->throws(InvalidNewsletterList::class);

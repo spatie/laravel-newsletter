@@ -14,7 +14,6 @@ class MailcoachDriver implements Driver
 
     protected Lists $lists;
 
-
     public static function make(array $arguments, Lists $lists): self
     {
         return new self($arguments, $lists);
@@ -50,14 +49,13 @@ class MailcoachDriver implements Driver
         array $properties,
         string $listName = '',
         array $options = []
-    ): Subscriber{
+    ): Subscriber {
         try {
             $subscriber = $this->subscribe($email, $properties, $listName, $options);
         } catch(Exception) {
             $subscriber = $this->getMember($email, $listName);
 
-            foreach($properties as $name => $value)
-            {
+            foreach ($properties as $name => $value) {
                 $subscriber->$name = $value;
             }
 
@@ -105,5 +103,4 @@ class MailcoachDriver implements Driver
 
         return ! empty($subscriber->subscribedAt);
     }
-
 }

@@ -8,6 +8,6 @@ class CouldNotUpdateMember extends Exception
 {
     public static function make(string $email, Exception $exception): self
     {
-        return new self("Could not update member {$email} because:" . $exception->getMessage());
+        return new self("Could not update member {$email} because:".$exception->getMessage());
     }
 }
