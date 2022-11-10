@@ -19,7 +19,6 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/support": "^9.39",
         "spatie/laravel-package-tools": "^1.13"
     },
     "suggest": {
@@ -32,7 +31,9 @@
         "spatie/ray": "^1.28",
         "pestphp/pest": "^1.20",
         "spatie/mailcoach-sdk-php": "^1.0",
-        "drewm/mailchimp-api": "^2.5"
+        "drewm/mailchimp-api": "^2.5",
+        "phpstan/phpstan": "^1.9",
+        "orchestra/testbench": "^7.11"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +42,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Newsletter\\Test\\": "tests"
+            "Spatie\\Newsletter\\Tests\\": "tests"
         }
     },
     "scripts": {

@@ -81,10 +81,6 @@ class MailcoachDriver implements Driver
 
         $emailList = $this->mailcoach->emailList($uuid);
 
-        if (! $emailList) {
-            throw InvalidNewsletterList::noListWithId($uuid, $listName);
-        }
-
         return $emailList->subscriber($email);
     }
 

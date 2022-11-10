@@ -3,7 +3,7 @@
 use Spatie\Newsletter\Support\NewsletterList;
 
 beforeEach(function () {
-    $this->newsletterList = new NewsletterList('subscriber', [
+    $this->newsletterList = new NewsletterList('subscribers', [
         'id' => 'abc123',
         'marketing_permissions' => [
             'email' => 'abc123',

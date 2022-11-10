@@ -5,6 +5,7 @@ namespace Spatie\Newsletter;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\Newsletter\Support\Lists;
+use Spatie\Newsletter\Drivers\Driver;
 
 class NewsletterServiceProvider extends PackageServiceProvider
 {
@@ -17,8 +18,8 @@ class NewsletterServiceProvider extends PackageServiceProvider
 
     public function registeringPackage()
     {
-        $this->app->singleton('newsletter', function () {
-            /** @var class-string<\Spatie\Newsletter\Drivers\Driver> $driverClass */
+        $this->app->singleton('newsletter', concrete: function () {
+            /** @var class-string<Driver> $driverClass */
             $driverClass = config('newsletter.driver');
 
             $arguments = config('newsletter.driver_arguments');
@@ -26,24 +27,5 @@ class NewsletterServiceProvider extends PackageServiceProvider
 
             return $driverClass::make($arguments, $lists);
         });
-
-        /*
-        $this->app->singleton(Newsletter::class, function () {
-            $driver = config('newsletter.driver', 'api');
-            if (is_null($driver) || $driver === 'log') {
-                return new LogDriver($driver === 'log');
-            }
-
-            $mailChimp = new Mailchimp(config('newsletter.apiKey'));
-
-            $mailChimp->verify_ssl = config('newsletter.ssl', true);
-
-            $configuredLists = Lists::createFromConfig(config('newsletter'));
-
-            return new Newsletter($mailChimp, $configuredLists);
-        });
-
-        $this->app->alias(Newsletter::class, 'newsletter');
-        */
     }
 }
