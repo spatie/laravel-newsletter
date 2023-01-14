@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 5.1.0 - 2023-01-14
+
+### What's Changed
+
+- Laravel 10.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-newsletter/pull/292
+
+**Full Changelog**: https://github.com/spatie/laravel-newsletter/compare/5.0.0...5.1.0
+
 ## 5.0.0 - 2022-11-10
 
 - the package is now driver based
