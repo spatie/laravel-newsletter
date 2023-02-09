@@ -58,7 +58,7 @@
                 "Spatie\\Newsletter\\NewsletterServiceProvider"
             ],
             "aliases": {
-                "Newsletter": "Spatie\\Newsletter\\NewsletterFacade"
+                "Newsletter": "Spatie\\Newsletter\\Facades\\Newsletter"
             }
         }
     },
