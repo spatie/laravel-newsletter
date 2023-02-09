@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 5.1.1 - 2023-02-09
+
+**Full Changelog**: https://github.com/spatie/laravel-newsletter/compare/5.1.0...5.1.1
+
 ## 5.1.0 - 2023-01-14
 
 ### What's Changed
