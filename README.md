@@ -106,7 +106,7 @@ The `driver` key of the `newsletter` config file must be set to `Spatie\Newslett
 
 Next, you must provide values for the API key and `list.subscribers.id`. You'll find these values in the MailChimp UI.
 
-The `endpoint` config value can be set to an empty string.
+The `endpoint` config value must be set to null.
 
 ## Usage
 
