@@ -102,7 +102,17 @@ To use MailChimp, install this extra package.
 composer require drewm/mailchimp-api
 ```
 
-The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\MailChimpDriver::class`.
+The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\MailChimpDriver::class`
+
+```
+'driver' => env('NEWSLETTER_DRIVER', Spatie\Newsletter\Drivers\MailChimpDriver::class),
+```
+
+or the `.env` variable must be set.
+
+```
+NEWSLETTER_DRIVER=Spatie\Newsletter\Drivers\MailChimpDriver
+```
 
 Next, you must provide values for the API key and `list.subscribers.id`. You'll find these values in the MailChimp UI.
 
