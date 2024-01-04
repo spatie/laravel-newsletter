@@ -22,7 +22,7 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 
 ## Installation
 
-You can install this package via composer using:
+You can install this package via Composer using:
 
 ```bash
 composer require spatie/laravel-newsletter
@@ -72,7 +72,7 @@ return [
         'subscribers' => [
 
             /*
-             * When using the Mailcoach driver, this should be Email list UUID
+             * When using the Mailcoach driver, this should be the Email list UUID
              * which is displayed in the Mailcoach UI
              *
              * When using the MailChimp driver, this should be a MailChimp list id.
@@ -177,7 +177,7 @@ Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 
 ### Deleting subscribers
 
-Deleting is not the same as unsubscribing. Unlike unsubscribing, deleting a member will result in the loss of all history (add/opt-in/edits) as well as removing them from the list. In most cases you want to use `unsubscribe` instead of `delete`.
+Deleting is not the same as unsubscribing. Unlike unsubscribing, deleting a member will result in the loss of all history (add/opt-in/edits) as well as removing them from the list. In most cases, you want to use `unsubscribe` instead of `delete`.
 
 Here's how to perform a delete:
 
@@ -197,13 +197,13 @@ For MailChimp, this will return an array with information on the subscriber.
 
 If there's no one subscribed with that e-mail address the function will return `false`
 
-There's also a convenience method to check if someone is already subscribed:
+There's also a convenient method to check if someone is already subscribed:
 
 ```php
 Newsletter::hasMember('nanny.ogg@discworld.com'); //returns a boolean
 ```
 
-In addition to this you can also check if a user is subscribed to your list:
+In addition to this, you can also check if a user is subscribed to your list:
 
 ```php
 Newsletter::isSubscribed('lord.vetinari@discworld.com'); //returns a boolean
@@ -217,7 +217,7 @@ If you need more functionality you get an instance of the underlying API with
 $api = Newsletter::getApi();
 ```
 
-If you're having troubles getting the MailChimp integration, you can see the last error with:
+If you're having trouble getting the MailChimp integration, you can see the last error with:
 
 ```php
 Newsletter::getApi()->getLastError();
@@ -233,7 +233,7 @@ vendor/bin/pest
 
 ### Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Contributing
 
@@ -241,7 +241,7 @@ Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTI
 
 ## Security
 
-If you discover any security related issues, please email [security@spatie.be](mailto:security@spatie.be) instead of using the issue tracker.
+If you discover any security-related issues, please email [security@spatie.be](mailto:security@spatie.be) instead of using the issue tracker.
 
 ## Credits
 
