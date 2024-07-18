@@ -2,6 +2,26 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 5.2.0 - 2024-07-18
+
+### What's Changed
+
+* Update 'Using mailchimp' readme section by @jose-bittacora in https://github.com/spatie/laravel-newsletter/pull/293
+* Bump ramsey/composer-install from 1 to 3 by @dependabot in https://github.com/spatie/laravel-newsletter/pull/319
+* Fix typos by @imanghafoori1 in https://github.com/spatie/laravel-newsletter/pull/317
+* Bump aglipanci/laravel-pint-action from 1.0.0 to 2.3.1 by @dependabot in https://github.com/spatie/laravel-newsletter/pull/316
+* Reintroduce NullDriver From v4 by @kellerjmrtn in https://github.com/spatie/laravel-newsletter/pull/323
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/spatie/laravel-newsletter/pull/320
+
+### New Contributors
+
+* @jose-bittacora made their first contribution in https://github.com/spatie/laravel-newsletter/pull/293
+* @dependabot made their first contribution in https://github.com/spatie/laravel-newsletter/pull/319
+* @imanghafoori1 made their first contribution in https://github.com/spatie/laravel-newsletter/pull/317
+* @kellerjmrtn made their first contribution in https://github.com/spatie/laravel-newsletter/pull/323
+
+**Full Changelog**: https://github.com/spatie/laravel-newsletter/compare/5.1.1...5.2.0
+
 ## 5.1.1 - 2023-02-09
 
 **Full Changelog**: https://github.com/spatie/laravel-newsletter/compare/5.1.0...5.1.1
