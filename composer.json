@@ -20,7 +20,7 @@
     "require": {
         "php": "^8.1",
         "spatie/laravel-package-tools": "^1.13",
-        "illuminate/log": "^10|^11"
+        "illuminate/log": "^9|^10|^11"
     },
     "suggest": {
         "spatie/mailcoach-sdk-php": "For working with Mailcoach",
