@@ -11,7 +11,7 @@ class Lists extends Collection
 
     public static function createFromConfig(array $config): self
     {
-        $collection = new self();
+        $collection = new self;
 
         foreach ($config['lists'] as $name => $listProperties) {
             $collection->push(new NewsletterList($name, $listProperties));

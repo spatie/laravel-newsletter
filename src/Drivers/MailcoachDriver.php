@@ -56,7 +56,7 @@ class MailcoachDriver implements Driver
     ): Subscriber {
         try {
             $subscriber = $this->subscribe($email, $properties, $listName, $options);
-        } catch(Exception) {
+        } catch (Exception) {
             $subscriber = $this->getMember($email, $listName);
 
             foreach ($properties as $name => $value) {
