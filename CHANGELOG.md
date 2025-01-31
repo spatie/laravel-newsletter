@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 5.2.1 - 2025-01-31
+
+### What's Changed
+
+* Add method chaining support to NullDriver by @imacrayon in https://github.com/spatie/laravel-newsletter/pull/328
+
+### New Contributors
+
+* @imacrayon made their first contribution in https://github.com/spatie/laravel-newsletter/pull/328
+
+**Full Changelog**: https://github.com/spatie/laravel-newsletter/compare/5.2.0...5.2.1
+
 ## 5.2.0 - 2024-07-18
 
 ### What's Changed
