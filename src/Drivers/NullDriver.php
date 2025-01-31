@@ -20,6 +20,15 @@ class NullDriver
     {
         if ($this->logCalls) {
             Log::debug('Called Spatie Newsletter facade method: '.$name.' with:', $arguments);
+
+            return new self;
         }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return '';
     }
 }
