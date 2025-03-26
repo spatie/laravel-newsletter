@@ -20,7 +20,7 @@ class NewsletterServiceProvider extends PackageServiceProvider
     public function bootingPackage()
     {
         $this->app->singleton('newsletter', function () {
-            /** @var class-string<Driver> $driverClass */
+            /** @var class-string<Driver>|null $driverClass */
             $driverClass = config('newsletter.driver');
 
             if (
