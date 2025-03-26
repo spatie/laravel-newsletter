@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 5.3.0 - 2025-03-26
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/spatie/laravel-newsletter/pull/331
+* Laravel 12 by @jochensengier in https://github.com/spatie/laravel-newsletter/pull/332
+
+### New Contributors
+
+* @jochensengier made their first contribution in https://github.com/spatie/laravel-newsletter/pull/332
+
+**Full Changelog**: https://github.com/spatie/laravel-newsletter/compare/5.2.1...5.3.0
+
 ## 5.2.1 - 2025-01-31
 
 ### What's Changed
