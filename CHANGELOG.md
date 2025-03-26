@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 5.3.1 - 2025-03-26
+
+### What's Changed
+
+* Update facade docblock by @duncanmcclean in https://github.com/spatie/laravel-newsletter/pull/334
+
+### New Contributors
+
+* @duncanmcclean made their first contribution in https://github.com/spatie/laravel-newsletter/pull/334
+
+**Full Changelog**: https://github.com/spatie/laravel-newsletter/compare/5.3.0...5.3.1
+
 ## 5.3.0 - 2025-03-26
 
 ### What's Changed
