@@ -23,5 +23,5 @@ it('uses the NullDriver with NullDriver::class config', function () {
 it('accepts calls to the NullDriver', function () {
     config()->set('newsletter.driver', null);
 
-    expect(app('newsletter')->subscribe('example@example.org'))->toBeNull();
+    expect(app('newsletter')->subscribe('example@example.org'))->toBeInstanceOf(NullDriver::class);
 });

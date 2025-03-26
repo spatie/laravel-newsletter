@@ -18,9 +18,9 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.1|^8.2",
         "spatie/laravel-package-tools": "^1.13",
-        "illuminate/log": "^9|^10|^11"
+        "illuminate/log": "^9|^10|^11|^12"
     },
     "suggest": {
         "spatie/mailcoach-sdk-php": "For working with Mailcoach",
@@ -30,10 +30,10 @@
         "drewm/mailchimp-api": "^2.5",
         "guzzlehttp/guzzle": "^7.5|^7.2",
         "mockery/mockery": "^1.4",
-        "orchestra/testbench": "^7.11|^8.0",
-        "pestphp/pest": "^1.20",
+        "orchestra/testbench": "^7.11|^8.0|^9.0|^10.0",
+        "pestphp/pest": "^1.20|^2.0|^3.0",
         "phpstan/phpstan": "^1.9",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.5|^10.0|^11.0|^12.0",
         "spatie/mailcoach-sdk-php": "^1.0",
         "spatie/ray": "^1.28"
     },
