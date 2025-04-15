@@ -1,9 +1,20 @@
-# Manage newsletters in Laravel
+<div align="left">
+    <a href="https://spatie.be/open-source?utm_source=github&utm_medium=banner&utm_campaign=laravel-newsletter">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://spatie.be/packages/header/laravel-newsletter/html/dark.webp">
+        <img alt="Logo for laravel-newsletter" src=" https://spatie.be/packages/header/laravel-newsletter/html/light.webp" height="190">
+      </picture>
+    </a>
+
+<h1>Manage newsletters in Laravel</h1>
+
 [![Latest Version](https://img.shields.io/github/release/spatie/laravel-newsletter.svg?style=flat-square)](https://github.com/spatie/laravel-newsletter/releases)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![run-tests](https://github.com/spatie/laravel-newsletter/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-newsletter/actions/workflows/run-tests.yml)
 [![PHPStan](https://github.com/spatie/laravel-newsletter/actions/workflows/phpstan.yml/badge.svg)](https://github.com/spatie/laravel-newsletter/actions/workflows/phpstan.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-newsletter.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-newsletter)
+    
+</div>
 
 This package provides an easy way to integrate subscriptions to email lists of various email services.
 
