@@ -22,6 +22,7 @@ Currently this package support:
 
 - [Mailcoach](https://mailcoach.app) (built by us :-))
 - [MailChimp](https://mailchimp.com)
+- [MailerLite](https://mailerlite.com)
 
 ## Support us
 
@@ -88,6 +89,8 @@ return [
              *
              * When using the MailChimp driver, this should be a MailChimp list id.
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
+             * 
+             * When using MailerLite Driver, this should be a MailerLite group ID
              */
             'id' => env('NEWSLETTER_LIST_ID'),
         ],
@@ -116,6 +119,20 @@ composer require drewm/mailchimp-api
 The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\MailChimpDriver::class`.
 
 Next, you must provide values for the API key and `list.subscribers.id`. You'll find these values in the MailChimp UI.
+
+The `endpoint` config value must be set to null.
+
+### Using MailerLite
+
+To use MailerLite, install this extra package.
+
+```bash
+composer require mailerlite/mailerlite-php
+```
+
+The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\MailerLiteDriver::class`.
+
+You need to provide the API key and the `group.id`. These can be found in your MailerLite Dashboard under Integrations > API.
 
 The `endpoint` config value must be set to null.
 
@@ -154,6 +171,11 @@ For MailChimp you can pass merge variables as the second argument:
 Newsletter::subscribe('rincewind@discworld.com', ['FNAME'=>'Rince', 'LNAME'=>'Wind']);
 ```
 
+For MailerLite you can pass subscriber fields as the second argument:
+```php
+Newsletter::subscribe('rincewind@discworld.com', ['name'=>'Rince', 'last_name'=>'Wind']);
+```
+
 You can subscribe someone to a specific list by passing a list name:
 ```php
 Newsletter::subscribe('rincewind@discworld.com', listName: 'subscribers');
@@ -181,6 +203,12 @@ Newsletter::subscribeOrUpdate(
 Simply add `false` if you want to remove someone from a group/interest.
 
 Here's how to unsubscribe someone from a specific list:
+
+```php
+Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
+```
+
+For MailerLite, if you provide the group ID as the second argument, the subscriber will be removed from that group. Otherwise, they will be marked as unsubscribed.
 
 ```php
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');

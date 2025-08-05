@@ -40,6 +40,8 @@ return [
              *
              * When using the MailChimp driver, this should be a MailChimp list id.
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
+             *
+             * When using MailerLite Driver, this should be a MailerLite group ID
              */
             'id' => env('NEWSLETTER_LIST_ID'),
         ],
