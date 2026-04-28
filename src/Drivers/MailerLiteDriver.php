@@ -2,13 +2,17 @@
 
 namespace Spatie\Newsletter\Drivers;
 
+use Exception;
 use MailerLite\MailerLite;
 use Spatie\Newsletter\Support\Lists;
 
 class MailerLiteDriver implements Driver
 {
     protected MailerLite $mailerLite;
+
     protected Lists $lists;
+
+    protected string|false $lastError = false;
 
     public static function make(array $arguments, Lists $lists): self
     {
@@ -18,7 +22,7 @@ class MailerLiteDriver implements Driver
     public function __construct(array $arguments, Lists $lists)
     {
         $this->mailerLite = new MailerLite([
-            'api_key' => $arguments['api_key'] ?? ''
+            'api_key' => $arguments['api_key'] ?? '',
         ]);
 
         $this->lists = $lists;
@@ -33,23 +37,9 @@ class MailerLiteDriver implements Driver
         string $email,
         array $properties = [],
         string $listName = '',
-        array $options = [],
-        bool $unsubscribe = false
+        array $options = []
     ): array|false {
-        $groupId = $this->lists->findByName($listName)->getId();
-
-        try {
-            $response = $this->mailerLite->subscribers->create([
-                'email' => $email,
-                'groups' => [$groupId],
-                'fields' => $properties,
-                'status' => $unsubscribe ? 'unsubscribed' : null,
-            ]);
-
-            return $response['body']['data'] ?? false;
-        } catch (\Exception $e) {
-            return false;
-        }
+        return $this->createSubscriber($email, $properties, $listName, $options);
     }
 
     public function subscribeOrUpdate(
@@ -58,54 +48,54 @@ class MailerLiteDriver implements Driver
         string $listName = '',
         array $options = []
     ): array|false {
-        return $this->subscribe($email, $properties, $listName, $options);
+        return $this->createSubscriber($email, $properties, $listName, $options);
     }
 
     public function unsubscribe(string $email, string $listName = ''): array|false
     {
-        if ($listName) {
-            $subscriber = $this->getMember($email, $listName);
+        $subscriber = $this->getMember($email, $listName);
 
-            if ($subscriber) {
-                $groupId = $this->lists->findByName($listName)->getId();
-                $this->mailerLite->groups->unAssignSubscriber($groupId, $subscriber['id']);
-
-                return $this->getMember($email);
-            }
-
+        if (! $subscriber) {
             return false;
         }
 
-        return $this->subscribe($email, listName: $listName, unsubscribe: true);
+        if ($listName !== '') {
+            return $this->tryRequest(function () use ($listName, $subscriber, $email) {
+                $groupId = $this->lists->findByName($listName)->getId();
+
+                $this->mailerLite->groups->unAssignSubscriber($groupId, $subscriber['id']);
+
+                return $this->getMember($email);
+            });
+        }
+
+        return $this->createSubscriber($email, [], $listName, ['status' => 'unsubscribed']);
     }
 
     public function delete(string $email, string $listName = ''): bool
     {
         $subscriber = $this->getMember($email, $listName);
 
-        if ($subscriber) {
-            try {
-                $this->mailerLite->subscribers->delete($subscriber['id']);
-                return true;
-            } catch (\Exception $e) {
-                return false;
-            }
+        if (! $subscriber) {
+            return false;
         }
 
-        return false;
+        return (bool) $this->tryRequest(function () use ($subscriber) {
+            $this->mailerLite->subscribers->delete($subscriber['id']);
+
+            return true;
+        });
     }
 
     public function getMember(string $email, string $listName = ''): array|false
     {
-        try {
+        return $this->tryRequest(function () use ($email, $listName) {
             $response = $this->mailerLite->subscribers->find($email);
 
             $groupId = $this->lists->findByName($listName)->getId();
 
             return $this->matchGroup($response, $groupId);
-        } catch (\Exception $e) {
-            return false;
-        }
+        });
     }
 
     public function hasMember(string $email, string $listName = ''): bool
@@ -118,6 +108,52 @@ class MailerLiteDriver implements Driver
         $subscriber = $this->getMember($email, $listName);
 
         return $subscriber && ($subscriber['status'] ?? null) === 'active';
+    }
+
+    public function getLastError(): string|false
+    {
+        return $this->lastError;
+    }
+
+    public function lastActionSucceeded(): bool
+    {
+        return $this->lastError === false;
+    }
+
+    protected function createSubscriber(
+        string $email,
+        array $properties,
+        string $listName,
+        array $options
+    ): array|false {
+        return $this->tryRequest(function () use ($email, $properties, $listName, $options) {
+            $groupId = $this->lists->findByName($listName)->getId();
+
+            $payload = array_merge([
+                'email' => $email,
+                'groups' => [$groupId],
+                'fields' => $properties,
+            ], $options);
+
+            $response = $this->mailerLite->subscribers->create($payload);
+
+            return $response['body']['data'] ?? false;
+        });
+    }
+
+    protected function tryRequest(callable $callback): mixed
+    {
+        try {
+            $result = $callback();
+
+            $this->lastError = false;
+
+            return $result;
+        } catch (Exception $exception) {
+            $this->lastError = $exception->getMessage();
+
+            return false;
+        }
     }
 
     protected function matchGroup(array $subscriber, string|int $groupId): array|false

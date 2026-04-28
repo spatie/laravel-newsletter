@@ -89,8 +89,8 @@ return [
              *
              * When using the MailChimp driver, this should be a MailChimp list id.
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
-             * 
-             * When using MailerLite Driver, this should be a MailerLite group ID
+             *
+             * When using the MailerLite driver, this should be a MailerLite group id.
              */
             'id' => env('NEWSLETTER_LIST_ID'),
         ],
@@ -208,11 +208,7 @@ Here's how to unsubscribe someone from a specific list:
 Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
 ```
 
-For MailerLite, if you provide the group ID as the second argument, the subscriber will be removed from that group. Otherwise, they will be marked as unsubscribed.
-
-```php
-Newsletter::unsubscribe('rincewind@discworld.com', 'subscribers');
-```
+For MailerLite, passing a list name as the second argument removes the subscriber from the matching group. Without a list name, the subscriber is marked as unsubscribed across the account.
 
 ### Deleting subscribers
 
