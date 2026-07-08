@@ -1,12 +1,13 @@
 {
     "name": "spatie/laravel-newsletter",
-    "description": "Manage Mailcoach, MailChimp and MailerLite newsletters in Laravel",
+    "description": "Manage Mailcoach, MailChimp, MailerLite and Brevo newsletters in Laravel",
     "keywords": [
         "laravel",
         "newsletter",
         "mailcoach",
         "mailchimp",
-        "mailerlite"
+        "mailerlite",
+        "brevo"
     ],
     "homepage": "https://github.com/spatie/laravel-newsletter",
     "license": "MIT",
@@ -26,10 +27,12 @@
     "suggest": {
         "spatie/mailcoach-sdk-php": "For working with Mailcoach",
         "drewm/mailchimp-api": "For working with MailChimp",
-        "mailerlite/mailerlite-php": "For working with MailerLite"
+        "mailerlite/mailerlite-php": "For working with MailerLite",
+        "getbrevo/brevo-php": "For working with Brevo"
     },
     "require-dev": {
         "drewm/mailchimp-api": "^2.5",
+        "getbrevo/brevo-php": "^5.0",
         "guzzlehttp/guzzle": "^7.5|^7.2",
         "mailerlite/mailerlite-php": "^1.0",
         "mockery/mockery": "^1.4",

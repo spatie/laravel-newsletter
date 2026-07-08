@@ -23,6 +23,7 @@ Currently this package support:
 - [Mailcoach](https://mailcoach.app) (built by us :-))
 - [MailChimp](https://mailchimp.com)
 - [MailerLite](https://mailerlite.com)
+- [Brevo](https://brevo.com)
 
 ## Support us
 
@@ -91,6 +92,8 @@ return [
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
              *
              * When using the MailerLite driver, this should be a MailerLite group id.
+             *
+             * When using the Brevo driver, this should be a Brevo list id (integer).
              */
             'id' => env('NEWSLETTER_LIST_ID'),
         ],
@@ -133,6 +136,20 @@ composer require mailerlite/mailerlite-php
 The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\MailerLiteDriver::class`.
 
 You need to provide the API key and the `group.id`. These can be found in your MailerLite Dashboard under Integrations > API.
+
+The `endpoint` config value must be set to null.
+
+### Using Brevo
+
+To use Brevo, install this extra package.
+
+```bash
+composer require getbrevo/brevo-php
+```
+
+The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\BrevoDriver::class`.
+
+You need to provide the API key and the `list.subscribers.id`. The API key can be found in your Brevo dashboard under SMTP & API > API Keys. The value for `list.subscribers.id` must be the id of a contact list, which you'll find under Contacts > Lists.
 
 The `endpoint` config value must be set to null.
 
