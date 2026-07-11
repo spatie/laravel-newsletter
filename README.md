@@ -23,6 +23,7 @@ Currently this package support:
 - [Mailcoach](https://mailcoach.app) (built by us :-))
 - [MailChimp](https://mailchimp.com)
 - [MailerLite](https://mailerlite.com)
+- [Beehiiv](https://beehiiv.com)
 
 ## Support us
 
@@ -136,6 +137,36 @@ You need to provide the API key and the `group.id`. These can be found in your M
 
 The `endpoint` config value must be set to null.
 
+### Using Beehiiv
+
+No additional packages are required for Beehiiv — it uses Laravel's built-in HTTP client.
+
+The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\BeehiivDriver::class`.
+
+Next, you must provide your Beehiiv API key and the publication ID. You can generate an API key in the [Beehiiv dashboard](https://app.beehiiv.com) under Settings > Integrations > API. The value for `list.subscribers.id` must be the publication ID (starts with `pub_`), found in Settings > Publication Info.
+
+The `endpoint` config value is not used and can be set to null.
+
+```env
+NEWSLETTER_DRIVER=Spatie\Newsletter\Drivers\BeehiivDriver::class
+NEWSLETTER_API_KEY=your-beehiiv-api-key
+NEWSLETTER_LIST_ID=pub_your-publication-id
+```
+
+For Beehiiv, you can pass custom fields as the second argument:
+```php
+Newsletter::subscribe('rincewind@discworld.com', ['First Name' => 'Rince', 'Last Name' => 'Wind']);
+```
+
+You can also pass Beehiiv-specific options (like UTM parameters) as the fourth argument:
+```php
+Newsletter::subscribe('rincewind@discworld.com', [], '', [
+    'utm_source' => 'website',
+    'utm_medium' => 'organic',
+    'referring_site' => 'https://example.com',
+]);
+```
+
 ## Usage
 
 After you've installed the package and filled in the values in the config-file working with this package will be a breeze. All the following examples use the facade. Don't forget to import it at the top of your file.
@@ -174,6 +205,11 @@ Newsletter::subscribe('rincewind@discworld.com', ['FNAME'=>'Rince', 'LNAME'=>'Wi
 For MailerLite you can pass subscriber fields as the second argument:
 ```php
 Newsletter::subscribe('rincewind@discworld.com', ['name'=>'Rince', 'last_name'=>'Wind']);
+```
+
+For Beehiiv you can pass custom fields as the second argument:
+```php
+Newsletter::subscribe('rincewind@discworld.com', ['First Name'=>'Rince', 'Last Name'=>'Wind']);
 ```
 
 You can subscribe someone to a specific list by passing a list name:
@@ -229,6 +265,7 @@ Newsletter::getMember('lord.vetinari@discworld.com');
 
 For MailCoach, this will return an instance of `Spatie\Mailcoach\Resources|Subscriber`
 For MailChimp, this will return an array with information on the subscriber. 
+For Beehiiv, this will return an array with subscription data (id, email, status, etc.).
 
 If there's no one subscribed with that e-mail address the function will return `false`
 

@@ -44,6 +44,9 @@ return [
              * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id.
              *
              * When using MailerLite Driver, this should be a MailerLite group ID
+             *
+             * When using the Beehiiv driver, this should be the publication ID
+             * (starts with "pub_"), found in your Beehiiv dashboard settings.
              */
             'id' => env('NEWSLETTER_LIST_ID'),
         ],
