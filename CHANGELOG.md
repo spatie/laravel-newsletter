@@ -2,6 +2,22 @@
 
 All notable changes to `laravel-newsletter` will be documented in this file.
 
+## 5.5.0 - 2026-10-19
+
+### What's new
+
+- Add an opt-in Brevo driver for creating and updating contacts, checking list membership and subscription status, removing contacts from a list, and deleting contacts. Thanks to @robinvdvleuten for #350.
+- Preserve Brevo contact attributes and request errors, encode email identifiers, validate list IDs, and detect per-contact unsubscribe failures.
+- Add Laravel facade integration tests using the real Brevo SDK with mocked HTTP responses, and modernize Pest, PHPStan, and CI.
+
+### Compatibility and setup
+
+- Requires PHP 8.2+ and Laravel 12 or 13; Laravel 13 requires PHP 8.3+. End-of-life PHP 8.1 and Laravel 9–11 are no longer supported. Existing drivers are unchanged.
+- To use Brevo, install `getbrevo/brevo-php:^5.0`, select `Spatie\Newsletter\Drivers\BrevoDriver::class`, and configure `newsletter.driver_arguments.api_key` and `newsletter.lists.subscribers.id`.
+- Brevo `unsubscribe` removes only the selected or default list membership. Brevo `delete` permanently deletes the contact across the account, regardless of list name.
+
+**Full changelog:** https://github.com/spatie/laravel-newsletter/compare/5.4.0...5.5.0
+
 ## 5.4.0 - 2026-04-28
 
 ### What's Changed
