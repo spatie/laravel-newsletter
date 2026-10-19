@@ -35,6 +35,8 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 
 ## Installation
 
+This package requires PHP 8.2 or higher and Laravel 12 or 13. Laravel 13 requires PHP 8.3 or higher.
+
 You can install this package via Composer using:
 
 ```bash
@@ -144,14 +146,28 @@ The `endpoint` config value must be set to null.
 To use Brevo, install this extra package.
 
 ```bash
-composer require getbrevo/brevo-php
+composer require "getbrevo/brevo-php:^5.0"
 ```
 
 The `driver` key of the `newsletter` config file must be set to `Spatie\Newsletter\Drivers\BrevoDriver::class`.
 
-You need to provide the API key and the `list.subscribers.id`. The API key can be found in your Brevo dashboard under SMTP & API > API Keys. The value for `list.subscribers.id` must be the id of a contact list, which you'll find under Contacts > Lists.
+Set `newsletter.driver_arguments.api_key` using `NEWSLETTER_API_KEY`. The API key can be found in your Brevo dashboard under SMTP & API > API Keys. Set `newsletter.lists.subscribers.id` using `NEWSLETTER_LIST_ID` to the positive integer id of a contact list under Contacts > Lists. Numeric strings from your `.env` file are supported.
 
-The `endpoint` config value must be set to null.
+The `endpoint` config value is unused by this driver and can remain null. Optional Brevo SDK settings, such as `timeout` or a PSR-18 `client`, can be passed through `newsletter.driver_arguments.options`.
+
+Pass existing Brevo contact attributes, using their uppercase names, as the second argument:
+
+```php
+Newsletter::subscribeOrUpdate('jane@example.com', ['FIRSTNAME' => 'Jane'], 'subscribers');
+```
+
+`subscribe` creates a contact and fails if it already exists. `subscribeOrUpdate` also updates existing contacts. The fourth argument accepts additional Brevo create-contact fields, such as `smsBlacklisted`; it cannot override the email, attributes, selected list, or create/update mode supplied by the method. Existing email blocklisting is not automatically cleared.
+
+`getMember`, `hasMember`, and `isSubscribed` use the selected list, or `default_list_name` when omitted. `isSubscribed` also checks email blocklisting and list-specific unsubscriptions. `getMember` returns an array containing the contact's attributes, or `false` when the contact is not in that list.
+
+`unsubscribe` removes the contact from only the selected (or default) list. It does not globally blocklist or delete the contact. **`delete` permanently deletes the contact across the Brevo account, regardless of the list name.** Use `unsubscribe` to remove only list membership.
+
+Failed API requests return `false`. Use `Newsletter::getLastError()` and `Newsletter::lastActionSucceeded()` to inspect errors. Subscribe, update, and unsubscribe return the refreshed contact; if that follow-up lookup fails, they return `false` even though the preceding mutation may already have succeeded.
 
 ## Usage
 

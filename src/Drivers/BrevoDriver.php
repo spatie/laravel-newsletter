@@ -7,6 +7,8 @@ use Brevo\Contacts\Requests\CreateContactRequest;
 use Brevo\Contacts\Requests\RemoveContactFromListRequest;
 use Brevo\Contacts\Types\RemoveContactFromListRequestBodyEmails;
 use Exception;
+use InvalidArgumentException;
+use RuntimeException;
 use Spatie\Newsletter\Support\Lists;
 
 class BrevoDriver implements Driver
@@ -24,7 +26,10 @@ class BrevoDriver implements Driver
 
     public function __construct(array $arguments, Lists $lists)
     {
-        $this->brevo = new Brevo(apiKey: $arguments['api_key'] ?? '');
+        $this->brevo = new Brevo(
+            apiKey: $arguments['api_key'] ?? '',
+            options: $arguments['options'] ?? [],
+        );
 
         $this->lists = $lists;
     }
@@ -55,20 +60,24 @@ class BrevoDriver implements Driver
     public function unsubscribe(string $email, string $listName = ''): array|false
     {
         return $this->tryRequest(function () use ($email, $listName) {
-            $listId = $this->lists->findByName($listName)->getId();
+            $listId = $this->getListId($listName);
 
-            $this->brevo->contacts->removeContactFromList((int) $listId, new RemoveContactFromListRequest([
+            $response = $this->brevo->contacts->removeContactFromList($listId, new RemoveContactFromListRequest([
                 'body' => new RemoveContactFromListRequestBodyEmails(['emails' => [$email]]),
             ]));
 
-            return $this->getMember($email, $listName);
+            if ($response?->contacts->failure) {
+                throw new RuntimeException("Could not remove contact from Brevo list {$listId}.");
+            }
+
+            return $this->getContact($email);
         });
     }
 
     public function delete(string $email, string $listName = ''): bool
     {
         return (bool) $this->tryRequest(function () use ($email) {
-            $this->brevo->contacts->deleteContact($email);
+            $this->brevo->contacts->deleteContact(rawurlencode($email));
 
             return true;
         });
@@ -76,28 +85,21 @@ class BrevoDriver implements Driver
 
     public function getMember(string $email, string $listName = ''): array|false
     {
-        return $this->tryRequest(function () use ($email) {
-            $contact = $this->brevo->contacts->getContactInfo($email);
+        return $this->tryRequest(function () use ($email, $listName) {
+            $listId = $this->getListId($listName);
+            $contact = $this->getContact($email);
 
-            return $contact ? $contact->jsonSerialize() : false;
+            if (! $contact) {
+                return false;
+            }
+
+            return in_array($listId, $contact['listIds'], true) ? $contact : false;
         });
     }
 
     public function hasMember(string $email, string $listName = ''): bool
     {
-        $contact = $this->getMember($email, $listName);
-
-        if (! $contact) {
-            return false;
-        }
-
-        if ($listName === '') {
-            return true;
-        }
-
-        $listId = $this->lists->findByName($listName)->getId();
-
-        return in_array((int) $listId, $contact['listIds'] ?? [], true);
+        return $this->getMember($email, $listName) !== false;
     }
 
     public function isSubscribed(string $email, string $listName = ''): bool
@@ -108,9 +110,9 @@ class BrevoDriver implements Driver
             return false;
         }
 
-        $listId = $this->lists->findByName($listName)->getId();
+        $listId = $this->getListId($listName);
 
-        return in_array((int) $listId, $contact['listIds'] ?? [], true);
+        return ! in_array($listId, $contact['listUnsubscribed'] ?? [], true);
     }
 
     public function getLastError(): string|false
@@ -131,17 +133,44 @@ class BrevoDriver implements Driver
         bool $updateEnabled
     ): array|false {
         return $this->tryRequest(function () use ($email, $properties, $listName, $options, $updateEnabled) {
-            $listId = $this->lists->findByName($listName)->getId();
+            $listId = $this->getListId($listName);
 
-            $this->brevo->contacts->createContact(new CreateContactRequest(array_merge([
+            $this->brevo->contacts->createContact(new CreateContactRequest(array_merge($options, [
                 'email' => $email,
                 'attributes' => $properties,
-                'listIds' => [(int) $listId],
+                'listIds' => [$listId],
                 'updateEnabled' => $updateEnabled,
-            ], $options)));
+            ])));
 
-            return $this->getMember($email, $listName);
+            return $this->getContact($email);
         });
+    }
+
+    protected function getContact(string $email): array|false
+    {
+        $contact = $this->brevo->contacts->getContactInfo(rawurlencode($email));
+
+        if (! $contact) {
+            return false;
+        }
+
+        return array_merge($contact->jsonSerialize(), [
+            'attributes' => $contact->attributes->getAdditionalProperties(),
+        ]);
+    }
+
+    protected function getListId(string $listName): int
+    {
+        $list = $this->lists->findByName($listName);
+        $listId = filter_var($list->properties['id'] ?? null, FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 1],
+        ]);
+
+        if ($listId === false) {
+            throw new InvalidArgumentException("The Brevo list id for `{$list->getName()}` must be a positive integer.");
+        }
+
+        return $listId;
     }
 
     protected function tryRequest(callable $callback): mixed

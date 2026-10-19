@@ -12,18 +12,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.5, 8.4, 8.3]
-        laravel: ['9.*', '10.*', '11.*', '12.*', '13.*']
+        php: [8.5, 8.4, 8.3, 8.2]
+        laravel: ['12.*', '13.*']
         dependency-version: [prefer-stable]
+        exclude:
+          - php: 8.2
+            laravel: 13.*
         include:
           - laravel: 12.*
             testbench: 10.*
-          - laravel: 11.*
-            testbench: 9.*
-          - laravel: 10.*
-            testbench: 8.*
-          - laravel: 9.*
-            testbench: 7.*
           - laravel: 13.*
             testbench: 11.*
 
@@ -48,8 +45,8 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer require --dev "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/pest
+        run: vendor/bin/pest --fail-on-warning --fail-on-risky
